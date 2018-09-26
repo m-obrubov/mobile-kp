@@ -25,9 +25,13 @@
 
 #### account/register 
 _Регистрация нового пользователя в системе_
-Method: POST
-Permission: all
-Request body: 
+
+**Метод:** POST
+
+**Доступ:** all
+
+**Тело запроса:**
+
 ```
 {
 	'first_name': 'Ivan',
@@ -38,16 +42,20 @@ Request body:
 	'password': 'qweasdzxc'
 }
 ```
-Response: none
+**Ответ:** none
 	
 #### account/login
 _Аутентификация и авторизация пользователя_
-Method: POST
-Permission: all
-Request parameters: 
+
+**Метод:** POST
+
+**Доступ:** all
+
+**Параметры запроса:** 
 * **login** - E-mail, указанный при регистрации (Например, `simple@email.com`)
 * **password** - пароль
-Response: 
+
+**Ответ:**
 ```
 {
 	'first_name': 'Ivan',
@@ -61,10 +69,14 @@ Response:
 
 #### account/logout
 _Выход текущего пользователя из системы_
-Method: GET
-Permission: all
-Request parameters: none
-Response: none
+
+**Метод:** GET
+
+**Доступ:** all
+
+**Запрос:** none
+
+**Ответ:** none
 
 # _В разработке..._
 
