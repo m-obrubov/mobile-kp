@@ -18,12 +18,13 @@
 
 * Для доступа к закрытым методам необходимо в заголовке запроса отсылать JWT-токен (header name – «Authorization»).
 * Хранится только один тест на каждую тему, при добавлении ещё одного теста предыдущий удаляется.
+* Пол пользователя представлен константой и может принимать значения `MALE` и `FEMALE`
 
-## API
+# API
 
-### ACCOUNT
+## ACCOUNT
 
-#### account/register 
+### account/register 
 _Регистрация нового пользователя в системе_
 
 **Метод:** POST
@@ -37,14 +38,14 @@ _Регистрация нового пользователя в системе_
 	'first_name': 'Ivan',
 	'last_name': 'Ivanov',
 	'age': '25',
-	'gender': 'male',
+	'gender': 'MALE',
 	'email': 'simple@email.com',
 	'password': 'qweasdzxc'
 }
 ```
 **Ответ:** none
 	
-#### account/login
+### account/login
 _Аутентификация и авторизация пользователя_
 
 **Метод:** POST
@@ -58,16 +59,19 @@ _Аутентификация и авторизация пользователя
 **Ответ:**
 ```
 {
-	'first_name': 'Ivan',
-	'last_name': 'Ivanov',
-	'age': '25',
-	'gender': 'male',
-	'email': 'simple@email.com',
-	'created_at': '2018-08-30 12:09:04'
+	'user': {
+		'id': 5,
+		'first_name': 'Ivan',
+		'last_name': 'Ivanov',
+		'age': '25',
+		'gender': 'MALE',
+		'email': 'simple@email.com',
+		'created_at': '2018-08-30 12:09:04'
+	}
 }
 ```
 
-#### account/logout
+### account/logout
 _Выход текущего пользователя из системы_
 
 **Метод:** GET
@@ -78,36 +82,132 @@ _Выход текущего пользователя из системы_
 
 **Ответ:** none
 
+## USER
+
+## user/all
+_Получение информации всех пользователей **с ролью student**_
+
+**Метод:** GET
+
+**Доступ:** teacher
+
+**Запрос:** none
+
+**Ответ:** 
+```
+{
+	'users': [
+		{
+			'id': 5,
+			'first_name': 'Ivan',
+			'last_name': 'Ivanov',
+			'age': '25',
+			'gender': 'MALE',
+			'email': 'simple@email.com',
+			'created_at': '2018-08-30 12:09:04'
+		},
+		{
+			...
+		},
+		...
+	]
+}
+```
+
+## user/id
+_Получение информации о пользователе **с ролью student** по его идентификатору_
+
+**Метод:** GET
+
+**Доступ:** teacher
+
+**Параметры запроса:** 
+* **id** - идентификатор пользователя
+
+**Ответ:** 
+```
+{
+	'user': {
+		'id': 5,
+		'first_name': 'Ivan',
+		'last_name': 'Ivanov',
+		'age': '25',
+		'gender': 'MALE',
+		'email': 'simple@email.com',
+		'created_at': '2018-08-30 12:09:04'
+	}
+}
+```
+## user/data
+_Получение информации текущего пользователя, вошедшего в систему_
+
+**Метод:** GET
+
+**Доступ:** student
+
+**Запрос:** none
+
+**Ответ:**
+```
+{
+	'user': {
+		'id': 5,
+		'first_name': 'Ivan',
+		'last_name': 'Ivanov',
+		'age': '25',
+		'gender': 'MALE',
+		'email': 'simple@email.com',
+		'created_at': '2018-08-30 12:09:04'
+	}
+}
+```
+
+## user/update
+_Обновление информации для текущего пользователя, вошедшего в систему_
+
+**Метод:** PUT
+
+**Доступ:** student
+
+**Тело запроса:**
+
+* _В запрос попадают только те поля, которые требуют обновления_
+* _поле id **обязательно**_
+```
+{
+	'user': {
+		'id': 5,
+		'first_name': 'New Ivan',
+		'age': '26',
+	}
+}
+```
+
+**Ответ:**
+```
+{
+	'user': {
+		'id': 5,
+		'first_name': 'New Ivan',
+		'last_name': 'Ivanov',
+		'age': '26',
+		'gender': 'MALE',
+		'email': 'simple@email.com',
+		'created_at': '2018-08-30 12:09:04'
+	}
+}
+```
+
 # _В разработке..._
 
-### USER
+**Метод:** GET
 
-user/all
-	method: GET
-	in: none
-	out: list full users
-	permission: teacher
-	description: returns all users with role student 
-user/id
-	method: GET
-	in: user id
-	out: full user
-	permission: teacher
-	description: returns data for user with id and role student
-user/data
-	method: GET
-	in: none
-	out: full user
-	permission: student
-	description: returns data for current logged-in user
-user/update
-	method: PUT
-	in: full user with id
-	out: updated full user
-	permission: student
-	description: updates data for current logged-in user
+**Доступ:** all
 
----------------------
+**Запрос:** none
+
+**Ответ:** none
+
 ### TEST
 
 test/add
