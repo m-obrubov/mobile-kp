@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -19,6 +20,8 @@ public class User {
 
     private String email;
     private String password;
+
+    private Set<TestResult> testResults;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -81,7 +84,7 @@ public class User {
         this.gender = gender;
     }
 
-    @OneToOne
+    @Basic
     @Column(name = "role")
     public Role getRole() {
         return role;
@@ -110,6 +113,15 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @OneToMany(mappedBy = "user")
+    public Set<TestResult> getTestResults() {
+        return testResults;
+    }
+
+    public void setTestResults(Set<TestResult> testResults) {
+        this.testResults = testResults;
     }
 
     @Override
