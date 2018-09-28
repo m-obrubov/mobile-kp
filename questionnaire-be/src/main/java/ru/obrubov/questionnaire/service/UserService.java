@@ -2,6 +2,7 @@ package ru.obrubov.questionnaire.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.obrubov.questionnaire.data.access.UserDataAccess;
 import ru.obrubov.questionnaire.domain.User;
 
 import java.util.List;
@@ -9,11 +10,11 @@ import java.util.List;
 @Service
 public class UserService {
 
-    private final UserService userDataAccess;
+    private final UserDataAccess userDataAccess;
 
     @Autowired
-    public UserService(UserService userRepository) {
-        this.userDataAccess = userRepository;
+    public UserService(UserDataAccess userDataAccess) {
+        this.userDataAccess = userDataAccess;
     }
 
     public User create(User user) {

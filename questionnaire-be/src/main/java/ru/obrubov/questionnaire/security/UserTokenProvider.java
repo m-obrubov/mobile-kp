@@ -6,18 +6,24 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.obrubov.questionnaire.data.access.AuthInfoDataAccess;
+import ru.obrubov.questionnaire.data.access.UserDataAccess;
 import ru.obrubov.questionnaire.domain.AuthInfo;
+import ru.obrubov.questionnaire.domain.User;
+
 import javax.servlet.http.HttpServletRequest;
 
 @Service
 public class UserTokenProvider {
 
+    private final UserDataAccess userDataAccess;
     private final AuthInfoDataAccess authInfoDataAccess;
     private final UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    public UserTokenProvider(AuthInfoDataAccess authInfoDataAccess,
+    public UserTokenProvider(UserDataAccess userDataAccess,
+                             AuthInfoDataAccess authInfoDataAccess,
                              UserDetailsServiceImpl userDetailsService) {
+        this.userDataAccess = userDataAccess;
         this.authInfoDataAccess = authInfoDataAccess;
         this.userDetailsService = userDetailsService;
     }
@@ -37,4 +43,11 @@ public class UserTokenProvider {
         return authInfo != null;
     }
 
+    public String generateToken(String login, String password) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(login);
+        if(!userDetails.getPassword().equals(password)) {
+            return null;
+        }
+        return "OK";
+    }
 }

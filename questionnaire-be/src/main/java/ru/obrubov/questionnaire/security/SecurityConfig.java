@@ -24,9 +24,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/user/all", "/user/id").hasAuthority(Role.TEACHER.toString())
                     .antMatchers("/user/data", "/user/update").hasAuthority(Role.STUDENT.toString())
+                    .antMatchers("/account/register", "/account/token").permitAll()
+                    .anyRequest().authenticated()
                 .and()
                     .addFilterBefore(userSecurityFilter, UsernamePasswordAuthenticationFilter.class)
                 .csrf()
-                    .disable();
+                    .disable()
+                .logout()
+                    .logoutUrl("account/logout");
     }
 }
