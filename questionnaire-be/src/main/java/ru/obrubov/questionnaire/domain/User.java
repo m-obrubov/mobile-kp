@@ -46,7 +46,7 @@ public class User {
 
     @Basic
     @Column(name = "last_name")
-    public String getLatName() {
+    public String getLastName() {
         return lastName;
     }
 
