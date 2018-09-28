@@ -23,6 +23,10 @@ public class UserDataAccess {
         return userRepository.getOne(id);
     }
 
+    public User getByEmail(String email) {
+        return userRepository.getByEmail(email);
+    }
+
     public User update(User user) {
         return userRepository.save(user);
     }
