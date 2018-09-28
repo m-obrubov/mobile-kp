@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/questionnaire"
+    username: "questionnaire_be_client"
+    password: "password"
+  jpa:
+    hibernate:
+      ddl-auto: create
