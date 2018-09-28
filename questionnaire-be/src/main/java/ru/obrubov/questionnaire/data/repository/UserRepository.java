@@ -6,4 +6,5 @@ import ru.obrubov.questionnaire.domain.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+    User getByEmail(String email);
 }

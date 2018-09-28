@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.obrubov.questionnaire.data.repository.UserRepository;
 import ru.obrubov.questionnaire.domain.User;
 
+import java.util.List;
+
 @Service
 public class UserDataAccess {
 
@@ -21,6 +23,14 @@ public class UserDataAccess {
 
     public User getById(Long id) {
         return userRepository.getOne(id);
+    }
+
+    public List<User> getAll() {
+        return userRepository.findAll();
+    }
+
+    public User getByEmail(String email) {
+        return userRepository.getByEmail(email);
     }
 
     public User update(User user) {
