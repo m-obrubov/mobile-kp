@@ -11,7 +11,7 @@ public class TestResult {
     private Long id;
     private LocalDateTime passedAt;
     private Test test;
-    private User user;
+    private Student student;
     private int totalPoints;
     private Set<QuestionResult> questionResults;
 
@@ -47,13 +47,13 @@ public class TestResult {
     }
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    public User getUser() {
-        return user;
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
+    public User getStudent() {
+        return student;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     @Basic
