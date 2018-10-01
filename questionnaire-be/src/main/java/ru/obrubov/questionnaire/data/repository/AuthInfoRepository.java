@@ -6,4 +6,5 @@ import ru.obrubov.questionnaire.domain.AuthInfo;
 
 @Repository
 public interface AuthInfoRepository extends JpaRepository<AuthInfo, Long> {
+    AuthInfo getByToken(String token);
 }
