@@ -1,6 +1,7 @@
 package ru.obrubov.questionnaire.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "questionnaire_user")
-public abstract class User {
+public class User {
     private Long id;
     private String firstName;
     private String lastName;
@@ -24,6 +25,7 @@ public abstract class User {
 
     private Set<TestResult> testResults;
 
+    @JsonProperty("id")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
@@ -35,6 +37,7 @@ public abstract class User {
         this.id = id;
     }
 
+    @JsonProperty("first_name")
     @Basic
     @Column(name = "first_name")
     public String getFirstName() {
@@ -45,6 +48,7 @@ public abstract class User {
         this.firstName = firstName;
     }
 
+    @JsonProperty("last_name")
     @Basic
     @Column(name = "last_name")
     public String getLastName() {
@@ -55,6 +59,7 @@ public abstract class User {
         this.lastName = lastName;
     }
 
+    @JsonProperty("age")
     @Basic
     @Column(name = "age")
     public int getAge() {
@@ -65,6 +70,7 @@ public abstract class User {
         this.age = age;
     }
 
+    @JsonProperty("city")
     @Basic
     @Column(name = "city")
     public String getCity() {
@@ -75,6 +81,7 @@ public abstract class User {
         this.city = city;
     }
 
+    @JsonProperty("gender")
     @Basic
     @Column(name = "gender")
     public Gender getGender() {
@@ -85,6 +92,7 @@ public abstract class User {
         this.gender = gender;
     }
 
+    @JsonProperty("email")
     @Basic
     @Column(name = "email")
     public String getEmail() {
@@ -102,10 +110,12 @@ public abstract class User {
         return password;
     }
 
+    @JsonProperty("password")
     public void setPassword(String password) {
         this.password = password;
     }
 
+    @JsonProperty("created_at")
     @Basic
     @Column(name = "created_at")
     public LocalDateTime getCreatedAt() {
