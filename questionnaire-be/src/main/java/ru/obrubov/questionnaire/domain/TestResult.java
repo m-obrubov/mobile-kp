@@ -11,8 +11,8 @@ public class TestResult {
     private Long id;
     private LocalDateTime passedAt;
     private Test test;
-    private Student student;
-    private int totalPoints;
+    private User user;
+    private Result result;
     private Set<QuestionResult> questionResults;
 
     @Id
@@ -47,23 +47,23 @@ public class TestResult {
     }
 
     @ManyToOne
-    @JoinColumn(name = "student_id", referencedColumnName = "id")
-    public User getStudent() {
-        return student;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    public User getUser() {
+        return user;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    @Basic
-    @Column(name = "total_points")
-    public int getTotalPoints() {
-        return totalPoints;
+    @ManyToOne
+    @JoinColumn(name = "result_id", referencedColumnName = "id")
+    public Result getResult() {
+        return result;
     }
 
-    public void setTotalPoints(int totalPoints) {
-        this.totalPoints = totalPoints;
+    public void setResult(Result result) {
+        this.result = result;
     }
 
     @OneToMany
@@ -86,13 +86,11 @@ public class TestResult {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TestResult that = (TestResult) o;
-        return getTotalPoints() == that.getTotalPoints() &&
-                Objects.equals(getId(), that.getId()) &&
-                Objects.equals(getPassedAt(), that.getPassedAt());
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getPassedAt(), getTotalPoints());
+        return Objects.hash(getId());
     }
 }

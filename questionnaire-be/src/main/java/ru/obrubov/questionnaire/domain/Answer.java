@@ -8,7 +8,6 @@ import java.util.Objects;
 public class Answer {
     private Long id;
     private String value;
-    private String description;
     private int weight;
 
     @Id
@@ -33,16 +32,6 @@ public class Answer {
     }
 
     @Basic
-    @Column(name = "description")
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Basic
     @Column(name = "weight")
     public int getWeight() {
         return weight;
@@ -59,12 +48,11 @@ public class Answer {
         Answer answer = (Answer) o;
         return getWeight() == answer.getWeight() &&
                 Objects.equals(getId(), answer.getId()) &&
-                Objects.equals(getValue(), answer.getValue()) &&
-                Objects.equals(getDescription(), answer.getDescription());
+                Objects.equals(getValue(), answer.getValue());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getValue(), getDescription(), getWeight());
+        return Objects.hash(getId(), getValue(), getWeight());
     }
 }

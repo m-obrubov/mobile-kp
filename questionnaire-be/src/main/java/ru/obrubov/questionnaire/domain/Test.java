@@ -9,12 +9,11 @@ import java.util.Set;
 public class Test {
     private Long id;
     private String name;
-    private String description;
-    private TestTheme theme;
+    private String about;
+    private String rules;
     private Set<Question> questions;
+    private Set<Answer> answers;
     private Set<Result> results;
-
-    private Set<TestResult> testResults;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -38,23 +37,23 @@ public class Test {
     }
 
     @Basic
-    @Column(name = "description")
-    public String getDescription() {
-        return description;
+    @Column(name = "about")
+    public String getAbout() {
+        return about;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setAbout(String about) {
+        this.about = about;
     }
 
     @Basic
-    @Column(name = "theme")
-    public TestTheme getTheme() {
-        return theme;
+    @Column(name = "rules")
+    public String getRules() {
+        return rules;
     }
 
-    public void setTheme(TestTheme theme) {
-        this.theme = theme;
+    public void setRules(String rules) {
+        this.rules = rules;
     }
 
     @OneToMany
@@ -72,6 +71,22 @@ public class Test {
         this.questions = questions;
     }
 
+
+    @OneToMany
+    @JoinTable
+            (
+                    name = "test_answer_join",
+                    joinColumns = @JoinColumn(name = "test_id", referencedColumnName = "id"),
+                    inverseJoinColumns = @JoinColumn(name = "answer_id", referencedColumnName = "id", unique = true)
+            )
+    public Set<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(Set<Answer> answers) {
+        this.answers = answers;
+    }
+
     @OneToMany
     @JoinTable
             (
@@ -87,15 +102,6 @@ public class Test {
         this.results = results;
     }
 
-    @OneToMany(mappedBy = "test")
-    public Set<TestResult> getTestResults() {
-        return testResults;
-    }
-
-    public void setTestResults(Set<TestResult> testResults) {
-        this.testResults = testResults;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -103,12 +109,13 @@ public class Test {
         Test test = (Test) o;
         return Objects.equals(getId(), test.getId()) &&
                 Objects.equals(getName(), test.getName()) &&
-                Objects.equals(getDescription(), test.getDescription()) &&
-                getTheme() == test.getTheme();
+                Objects.equals(getAbout(), test.getAbout()) &&
+                Objects.equals(getRules(), test.getRules());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getDescription(), getTheme());
+
+        return Objects.hash(getId(), getName(), getAbout(), getRules());
     }
 }
