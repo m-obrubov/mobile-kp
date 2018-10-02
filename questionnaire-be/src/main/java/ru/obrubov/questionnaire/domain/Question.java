@@ -34,7 +34,7 @@ public class Question {
     }
 
     @Basic
-    @Column(name = "group")
+    @Column(name = "question_group")
     public ProfessionalClass getGroup() {
         return group;
     }

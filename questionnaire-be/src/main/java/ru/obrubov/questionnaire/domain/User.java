@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "q_user")
+@Table(name = "questionnaire_user")
 public abstract class User {
     private Long id;
     private String firstName;
@@ -129,7 +129,7 @@ public abstract class User {
 
 
     @JsonIgnore
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "user")
     public Set<TestResult> getTestResults() {
         return testResults;
     }
