@@ -9,12 +9,20 @@ import java.util.Set;
 
 @Entity
 @Table(name = "q_user")
-@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User {
     private Long id;
-    private Role role;
+    private String firstName;
+    private String lastName;
+    private int age;
+    private String city;
+    private Gender gender;
     private String email;
     private String password;
+    private LocalDateTime createdAt;
+
+    private Role role;
+
+    private Set<TestResult> testResults;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -28,13 +36,53 @@ public abstract class User {
     }
 
     @Basic
-    @Column(name = "role")
-    public Role getRole() {
-        return role;
+    @Column(name = "first_name")
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    @Basic
+    @Column(name = "last_name")
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    @Basic
+    @Column(name = "age")
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Basic
+    @Column(name = "city")
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    @Basic
+    @Column(name = "gender")
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     @Basic
@@ -47,9 +95,9 @@ public abstract class User {
         this.email = email;
     }
 
+    @JsonIgnore
     @Basic
     @Column(name = "password")
-    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -58,19 +106,57 @@ public abstract class User {
         this.password = password;
     }
 
+    @Basic
+    @Column(name = "created_at")
+    public LocalDateTime getCreatedAt() {
+        return createdAt != null ? createdAt.withNano(0) : null;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @JsonIgnore
+    @Basic
+    @Column(name = "role")
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "student")
+    public Set<TestResult> getTestResults() {
+        return testResults;
+    }
+
+    public void setTestResults(Set<TestResult> testResults) {
+        this.testResults = testResults;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(getId(), user.getId()) &&
-                getRole() == user.getRole() &&
+        return getAge() == user.getAge() &&
+                Objects.equals(getId(), user.getId()) &&
+                Objects.equals(getFirstName(), user.getFirstName()) &&
+                Objects.equals(getLastName(), user.getLastName()) &&
+                Objects.equals(getCity(), user.getCity()) &&
+                getGender() == user.getGender() &&
                 Objects.equals(getEmail(), user.getEmail()) &&
-                Objects.equals(getPassword(), user.getPassword());
+                Objects.equals(getPassword(), user.getPassword()) &&
+                getRole() == user.getRole();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getRole(), getEmail(), getPassword());
+        return Objects.hash(getId(), getFirstName(), getLastName(), getAge(), getCity(), getGender(), getEmail(),
+                getPassword(), getRole());
     }
 }
