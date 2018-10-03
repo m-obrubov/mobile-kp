@@ -2,43 +2,42 @@ package ru.obrubov.questionnaire.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.obrubov.questionnaire.service.UserService;
 import ru.obrubov.questionnaire.domain.User;
+import ru.obrubov.questionnaire.response.ErrorResponse;
+import ru.obrubov.questionnaire.response.Response;
+import ru.obrubov.questionnaire.response.UserDataResponse;
+import ru.obrubov.questionnaire.security.AccessResolver;
+import ru.obrubov.questionnaire.service.UserService;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
+    private final AccessResolver accessResolver;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AccessResolver accessResolver) {
         this.userService = userService;
-    }
-
-    //TODO all
-    @GetMapping("/all")
-    public String getAll() {
-        return userService.getAll().toString();
-    }
-
-    //TODO id
-    @GetMapping("/id")
-    public String getById(@RequestParam("id") Long id) {
-        return userService.getById(id).toString();
+        this.accessResolver = accessResolver;
     }
 
     //TODO data
-    @GetMapping("/data")
-    public String getOwnData() {
-        Long id = 1L;
-        return userService.getById(id).toString();
+    @GetMapping("/own")
+    public Response getOwnData() {
+        User currentUser = accessResolver.getCurrentUser();
+        return UserDataResponse.create(currentUser);
     }
 
     //TODO update
     @PutMapping("/update")
-    public String updateOwnData(@RequestBody User user) {
-        return userService.update(user).toString();
+    public Response updateOwnData(@RequestBody User user) {
+        Long currentUserId = accessResolver.getCurrentUser().getId();
+        user.setId(currentUserId);
+        User updatedUser = userService.update(user);
+        if(updatedUser == null) {
+            return ErrorResponse.create(500);
+        }
+        return UserDataResponse.create(updatedUser);
     }
-
 }

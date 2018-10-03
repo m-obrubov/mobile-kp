@@ -8,7 +8,7 @@ import ru.obrubov.questionnaire.data.access.UserDataAccess;
 import ru.obrubov.questionnaire.domain.AuthInfo;
 import ru.obrubov.questionnaire.domain.User;
 import ru.obrubov.questionnaire.exception.account.PermissionDeniedException;
-import ru.obrubov.questionnaire.security.AccessProvider;
+import ru.obrubov.questionnaire.security.AccessResolver;
 import ru.obrubov.questionnaire.security.UserTokenProvider;
 
 import java.time.LocalDateTime;
@@ -19,25 +19,25 @@ public class TokenService {
     private final UserTokenProvider tokenProvider;
     private final UserDataAccess userDataAccess;
     private final AuthInfoDataAccess authInfoDataAccess;
-    private final AccessProvider accessProvider;
+    private final AccessResolver accessResolver;
     private final QuestionnaireConfig config;
 
     @Autowired
     public TokenService(UserTokenProvider tokenProvider,
                         UserDataAccess userDataAccess,
                         AuthInfoDataAccess authInfoDataAccess,
-                        AccessProvider accessProvider,
+                        AccessResolver accessResolver,
                         QuestionnaireConfig config) {
         this.tokenProvider = tokenProvider;
         this.userDataAccess = userDataAccess;
         this.authInfoDataAccess = authInfoDataAccess;
-        this.accessProvider = accessProvider;
+        this.accessResolver = accessResolver;
         this.config = config;
     }
 
     public String generateToken(String login, String password) throws PermissionDeniedException {
         User user = userDataAccess.getByEmail(login);
-        if(!accessProvider.getAccessByPassword(user.getPassword(), password)) {
+        if(!accessResolver.getAccessByPassword(user.getPassword(), password)) {
             throw new PermissionDeniedException("Доступ запрещен. Пароли не совпадают");
         }
         String token = tokenProvider.generate(login, password);

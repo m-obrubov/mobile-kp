@@ -1,5 +1,6 @@
 package ru.obrubov.questionnaire.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -116,6 +117,7 @@ public class User {
     }
 
     @JsonProperty("created_at")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Basic
     @Column(name = "created_at")
     public LocalDateTime getCreatedAt() {
