@@ -22,15 +22,13 @@ public class UserController {
         this.accessResolver = accessResolver;
     }
 
-    //TODO data
-    @GetMapping("/own")
+    @GetMapping
     public Response getOwnData() {
         User currentUser = accessResolver.getCurrentUser();
         return UserDataResponse.create(currentUser);
     }
 
-    //TODO update
-    @PutMapping("/update")
+    @PutMapping
     public Response updateOwnData(@RequestBody User user) {
         Long currentUserId = accessResolver.getCurrentUser().getId();
         user.setId(currentUserId);
