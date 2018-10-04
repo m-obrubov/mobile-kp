@@ -1,6 +1,8 @@
 package ru.obrubov.questionnaire.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -8,21 +10,23 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "user_q")
+@Table(name = "questionnaire_user")
 public class User {
     private Long id;
     private String firstName;
     private String lastName;
     private int age;
-    private LocalDateTime createdAt;
+    private String city;
     private Gender gender;
-    private Role role;
-
     private String email;
     private String password;
+    private LocalDateTime createdAt;
+
+    private Role role;
 
     private Set<TestResult> testResults;
 
+    @JsonProperty("id")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
@@ -34,6 +38,7 @@ public class User {
         this.id = id;
     }
 
+    @JsonProperty("first_name")
     @Basic
     @Column(name = "first_name")
     public String getFirstName() {
@@ -44,6 +49,7 @@ public class User {
         this.firstName = firstName;
     }
 
+    @JsonProperty("last_name")
     @Basic
     @Column(name = "last_name")
     public String getLastName() {
@@ -54,6 +60,7 @@ public class User {
         this.lastName = lastName;
     }
 
+    @JsonProperty("age")
     @Basic
     @Column(name = "age")
     public int getAge() {
@@ -64,16 +71,18 @@ public class User {
         this.age = age;
     }
 
+    @JsonProperty("city")
     @Basic
-    @Column(name = "created_at")
-    public LocalDateTime getCreatedAt() {
-        return createdAt != null ? createdAt.withNano(0) : null;
+    @Column(name = "city")
+    public String getCity() {
+        return city;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setCity(String city) {
+        this.city = city;
     }
 
+    @JsonProperty("gender")
     @Basic
     @Column(name = "gender")
     public Gender getGender() {
@@ -84,16 +93,7 @@ public class User {
         this.gender = gender;
     }
 
-    @Basic
-    @Column(name = "role")
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
+    @JsonProperty("email")
     @Basic
     @Column(name = "email")
     public String getEmail() {
@@ -104,17 +104,43 @@ public class User {
         this.email = email;
     }
 
+    @JsonIgnore
     @Basic
     @Column(name = "password")
-    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    @JsonProperty("password")
     public void setPassword(String password) {
         this.password = password;
     }
 
+    @JsonProperty("created_at")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Basic
+    @Column(name = "created_at")
+    public LocalDateTime getCreatedAt() {
+        return createdAt != null ? createdAt.withNano(0) : null;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @JsonIgnore
+    @Basic
+    @Column(name = "role")
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     public Set<TestResult> getTestResults() {
         return testResults;
@@ -132,17 +158,17 @@ public class User {
         return getAge() == user.getAge() &&
                 Objects.equals(getId(), user.getId()) &&
                 Objects.equals(getFirstName(), user.getFirstName()) &&
-                Objects.equals(lastName, user.lastName) &&
-                Objects.equals(getCreatedAt(), user.getCreatedAt()) &&
+                Objects.equals(getLastName(), user.getLastName()) &&
+                Objects.equals(getCity(), user.getCity()) &&
                 getGender() == user.getGender() &&
-                getRole() == user.getRole() &&
                 Objects.equals(getEmail(), user.getEmail()) &&
-                Objects.equals(getPassword(), user.getPassword());
+                Objects.equals(getPassword(), user.getPassword()) &&
+                getRole() == user.getRole();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), lastName, getAge(), getCreatedAt(),
-                getGender(), getRole(), getEmail(), getPassword());
+        return Objects.hash(getId(), getFirstName(), getLastName(), getAge(), getCity(), getGender(), getEmail(),
+                getPassword(), getRole());
     }
 }

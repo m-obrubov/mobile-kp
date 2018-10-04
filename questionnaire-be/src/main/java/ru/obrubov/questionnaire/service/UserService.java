@@ -30,6 +30,25 @@ public class UserService {
     }
 
     public User update(User user) {
-        return userDataAccess.update(user);
+        User storedUser = getById(user.getId());
+        if(user.getFirstName() != null) {
+            storedUser.setFirstName(user.getFirstName());
+        }
+        if(user.getLastName() != null) {
+            storedUser.setLastName(user.getLastName());
+        }
+        if(user.getAge() != 0) {
+            storedUser.setAge(user.getAge());
+        }
+        if(user.getCity() != null) {
+            storedUser.setCity(user.getCity());
+        }
+        if(user.getGender() != null) {
+            storedUser.setGender(user.getGender());
+        }
+        if(user.getEmail() != null) {
+            storedUser.setEmail(user.getEmail());
+        }
+        return userDataAccess.update(storedUser);
     }
 }

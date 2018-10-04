@@ -1,19 +1,20 @@
 package ru.obrubov.questionnaire.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "question")
 public class Question {
     private Long id;
     private String value;
-    private String description;
+    private ProfessionalClass group;
+    private TestPart part;
     private int numberInOrder;
-    private boolean isMultiChoice;
-    private Set<Answer> answers;
 
+    @JsonProperty("id")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
@@ -25,6 +26,7 @@ public class Question {
         this.id = id;
     }
 
+    @JsonProperty("value")
     @Basic
     @Column(name = "value")
     public String getValue() {
@@ -35,16 +37,29 @@ public class Question {
         this.value = value;
     }
 
+    @JsonProperty("group")
     @Basic
-    @Column(name = "description")
-    public String getDescription() {
-        return description;
+    @Column(name = "question_group")
+    public ProfessionalClass getGroup() {
+        return group;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setGroup(ProfessionalClass group) {
+        this.group = group;
     }
 
+    @JsonProperty("part")
+    @Basic
+    @Column(name = "part")
+    public TestPart getPart() {
+        return part;
+    }
+
+    public void setPart(TestPart part) {
+        this.part = part;
+    }
+
+    @JsonProperty("number_in_order")
     @Basic
     @Column(name = "number_in_order")
     public int getNumberInOrder() {
@@ -55,45 +70,20 @@ public class Question {
         this.numberInOrder = numberInOrder;
     }
 
-    @Basic
-    @Column(name = "is_multi_choice")
-    public boolean isMultiChoice() {
-        return isMultiChoice;
-    }
-
-    public void setMultiChoice(boolean multiChoice) {
-        isMultiChoice = multiChoice;
-    }
-
-    @OneToMany
-    @JoinTable
-            (
-                    name = "question_answer_join",
-                    joinColumns = @JoinColumn(name = "question_id", referencedColumnName = "id"),
-                    inverseJoinColumns = @JoinColumn(name = "answer_id", referencedColumnName = "id", unique = true)
-            )
-    public Set<Answer> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(Set<Answer> answers) {
-        this.answers = answers;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Question question = (Question) o;
         return getNumberInOrder() == question.getNumberInOrder() &&
-                isMultiChoice() == question.isMultiChoice() &&
                 Objects.equals(getId(), question.getId()) &&
                 Objects.equals(getValue(), question.getValue()) &&
-                Objects.equals(getDescription(), question.getDescription());
+                getGroup() == question.getGroup() &&
+                getPart() == question.getPart();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getValue(), getDescription(), getNumberInOrder(), isMultiChoice());
+        return Objects.hash(getId(), getValue(), getGroup(), getPart(), getNumberInOrder());
     }
 }

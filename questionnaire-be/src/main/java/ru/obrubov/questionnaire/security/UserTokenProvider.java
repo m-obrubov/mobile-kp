@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import ru.obrubov.questionnaire.data.access.AuthInfoDataAccess;
 import ru.obrubov.questionnaire.data.access.UserDataAccess;
 import ru.obrubov.questionnaire.domain.AuthInfo;
-import ru.obrubov.questionnaire.domain.User;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,11 +42,7 @@ public class UserTokenProvider {
         return authInfo != null;
     }
 
-    public String generateToken(String login, String password) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(login);
-        if(!userDetails.getPassword().equals(password)) {
-            return null;
-        }
-        return "OK";
+    public String generate(String login, String password) {
+        return "generated.token.here";
     }
 }

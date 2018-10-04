@@ -1,17 +1,21 @@
 package ru.obrubov.questionnaire.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "result")
 public class Result {
     private Long id;
-    private String value;
     private String description;
-    private int pointsFrom;
-    private int pointsTo;
+    private Set<Profession> professions;
+    private ProfessionalClass workSubject;
+    private ProfessionalClass workCharacter;
 
+    @JsonProperty("id")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
@@ -23,16 +27,7 @@ public class Result {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "value")
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
+    @JsonProperty("description")
     @Basic
     @Column(name = "description")
     public String getDescription() {
@@ -43,24 +38,36 @@ public class Result {
         this.description = description;
     }
 
+    @JsonProperty("professions")
+    @OneToMany(mappedBy = "result")
+    public Set<Profession> getProfessions() {
+        return professions;
+    }
+
+    public void setProfessions(Set<Profession> professions) {
+        this.professions = professions;
+    }
+
+    @JsonProperty("work_subject")
     @Basic
-    @Column(name = "points_from")
-    public int getPointsFrom() {
-        return pointsFrom;
+    @Column(name = "work_subject")
+    public ProfessionalClass getWorkSubject() {
+        return workSubject;
     }
 
-    public void setPointsFrom(int pointsFrom) {
-        this.pointsFrom = pointsFrom;
+    public void setWorkSubject(ProfessionalClass workSubject) {
+        this.workSubject = workSubject;
     }
 
+    @JsonProperty("work_character")
     @Basic
-    @Column(name = "points_to")
-    public int getPointsTo() {
-        return pointsTo;
+    @Column(name = "work_character")
+    public ProfessionalClass getWorkCharacter() {
+        return workCharacter;
     }
 
-    public void setPointsTo(int pointsTo) {
-        this.pointsTo = pointsTo;
+    public void setWorkCharacter(ProfessionalClass workCharacter) {
+        this.workCharacter = workCharacter;
     }
 
     @Override
@@ -68,15 +75,14 @@ public class Result {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Result result = (Result) o;
-        return getPointsFrom() == result.getPointsFrom() &&
-                getPointsTo() == result.getPointsTo() &&
-                Objects.equals(getId(), result.getId()) &&
-                Objects.equals(getValue(), result.getValue()) &&
-                Objects.equals(getDescription(), result.getDescription());
+        return Objects.equals(getId(), result.getId()) &&
+                Objects.equals(getDescription(), result.getDescription()) &&
+                getWorkSubject() == result.getWorkSubject() &&
+                getWorkCharacter() == result.getWorkCharacter();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getValue(), getDescription(), getPointsFrom(), getPointsTo());
+        return Objects.hash(getId(), getDescription(), getWorkSubject(), getWorkCharacter());
     }
 }

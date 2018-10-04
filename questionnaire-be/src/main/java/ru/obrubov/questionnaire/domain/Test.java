@@ -1,5 +1,8 @@
 package ru.obrubov.questionnaire.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
@@ -9,13 +12,15 @@ import java.util.Set;
 public class Test {
     private Long id;
     private String name;
-    private String description;
-    private TestTheme theme;
+    private String about;
+    private String rules;
     private Set<Question> questions;
+    private Set<Answer> answers;
     private Set<Result> results;
 
     private Set<TestResult> testResults;
 
+    @JsonProperty("id")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
@@ -27,6 +32,7 @@ public class Test {
         this.id = id;
     }
 
+    @JsonProperty("name")
     @Basic
     @Column(name = "name")
     public String getName() {
@@ -37,27 +43,30 @@ public class Test {
         this.name = name;
     }
 
+    @JsonProperty("about")
     @Basic
-    @Column(name = "description")
-    public String getDescription() {
-        return description;
+    @Column(name = "about")
+    public String getAbout() {
+        return about;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setAbout(String about) {
+        this.about = about;
     }
 
+    @JsonProperty("rules")
     @Basic
-    @Column(name = "theme")
-    public TestTheme getTheme() {
-        return theme;
+    @Column(name = "rules")
+    public String getRules() {
+        return rules;
     }
 
-    public void setTheme(TestTheme theme) {
-        this.theme = theme;
+    public void setRules(String rules) {
+        this.rules = rules;
     }
 
-    @OneToMany
+    @JsonProperty("questions")
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinTable
             (
                     name = "test_question_join",
@@ -72,7 +81,24 @@ public class Test {
         this.questions = questions;
     }
 
-    @OneToMany
+    @JsonProperty("answers")
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinTable
+            (
+                    name = "test_answer_join",
+                    joinColumns = @JoinColumn(name = "test_id", referencedColumnName = "id"),
+                    inverseJoinColumns = @JoinColumn(name = "answer_id", referencedColumnName = "id", unique = true)
+            )
+    public Set<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(Set<Answer> answers) {
+        this.answers = answers;
+    }
+
+    @JsonProperty("results")
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinTable
             (
                     name = "test_result_join",
@@ -87,7 +113,8 @@ public class Test {
         this.results = results;
     }
 
-    @OneToMany(mappedBy = "test")
+    @JsonIgnore
+    @OneToMany(mappedBy = "test", cascade = CascadeType.REMOVE)
     public Set<TestResult> getTestResults() {
         return testResults;
     }
@@ -103,12 +130,12 @@ public class Test {
         Test test = (Test) o;
         return Objects.equals(getId(), test.getId()) &&
                 Objects.equals(getName(), test.getName()) &&
-                Objects.equals(getDescription(), test.getDescription()) &&
-                getTheme() == test.getTheme();
+                Objects.equals(getAbout(), test.getAbout()) &&
+                Objects.equals(getRules(), test.getRules());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getDescription(), getTheme());
+        return Objects.hash(getId(), getName(), getAbout(), getRules());
     }
 }

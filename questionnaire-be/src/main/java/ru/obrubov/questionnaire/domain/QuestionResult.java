@@ -7,8 +7,8 @@ import java.util.Objects;
 @Table(name = "question_result")
 public class QuestionResult {
     private Long id;
-    private Question question;
     private Answer answer;
+    private Question question;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -22,16 +22,6 @@ public class QuestionResult {
     }
 
     @ManyToOne
-    @JoinColumn(name = "question_id")
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
-
-    @ManyToOne
     @JoinColumn(name = "answer_id")
     public Answer getAnswer() {
         return answer;
@@ -39,6 +29,16 @@ public class QuestionResult {
 
     public void setAnswer(Answer answer) {
         this.answer = answer;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "question_id")
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
     @Override
@@ -51,7 +51,6 @@ public class QuestionResult {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(getId());
     }
 }
