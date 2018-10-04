@@ -1,5 +1,8 @@
 package ru.obrubov.questionnaire.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,6 +12,7 @@ public class Profession {
     private String value;
     private Result result;
 
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
@@ -20,6 +24,7 @@ public class Profession {
         this.id = id;
     }
 
+    @JsonProperty("value")
     @Basic
     @Column(name = "value")
     public String getValue() {
@@ -30,6 +35,7 @@ public class Profession {
         this.value = value;
     }
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "result_id", referencedColumnName = "id")
     public Result getResult() {
