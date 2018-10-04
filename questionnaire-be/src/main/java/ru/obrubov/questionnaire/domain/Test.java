@@ -1,5 +1,8 @@
 package ru.obrubov.questionnaire.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
@@ -15,6 +18,9 @@ public class Test {
     private Set<Answer> answers;
     private Set<Result> results;
 
+    private Set<TestResult> testResults;
+
+    @JsonProperty("id")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
@@ -26,6 +32,7 @@ public class Test {
         this.id = id;
     }
 
+    @JsonProperty("name")
     @Basic
     @Column(name = "name")
     public String getName() {
@@ -36,6 +43,7 @@ public class Test {
         this.name = name;
     }
 
+    @JsonProperty("about")
     @Basic
     @Column(name = "about")
     public String getAbout() {
@@ -46,6 +54,7 @@ public class Test {
         this.about = about;
     }
 
+    @JsonProperty("rules")
     @Basic
     @Column(name = "rules")
     public String getRules() {
@@ -56,7 +65,8 @@ public class Test {
         this.rules = rules;
     }
 
-    @OneToMany
+    @JsonProperty("questions")
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinTable
             (
                     name = "test_question_join",
@@ -71,8 +81,8 @@ public class Test {
         this.questions = questions;
     }
 
-
-    @OneToMany
+    @JsonProperty("answers")
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinTable
             (
                     name = "test_answer_join",
@@ -87,7 +97,8 @@ public class Test {
         this.answers = answers;
     }
 
-    @OneToMany
+    @JsonProperty("results")
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinTable
             (
                     name = "test_result_join",
@@ -100,6 +111,16 @@ public class Test {
 
     public void setResults(Set<Result> results) {
         this.results = results;
+    }
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "test", cascade = CascadeType.REMOVE)
+    public Set<TestResult> getTestResults() {
+        return testResults;
+    }
+
+    public void setTestResults(Set<TestResult> testResults) {
+        this.testResults = testResults;
     }
 
     @Override
@@ -115,7 +136,6 @@ public class Test {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(getId(), getName(), getAbout(), getRules());
     }
 }

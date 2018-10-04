@@ -1,5 +1,7 @@
 package ru.obrubov.questionnaire.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
@@ -13,6 +15,7 @@ public class Result {
     private ProfessionalClass workSubject;
     private ProfessionalClass workCharacter;
 
+    @JsonProperty("id")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
@@ -24,6 +27,7 @@ public class Result {
         this.id = id;
     }
 
+    @JsonProperty("description")
     @Basic
     @Column(name = "description")
     public String getDescription() {
@@ -34,6 +38,7 @@ public class Result {
         this.description = description;
     }
 
+    @JsonProperty("professions")
     @OneToMany(mappedBy = "result")
     public Set<Profession> getProfessions() {
         return professions;
@@ -43,6 +48,7 @@ public class Result {
         this.professions = professions;
     }
 
+    @JsonProperty("work_subject")
     @Basic
     @Column(name = "work_subject")
     public ProfessionalClass getWorkSubject() {
@@ -53,6 +59,7 @@ public class Result {
         this.workSubject = workSubject;
     }
 
+    @JsonProperty("work_character")
     @Basic
     @Column(name = "work_character")
     public ProfessionalClass getWorkCharacter() {
@@ -76,7 +83,6 @@ public class Result {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(getId(), getDescription(), getWorkSubject(), getWorkCharacter());
     }
 }

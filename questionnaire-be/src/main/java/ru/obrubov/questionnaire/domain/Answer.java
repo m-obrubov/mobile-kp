@@ -1,5 +1,7 @@
 package ru.obrubov.questionnaire.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -10,6 +12,7 @@ public class Answer {
     private String value;
     private int weight;
 
+    @JsonProperty("id")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
@@ -21,6 +24,7 @@ public class Answer {
         this.id = id;
     }
 
+    @JsonProperty("value")
     @Basic
     @Column(name = "value")
     public String getValue() {
@@ -31,6 +35,7 @@ public class Answer {
         this.value = value;
     }
 
+    @JsonProperty("weight")
     @Basic
     @Column(name = "weight")
     public int getWeight() {

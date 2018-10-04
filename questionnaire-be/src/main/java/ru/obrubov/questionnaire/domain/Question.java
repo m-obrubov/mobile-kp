@@ -1,5 +1,7 @@
 package ru.obrubov.questionnaire.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -12,6 +14,7 @@ public class Question {
     private TestPart part;
     private int numberInOrder;
 
+    @JsonProperty("id")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
@@ -23,6 +26,7 @@ public class Question {
         this.id = id;
     }
 
+    @JsonProperty("value")
     @Basic
     @Column(name = "value")
     public String getValue() {
@@ -33,6 +37,7 @@ public class Question {
         this.value = value;
     }
 
+    @JsonProperty("group")
     @Basic
     @Column(name = "question_group")
     public ProfessionalClass getGroup() {
@@ -43,6 +48,7 @@ public class Question {
         this.group = group;
     }
 
+    @JsonProperty("part")
     @Basic
     @Column(name = "part")
     public TestPart getPart() {
@@ -53,6 +59,7 @@ public class Question {
         this.part = part;
     }
 
+    @JsonProperty("number_in_order")
     @Basic
     @Column(name = "number_in_order")
     public int getNumberInOrder() {
@@ -77,7 +84,6 @@ public class Question {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(getId(), getValue(), getGroup(), getPart(), getNumberInOrder());
     }
 }

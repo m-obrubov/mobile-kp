@@ -18,4 +18,8 @@ public class AuthInfoDataAccess {
     public AuthInfo getByToken(String token) {
         return authInfoRepository.getByToken(token);
     }
+
+    public AuthInfo create(AuthInfo authInfo) {
+        return authInfoRepository.save(authInfo);
+    }
 }
