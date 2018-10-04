@@ -20,12 +20,13 @@ public class TestDataAccess {
     }
 
     public Test getOne() {
-        //TODO
-        return null;
+        return testRepository.getOne();
     }
 
     public void delete() {
         Test testToDelete = getOne();
-        testRepository.delete(testToDelete);
+        if(testToDelete != null) {
+            testRepository.delete(testToDelete);
+        }
     }
 }

@@ -66,7 +66,7 @@ public class Test {
     }
 
     @JsonProperty("questions")
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
             (
                     name = "test_question_join",
@@ -82,7 +82,7 @@ public class Test {
     }
 
     @JsonProperty("answers")
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
             (
                     name = "test_answer_join",
@@ -98,7 +98,7 @@ public class Test {
     }
 
     @JsonProperty("results")
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
             (
                     name = "test_result_join",

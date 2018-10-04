@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import ru.obrubov.questionnaire.domain.Test;
 
 @Repository
-public interface TestRepository extends JpaRepository<Test, Long> {
+public interface TestRepository extends JpaRepository<Test, Long>, TestRepositoryCustom {
 }

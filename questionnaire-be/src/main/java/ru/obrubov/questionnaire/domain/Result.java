@@ -1,5 +1,6 @@
 package ru.obrubov.questionnaire.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -15,7 +16,7 @@ public class Result {
     private ProfessionalClass workSubject;
     private ProfessionalClass workCharacter;
 
-    @JsonProperty("id")
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
@@ -39,7 +40,7 @@ public class Result {
     }
 
     @JsonProperty("professions")
-    @OneToMany(mappedBy = "result")
+    @OneToMany(mappedBy = "result", cascade = CascadeType.ALL)
     public Set<Profession> getProfessions() {
         return professions;
     }
