@@ -36,6 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .mvcMatchers(HttpMethod.DELETE, "/test").hasAuthority(Role.TEACHER.toString())
                     .mvcMatchers(HttpMethod.GET, "/test").hasAnyAuthority(Role.STUDENT.toString(), Role.TEACHER.toString())
                     // RESULT
+                    .antMatchers("/result").hasAuthority(Role.STUDENT.toString())
+                    .antMatchers("/result/all").hasAuthority(Role.TEACHER.toString())
                     .anyRequest().authenticated()
                 .and()
                     .addFilterBefore(userSecurityFilter, UsernamePasswordAuthenticationFilter.class)
