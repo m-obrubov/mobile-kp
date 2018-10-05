@@ -126,6 +126,7 @@ public class User {
         return createdAt != null ? createdAt.withNano(0) : null;
     }
 
+    @JsonIgnore
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }

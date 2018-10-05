@@ -28,6 +28,7 @@ public class Test {
         return id;
     }
 
+    @JsonIgnore
     public void setId(Long id) {
         this.id = id;
     }
