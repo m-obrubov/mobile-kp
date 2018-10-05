@@ -40,7 +40,13 @@ public class Result {
     }
 
     @JsonProperty("professions")
-    @OneToMany(mappedBy = "result", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable
+            (
+                    name = "result_profession_join",
+                    joinColumns = @JoinColumn(name = "result_id", referencedColumnName = "id"),
+                    inverseJoinColumns = @JoinColumn(name = "profession_id", referencedColumnName = "id", unique = true)
+            )
     public Set<Profession> getProfessions() {
         return professions;
     }

@@ -12,7 +12,8 @@ public class TestResult {
     private LocalDateTime passedAt;
     private Test test;
     private User user;
-    private Result result;
+    private Result resultCan;
+    private Result resultWant;
     private Set<QuestionResult> questionResults;
 
     @Id
@@ -57,13 +58,23 @@ public class TestResult {
     }
 
     @ManyToOne
-    @JoinColumn(name = "result_id", referencedColumnName = "id")
-    public Result getResult() {
-        return result;
+    @JoinColumn(name = "result_can_id", referencedColumnName = "id")
+    public Result getResultCan() {
+        return resultCan;
     }
 
-    public void setResult(Result result) {
-        this.result = result;
+    public void setResultCan(Result resultCan) {
+        this.resultCan = resultCan;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "result_want_id", referencedColumnName = "id")
+    public Result getResultWant() {
+        return resultWant;
+    }
+
+    public void setResultWant(Result resultWant) {
+        this.resultWant = resultWant;
     }
 
     @OneToMany
