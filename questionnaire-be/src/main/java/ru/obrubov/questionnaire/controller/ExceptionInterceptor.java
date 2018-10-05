@@ -1,4 +1,4 @@
-package ru.obrubov.questionnaire.data.access;
+package ru.obrubov.questionnaire.controller;
 
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

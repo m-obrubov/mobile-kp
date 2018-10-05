@@ -3,6 +3,7 @@ package ru.obrubov.questionnaire.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -31,6 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     // USER
                     .antMatchers("/user").hasAuthority(Role.STUDENT.toString())
                     // TEST
+                    .mvcMatchers(HttpMethod.POST, "/test").hasAuthority(Role.TEACHER.toString())
+                    .mvcMatchers(HttpMethod.DELETE, "/test").hasAuthority(Role.TEACHER.toString())
+                    .mvcMatchers(HttpMethod.GET, "/test").hasAnyAuthority(Role.STUDENT.toString(), Role.TEACHER.toString())
+                    // RESULT
                     .anyRequest().authenticated()
                 .and()
                     .addFilterBefore(userSecurityFilter, UsernamePasswordAuthenticationFilter.class)
