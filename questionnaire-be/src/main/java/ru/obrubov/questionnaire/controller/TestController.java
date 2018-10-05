@@ -1,7 +1,6 @@
 package ru.obrubov.questionnaire.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.obrubov.questionnaire.domain.Test;
 import ru.obrubov.questionnaire.response.ErrorResponse;
@@ -21,7 +20,6 @@ public class TestController {
         this.testService = testService;
     }
 
-    @PreAuthorize("hasAnyAuthority('Role.STUDENT, Role.TEACHER')")
     @GetMapping
     public Response getOne() {
         Test test = testService.getTest();
@@ -31,7 +29,6 @@ public class TestController {
         return TestDataResponse.create(test);
     }
 
-    @PreAuthorize("hasAuthority('Role.TEACHER')")
     @PostMapping
     public Response add(@RequestBody Test test) {
         Test createdTest = testService.create(test);
@@ -41,7 +38,6 @@ public class TestController {
         return OkResponse.create();
     }
 
-    @PreAuthorize("hasAuthority('Role.TEACHER')")
     @DeleteMapping
     public Response delete() {
         boolean isDeleted = testService.delete();
