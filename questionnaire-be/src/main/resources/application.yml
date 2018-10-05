@@ -5,10 +5,10 @@ spring:
     password: "password"
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     properties.hibernate:
       dialect: "org.hibernate.dialect.PostgreSQLDialect"
       jdbc.lob.non_contextual_creation: true
-    show-sql: true
 questionnaire:
-  token-expire-days: 30
+  token-expire-minutes: 30
+  token-secret-key: secret-key

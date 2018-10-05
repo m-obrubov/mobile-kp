@@ -11,8 +11,6 @@ import ru.obrubov.questionnaire.exception.account.PermissionDeniedException;
 import ru.obrubov.questionnaire.security.AccessResolver;
 import ru.obrubov.questionnaire.security.UserTokenProvider;
 
-import java.time.LocalDateTime;
-
 @Service
 public class TokenService {
 
@@ -40,11 +38,10 @@ public class TokenService {
         if(!accessResolver.getAccessByPassword(user.getPassword(), password)) {
             throw new PermissionDeniedException("Доступ запрещен. Пароли не совпадают");
         }
-        String token = tokenProvider.generate(login, password);
+        String token = tokenProvider.generate(login);//, password
         AuthInfo authInfo = new AuthInfo();
         authInfo.setUser(user);
         authInfo.setToken(token);
-        authInfo.setExpiredAt(LocalDateTime.now().plusDays(config.getTokenExpireDays()));
         AuthInfo createdAuthInfo = authInfoDataAccess.create(authInfo);
         return createdAuthInfo.getToken();
     }
