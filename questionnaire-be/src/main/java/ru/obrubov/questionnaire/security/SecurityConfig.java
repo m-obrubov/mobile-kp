@@ -24,9 +24,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
 
                 .authorizeRequests()
-                    .antMatchers("/user/all", "/user/id").hasAuthority(Role.TEACHER.toString())
-                    .antMatchers("/user/data", "/user/update").hasAuthority(Role.STUDENT.toString())
+                    // ACCOUNT
                     .antMatchers("/account/register", "/account/token").permitAll()
+                    // USER
+                    .antMatchers("/user").hasAuthority(Role.STUDENT.toString())
+                    // TEST
                     .anyRequest().authenticated()
                 .and()
                     .addFilterBefore(userSecurityFilter, UsernamePasswordAuthenticationFilter.class)
