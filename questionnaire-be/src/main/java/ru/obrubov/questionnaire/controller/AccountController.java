@@ -11,6 +11,7 @@ import ru.obrubov.questionnaire.response.ErrorResponse;
 import ru.obrubov.questionnaire.response.OkResponse;
 import ru.obrubov.questionnaire.response.Response;
 import ru.obrubov.questionnaire.response.account.TokenResponse;
+import ru.obrubov.questionnaire.security.AccessResolver;
 import ru.obrubov.questionnaire.service.TokenService;
 import ru.obrubov.questionnaire.service.UserService;
 
@@ -24,19 +25,22 @@ public class AccountController {
 
     private final UserService userService;
     private final TokenService tokenService;
+    private final AccessResolver accessResolver;
 
     @Autowired
     public AccountController(UserService userService,
-                             TokenService tokenService) {
+                             TokenService tokenService,
+                             AccessResolver accessResolver) {
         this.userService = userService;
         this.tokenService = tokenService;
+        this.accessResolver = accessResolver;
     }
 
     @PostMapping("/register")
     public Response register(@RequestBody User user) {
         user.setCreatedAt(LocalDateTime.now());
         user.setRole(Role.STUDENT);
-        //TODO шифровать пароль
+        user.setPassword(accessResolver.encryptPassword(user.getPassword()));
         User createdUser = userService.create(user);
         if(createdUser == null) {
             return ErrorResponse.create(500);
