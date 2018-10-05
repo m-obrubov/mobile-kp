@@ -10,5 +10,5 @@ spring:
       dialect: "org.hibernate.dialect.PostgreSQLDialect"
       jdbc.lob.non_contextual_creation: true
 questionnaire:
-  token-expire-minutes: 1
+  token-expire-minutes: 30
   token-secret-key: secret-key

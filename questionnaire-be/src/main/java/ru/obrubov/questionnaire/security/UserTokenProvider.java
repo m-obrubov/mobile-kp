@@ -54,7 +54,6 @@ public class UserTokenProvider {
             Jwts.parser().setSigningKey(questionnaireConfig.getTokenSecretKey()).parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
-            //TODO runtime ex
             throw new ValidateTokenException("Expired or invalid JWT token");
         }
     }
