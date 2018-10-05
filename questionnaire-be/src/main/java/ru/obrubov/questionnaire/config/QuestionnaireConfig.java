@@ -4,13 +4,22 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix="questionnaire")
 public class QuestionnaireConfig {
-    private int tokenExpireDays;
+    private int tokenExpireMinutes;
+    private String tokenSecretKey;
 
-    public int getTokenExpireDays() {
-        return tokenExpireDays;
+    public int getTokenExpireMinutes() {
+        return tokenExpireMinutes;
     }
 
-    public void setTokenExpireDays(int tokenExpireDays) {
-        this.tokenExpireDays = tokenExpireDays;
+    public void setTokenExpireMinutes(int tokenExpireMinutes) {
+        this.tokenExpireMinutes = tokenExpireMinutes;
+    }
+
+    public String getTokenSecretKey() {
+        return tokenSecretKey;
+    }
+
+    public void setTokenSecretKey(String tokenSecretKey) {
+        this.tokenSecretKey = tokenSecretKey;
     }
 }

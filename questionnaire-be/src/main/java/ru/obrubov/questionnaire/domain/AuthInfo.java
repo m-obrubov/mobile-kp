@@ -10,7 +10,6 @@ public class AuthInfo {
     private Long id;
     private User user;
     private String token;
-    private LocalDateTime expiredAt;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -43,28 +42,17 @@ public class AuthInfo {
         this.token = token;
     }
 
-    @Basic
-    @Column(name = "expired_at")
-    public LocalDateTime getExpiredAt() {
-        return expiredAt != null ? expiredAt.withNano(0) : null;
-    }
-
-    public void setExpiredAt(LocalDateTime expiredAt) {
-        this.expiredAt = expiredAt;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AuthInfo authInfo = (AuthInfo) o;
         return Objects.equals(getId(), authInfo.getId()) &&
-                Objects.equals(getToken(), authInfo.getToken()) &&
-                Objects.equals(getExpiredAt(), authInfo.getExpiredAt());
+                Objects.equals(getToken(), authInfo.getToken());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getToken(), getExpiredAt());
+        return Objects.hash(getId(), getToken());
     }
 }
