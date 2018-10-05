@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.obrubov.questionnaire.domain.Role;
 import ru.obrubov.questionnaire.domain.User;
 import ru.obrubov.questionnaire.exception.account.PermissionDeniedException;
+import ru.obrubov.questionnaire.exception.account.UsernameAlreadyExistsException;
 import ru.obrubov.questionnaire.response.ErrorResponse;
 import ru.obrubov.questionnaire.response.OkResponse;
 import ru.obrubov.questionnaire.response.Response;
@@ -41,7 +42,13 @@ public class AccountController {
         user.setCreatedAt(LocalDateTime.now());
         user.setRole(Role.STUDENT);
         user.setPassword(accessResolver.encryptPassword(user.getPassword()));
-        User createdUser = userService.create(user);
+        User createdUser;
+        try {
+            createdUser = userService.create(user);
+        } catch (UsernameAlreadyExistsException e) {
+            logger.info("Пользователь с email = {} уже существует", user.getEmail());
+            return ErrorResponse.create(1000);
+        }
         if(createdUser == null) {
             return ErrorResponse.create(500);
         }
@@ -51,12 +58,15 @@ public class AccountController {
     @GetMapping("/token")
     public Response getTokenByLoginAndPassword(@RequestParam("login") String login,
                                                @RequestParam("password") String password) {
+        if(!userService.isUserExists(login)) {
+            return ErrorResponse.create(1001);
+        }
         String token;
         try {
             token = tokenService.generateToken(login, password);
         } catch (PermissionDeniedException e) {
             logger.info("Пользователь с логином {} ввел неправильный пароль", login);
-            return ErrorResponse.create(403);
+            return ErrorResponse.create(1001);
         }
         return TokenResponse.create(token);
     }
