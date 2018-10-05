@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.obrubov.questionnaire.domain.User;
 import ru.obrubov.questionnaire.response.ErrorResponse;
 import ru.obrubov.questionnaire.response.Response;
-import ru.obrubov.questionnaire.response.UserDataResponse;
+import ru.obrubov.questionnaire.response.user.UserDataResponse;
 import ru.obrubov.questionnaire.security.AccessResolver;
 import ru.obrubov.questionnaire.service.UserService;
 
