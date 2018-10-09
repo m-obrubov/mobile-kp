@@ -48,8 +48,7 @@ public class ResultController {
     }
 
     @GetMapping("/all")
-    public Response getAllResults() {
-        //TODO
-        return null;
+    public ResultsDataResponse getAllResults() {
+        return ResultsDataResponse.create(testResultService.getAll());
     }
 }

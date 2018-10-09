@@ -23,4 +23,8 @@ public class TestResultDataAccess {
     public List<TestResult> getByUserId(Long id){ // получение результатов теста пользователя
         return testResultRepository.getAllByUserId(id);
     }
+
+    public List<TestResult> getAll(){
+        return testResultRepository.findAll();
+    }
 }

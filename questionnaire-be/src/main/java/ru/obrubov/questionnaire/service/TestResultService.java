@@ -93,4 +93,9 @@ public class TestResultService {
     public List<TestResult> getOwnResults(Long userId){
         return testResultDataAccess.getByUserId(userId);
     }
+
+    public List<TestResult> getAll(){
+        return testResultDataAccess.getAll();
+    }
+
 }
