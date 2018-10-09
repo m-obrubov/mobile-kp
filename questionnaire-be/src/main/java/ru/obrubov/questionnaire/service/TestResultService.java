@@ -9,6 +9,7 @@ import ru.obrubov.questionnaire.security.AccessResolver;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -52,10 +53,9 @@ public class TestResultService {
         return resultDataAccess.getByWorkCharacterAndWorkSubject(workCharacter,workSubject);
     }
 
-    public TestResult add(TestResult testResult) throws TestNotFoundException {
-        //TODO рассчитать все необходимые поля
+    public TestResult add(TestResult testResult, User user) throws TestNotFoundException {
         testResult.setPassedAt(LocalDateTime.now());
-        testResult.setUser(accessResolver.getCurrentUser());
+        testResult.setUser(user);
         Test test = testDataAccess.getOne();
         if (test == null){
             throw new TestNotFoundException("Нет тестов в БД");
@@ -88,5 +88,9 @@ public class TestResultService {
         testResult.setResultCan(calculateResult(resultGroupCan));
 
         return testResultDataAccess.create(testResult);
+    }
+
+    public List<TestResult> getOwnResults(Long userId){
+        return testResultDataAccess.getByUserId(userId);
     }
 }
