@@ -1,5 +1,7 @@
 package ru.obrubov.questionnaire.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.obrubov.questionnaire.domain.TestResult;
@@ -18,6 +20,8 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("/result")
 public class ResultController {
 
+    private final Logger logger = LoggerFactory.getLogger(ResultController.class);
+
     private final TestResultService testResultService;
     private final AccessResolver accessResolver;
 
@@ -29,26 +33,25 @@ public class ResultController {
     }
 
     @PostMapping
-    public ResultDataResponse addResult(@RequestBody @NotNull TestResult testResult) {
+    public Response addResult(@RequestBody @NotNull TestResult testResult) {
         try {
             User user = accessResolver.getCurrentUser();
             TestResult calculatedResult = testResultService.add(testResult,user);
             return ResultDataResponse.create(calculatedResult);
         } catch (TestNotFoundException e) {
-            ErrorResponse.create(1002);
-            e.printStackTrace();
+            logger.error(e.getMessage());
+            return ErrorResponse.create(1002);
         }
-        return null;
     }
 
     @GetMapping
-    public ResultsDataResponse getOwnResults() {
+    public Response getOwnResults() {
         User user = accessResolver.getCurrentUser();
         return ResultsDataResponse.create(testResultService.getOwnResults(user.getId()));
     }
 
     @GetMapping("/all")
-    public ResultsDataResponse getAllResults() {
+    public Response getAllResults() {
         return ResultsDataResponse.create(testResultService.getAll());
     }
 }
