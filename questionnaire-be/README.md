@@ -446,91 +446,94 @@ _Получение всех результатов опросов для тек
 
 **Ответ:**
 ```json
-[
-    {
-        "passed_at": "2018-08-30 12:09:04",
-        "user": {
-            "id": 5,
-            "first_name": "New Ivan",
-            "last_name": "Ivanov",
-            "age": 26,
-            "city": "Moscow",
-            "gender": "MALE",
-            "email": "simple@email.com",
-            "created_at": "2018-08-30 12:09:04"
-        },
-        "test": {
-            "name": "Тест на оценку оценки профессиональных интересов Соломина",
-            "about": "Анкета 'Ориентация' определяет профессиональную направленность личности к определенной сфере деятельности.",
-            "rules": "В первой части (\"Я хочу\") вы можете оценить по 4-х бальной шкале степень своего желания заниматься...",
-            "questions": [],
-            "answers": [],
-            "results": []
-        },
-        "result_can": {
-            "description": "Вы уверенный в себе и амбициозный...",
-            "professions": [
+{
+    "results": [
+        {
+            "passed_at": "2018-08-30 12:09:04",
+            "user": {
+                "id": 5,
+                "first_name": "New Ivan",
+                "last_name": "Ivanov",
+                "age": 26,
+                "city": "Moscow",
+                "gender": "MALE",
+                "email": "simple@email.com",
+                "created_at": "2018-08-30 12:09:04"
+            },
+            "test": {
+                "name": "Тест на оценку оценки профессиональных интересов Соломина",
+                "about": "Анкета 'Ориентация' определяет профессиональную направленность личности к определенной сфере деятельности.",
+                "rules": "В первой части (\"Я хочу\") вы можете оценить по 4-х бальной шкале степень своего желания заниматься...",
+                "questions": [],
+                "answers": [],
+                "results": []
+            },
+            "result_can": {
+                "description": "Вы уверенный в себе и амбициозный...",
+                "professions": [
+                    {
+                        "value": "Архитектор",
+                        "description": "Архитектор строит дома"
+                    },
+                    {
+                        "value": "Художник",
+                        "description": "Художник пишет картины"
+                    },
+                    {
+                        "value": "Музыкант",
+                        "description": "Музыкант пишет музыку"
+                    },
+                    {
+                        "value": "Хореограф",
+                        "description": "Хореограф умеет танцевать"
+                    }
+                ],
+                "work_subject": "ART",
+                "work_character": "CREATOR"
+            },
+            "result_want": {
+                "description": "Вы уверенный в себе и амбициозный...",
+                "professions": [
+                    {
+                        "value": "Архитектор",
+                        "description": "Архитектор строит дома"
+                    },
+                    {
+                        "value": "Художник",
+                        "description": "Художник пишет картины"
+                    },
+                    {
+                        "value": "Музыкант",
+                        "description": "Музыкант пишет музыку"
+                    },
+                    {
+                        "value": "Хореограф",
+                        "description": "Хореограф умеет танцевать"
+                    }
+                ],
+                "work_subject": "ART",
+                "work_character": "CREATOR"
+            },
+            "question_results": [
                 {
-                    "value": "Архитектор",
-                    "description": "Архитектор строит дома"
-                },
-                {
-                    "value": "Художник",
-                    "description": "Художник пишет картины"
-                },
-                {
-                    "value": "Музыкант",
-                    "description": "Музыкант пишет музыку"
-                },
-                {
-                    "value": "Хореограф",
-                    "description": "Хореограф умеет танцевать"
+                    "question": {
+                        "id": 1,
+                        "value": "Я хочу обслуживать людей",
+                        "group": "HUMAN",
+                        "part": "WANT",
+                        "number_in_order": 1
+                    },
+                    "answer": {
+                        "id": 1,
+                        "value": "Вовсе нет",
+                        "weight": 0
+                    }
                 }
-            ],
-            "work_subject": "ART",
-            "work_character": "CREATOR"
-        },
-        "result_want": {
-            "description": "Вы уверенный в себе и амбициозный...",
-            "professions": [
-                {
-                    "value": "Архитектор",
-                    "description": "Архитектор строит дома"
-                },
-                {
-                    "value": "Художник",
-                    "description": "Художник пишет картины"
-                },
-                {
-                    "value": "Музыкант",
-                    "description": "Музыкант пишет музыку"
-                },
-                {
-                    "value": "Хореограф",
-                    "description": "Хореограф умеет танцевать"
-                }
-            ],
-            "work_subject": "ART",
-            "work_character": "CREATOR"
-        },
-        "question_results": [
-            {
-                "question": {
-                    "id": 1,
-                    "value": "Я хочу обслуживать людей",
-                    "group": "HUMAN",
-                    "part": "WANT",
-                    "number_in_order": 1
-                },
-                "answer": {
-                    "id": 1,
-                    "value": "Вовсе нет",
-                    "weight": 0
-                }
-            }
-        ]
-    }
-]
+            ]
+        }
+    ]
+}
+
 ```
 
 ### /result/all
