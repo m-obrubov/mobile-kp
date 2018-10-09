@@ -24,8 +24,6 @@ public class User {
 
     @JsonIgnore
     private Role role;
-    @JsonIgnore
-    private Set<TestResult> testResults;
 
     @JsonProperty("id")
     @Id
@@ -139,15 +137,6 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    @OneToMany(mappedBy = "user")
-    public Set<TestResult> getTestResults() {
-        return testResults;
-    }
-
-    public void setTestResults(Set<TestResult> testResults) {
-        this.testResults = testResults;
     }
 
     @Override
