@@ -90,7 +90,7 @@ public class TestResult {
     }
 
     @JsonProperty("question_results")
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
             (
                     name = "test_result_question_result_join",

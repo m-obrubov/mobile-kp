@@ -7,5 +7,5 @@ import ru.obrubov.questionnaire.domain.Result;
 
 @Repository
 public interface ResultRepository extends JpaRepository<Result, Long> {
-    Result getByWorkCharacterAndWorkSubject(ProfessionalClass WorkCharacter, ProfessionalClass WorkSubject);
+    Result getByWorkCharacterAndWorkSubject(ProfessionalClass workCharacter, ProfessionalClass workSubject);
 }
