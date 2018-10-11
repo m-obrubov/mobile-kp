@@ -16,6 +16,9 @@ public class TestService {
     }
 
     public Test create(Test test) {
+        if(getTest() != null) {
+            delete();
+        }
         return testDataAccess.create(test);
     }
 
