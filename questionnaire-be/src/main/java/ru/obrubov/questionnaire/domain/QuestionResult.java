@@ -57,6 +57,6 @@ public class QuestionResult {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(getId(), getAnswer(), getQuestion());
     }
 }
