@@ -1,0 +1,1080 @@
+{
+    "name": "Тест на оценку оценки профессиональных интересов Соломина",
+    "about": "Анкета 'Ориентация' определяет профессиональную направленность личности к определенной сфере деятельности.",
+    "rules": "В первой части (\"Я хочу\") вы можете оценить по 4-х бальной шкале степень своего желания заниматься...",
+    "questions": [
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) обслуживать людей",
+            "group": "HUMAN",
+            "part": "WANT",
+            "number_in_order": 1
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) заниматься лечением",
+            "group": "HUMAN",
+            "part": "WANT",
+            "number_in_order": 2
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) обучать, воспитывать",
+            "group": "HUMAN",
+            "part": "WANT",
+            "number_in_order": 3
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) защищать права и безопасность",
+            "group": "HUMAN",
+            "part": "WANT",
+            "number_in_order": 4
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) управлять людьми",
+            "group": "HUMAN",
+            "part": "WANT",
+            "number_in_order": 5
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) управлять машинами",
+            "group": "TECHNICS",
+            "part": "WANT",
+            "number_in_order": 1
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) pемонтировать оборудование",
+            "group": "TECHNICS",
+            "part": "WANT",
+            "number_in_order": 2
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) cобирать и налаживать технику",
+            "group": "TECHNICS",
+            "part": "WANT",
+            "number_in_order": 3
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) обрабатывать материалы, изготовлять предметы и вещи",
+            "group": "TECHNICS",
+            "part": "WANT",
+            "number_in_order": 4
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) заниматься строительством",
+            "group": "TECHNICS",
+            "part": "WANT",
+            "number_in_order": 5
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) pедактировать тексты и таблицы",
+            "group": "ZNAK",
+            "part": "WANT",
+            "number_in_order": 1
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) производить расчеты и вычисления",
+            "group": "ZNAK",
+            "part": "WANT",
+            "number_in_order": 2
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) обрабатывать информацию",
+            "group": "ZNAK",
+            "part": "WANT",
+            "number_in_order": 3
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) работать с чертежами, картами и схемами",
+            "group": "ZNAK",
+            "part": "WANT",
+            "number_in_order": 4
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) принимать и передавать сигналы и сообщения",
+            "group": "ZNAK",
+            "part": "WANT",
+            "number_in_order": 5
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) заниматься художественным оформлением",
+            "group": "ART",
+            "part": "WANT",
+            "number_in_order": 1
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) рисовать, фотографировать",
+            "group": "ART",
+            "part": "WANT",
+            "number_in_order": 2
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) создавать произведения искусства",
+            "group": "ART",
+            "part": "WANT",
+            "number_in_order": 3
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) выступать на сцене",
+            "group": "ART",
+            "part": "WANT",
+            "number_in_order": 4
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) шить, вышивать, вязать",
+            "group": "ART",
+            "part": "WANT",
+            "number_in_order": 5
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) ухаживать за животными",
+            "group": "NATURE",
+            "part": "WANT",
+            "number_in_order": 1
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) заготавливать продукты",
+            "group": "NATURE",
+            "part": "WANT",
+            "number_in_order": 2
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) работать на открытом воздухе",
+            "group": "NATURE",
+            "part": "WANT",
+            "number_in_order": 3
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) выращивать овощи и фрукты",
+            "group": "NATURE",
+            "part": "WANT",
+            "number_in_order": 4
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) иметь дело с природой",
+            "group": "NATURE",
+            "part": "WANT",
+            "number_in_order": 5
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) работать руками",
+            "group": "EXECUTOR",
+            "part": "WANT",
+            "number_in_order": 1
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) выполнять решения",
+            "group": "EXECUTOR",
+            "part": "WANT",
+            "number_in_order": 2
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) воспроизводить имеющиеся образцы, размножать, копировать",
+            "group": "EXECUTOR",
+            "part": "WANT",
+            "number_in_order": 3
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) получать конкретный практический результаты",
+            "group": "EXECUTOR",
+            "part": "WANT",
+            "number_in_order": 4
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) воплощать идеи в жизнь",
+            "group": "EXECUTOR",
+            "part": "WANT",
+            "number_in_order": 5
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) работать головой",
+            "group": "CREATOR",
+            "part": "WANT",
+            "number_in_order": 1
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) принимать решения",
+            "group": "CREATOR",
+            "part": "WANT",
+            "number_in_order": 2
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) создавать новые образцы",
+            "group": "CREATOR",
+            "part": "WANT",
+            "number_in_order": 3
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) анализировать, изучать, наблюдать, измерять, контролировать",
+            "group": "CREATOR",
+            "part": "WANT",
+            "number_in_order": 4
+        },
+        {
+            "value": "Я хочу (мне нравится, меня привлекает, я предпочитаю) планировать, конструировать, разрабатывать, моделировать",
+            "group": "CREATOR",
+            "part": "WANT",
+            "number_in_order": 5
+        },
+               {
+            "value": "Я могу (способен, умею, обладаю навыками) знакомиться с новыми людьми",
+            "group": "HUMAN",
+            "part": "CAN",
+            "number_in_order": 1
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) быть чутким и доброжелательным",
+            "group": "HUMAN",
+            "part": "CAN",
+            "number_in_order": 2
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) выслушивать людей",
+            "group": "HUMAN",
+            "part": "CAN",
+            "number_in_order": 3
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) разбираться в людях",
+            "group": "HUMAN",
+            "part": "CAN",
+            "number_in_order": 4
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) хорошо говорить и выступать публично",
+            "group": "HUMAN",
+            "part": "CAN",
+            "number_in_order": 5
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) искать и устранять неисправности",
+            "group": "TECHNICS",
+            "part": "CAN",
+            "number_in_order": 1
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) использовать приборы, машины, механизмы",
+            "group": "TECHNICS",
+            "part": "CAN",
+            "number_in_order": 2
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) разбираться в технических устройствах",
+            "group": "TECHNICS",
+            "part": "CAN",
+            "number_in_order": 3
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) ловко обращаться с инструментами",
+            "group": "TECHNICS",
+            "part": "CAN",
+            "number_in_order": 4
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) хорошо ориентироваться в пространстве",
+            "group": "TECHNICS",
+            "part": "CAN",
+            "number_in_order": 5
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) быть сосредоточенным и усидчивым",
+            "group": "ZNAK",
+            "part": "CAN",
+            "number_in_order": 1
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) хорошо считать в уме",
+            "group": "ZNAK",
+            "part": "CAN",
+            "number_in_order": 2
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) преобразовывать информацию",
+            "group": "ZNAK",
+            "part": "CAN",
+            "number_in_order": 3
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) оперировать знаками и символами",
+            "group": "ZNAK",
+            "part": "CAN",
+            "number_in_order": 4
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) искать и исправлять ошибки",
+            "group": "ZNAK",
+            "part": "CAN",
+            "number_in_order": 5
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) создавать красивые, со вкусом сделанные вещи",
+            "group": "ART",
+            "part": "CAN",
+            "number_in_order": 1
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) разбираться в литературе и искусстве",
+            "group": "ART",
+            "part": "CAN",
+            "number_in_order": 2
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) петь, играть на музыкальных инструментах",
+            "group": "ART",
+            "part": "CAN",
+            "number_in_order": 3
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) сочинять стихи, писать рассказы",
+            "group": "ART",
+            "part": "CAN",
+            "number_in_order": 4
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) рисовать",
+            "group": "ART",
+            "part": "CAN",
+            "number_in_order": 5
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) разбираться в животных или растениях",
+            "group": "NATURE",
+            "part": "CAN",
+            "number_in_order": 1
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) разводить растения или животных",
+            "group": "NATURE",
+            "part": "CAN",
+            "number_in_order": 2
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) бороться с болезнями, вредителями",
+            "group": "NATURE",
+            "part": "CAN",
+            "number_in_order": 3
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) ориентироваться в природных явлениях",
+            "group": "NATURE",
+            "part": "CAN",
+            "number_in_order": 4
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) работать на земле",
+            "group": "NATURE",
+            "part": "CAN",
+            "number_in_order": 5
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) быстро выполнять указания",
+            "group": "EXECUTOR",
+            "part": "CAN",
+            "number_in_order": 1
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) точно следовать инструкциям",
+            "group": "EXECUTOR",
+            "part": "CAN",
+            "number_in_order": 2
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) работать по заданному алгоритму",
+            "group": "EXECUTOR",
+            "part": "CAN",
+            "number_in_order": 3
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) выполнять однообразную работу",
+            "group": "EXECUTOR",
+            "part": "CAN",
+            "number_in_order": 4
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) соблюдать правила и нормативы",
+            "group": "EXECUTOR",
+            "part": "CAN",
+            "number_in_order": 5
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) создавать новые инструкции и давать указания",
+            "group": "CREATOR",
+            "part": "CAN",
+            "number_in_order": 1
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) принимать нестандартные решения",
+            "group": "CREATOR",
+            "part": "CAN",
+            "number_in_order": 2
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) легко придумывать новые способы поведения",
+            "group": "CREATOR",
+            "part": "CAN",
+            "number_in_order": 3
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) брать на себя ответственность",
+            "group": "CREATOR",
+            "part": "CAN",
+            "number_in_order": 4
+        },
+        {
+            "value": "Я могу (способен, умею, обладаю навыками) cамостоятельно организовывать свою работу",
+            "group": "CREATOR",
+            "part": "CAN",
+            "number_in_order": 5
+        }
+        
+    ],
+    "answers": [
+        {
+            "value": "Вовсе нет",
+            "weight": 0
+        },
+        {
+            "value": "Пожалуй так",
+            "weight": 1
+        },
+        {
+            "value": "Верно",
+            "weight": 2
+        },
+        {
+            "value": "Совершенно верно",
+            "weight": 3
+        }
+    ],
+    "results": [
+        {
+            "description": "Поздравлям тест показал вы исполнитеьный и амбициозный человек...",
+            "professions": [
+                {
+                    "value": "Агенты",
+                    "description": "Аген 001 это именно вы!"
+                },
+                {
+                    "value": "Акушерка",
+                    "description": "Если ты тоже знаешь откудаберуться дети, то эта профессия точно для тебя."
+                },
+                {
+                    "value": "Бармен",
+                    "description": "Мешайте алкоголь смело! Вы же бармен."
+                },
+                {
+                    "value": "Буфетчик",
+                    "description": ""
+                },
+                {
+                    "value": "Гардеробщик",
+                    "description": ""
+                },
+                {
+                    "value": "Горничная",
+                    "description": ""
+                },
+                {
+                    "value": "Киоскер",
+                    "description": ""
+                },
+                {
+                    "value": "Медсестра",
+                    "description": ""
+                },
+                {
+                    "value": "Милиционер",
+                    "description": ""
+                },
+                {
+                    "value": "Официант",
+                    "description": ""
+                },
+                {
+                    "value": "Приемщик заказов",
+                    "description": ""
+                },
+                {
+                    "value": "Продавец",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Регистратор",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Санитар",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Социальный работник",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Фельдшер",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Няня",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Экспедитор",
+                    "description": ""
+                }
+            ],
+            "work_subject": "HUMAN",
+            "work_character": "EXECUTOR"
+        },        
+        {
+            "description": "Поздравлям тест показал вы творческий и амбициозный человек...",
+            "professions": [
+                {
+                    "value": "Врач",
+                    "description": ""
+                },
+                {
+                    "value": "Инспектор",
+                    "description": ""
+                },
+                {
+                    "value": "По кадрам",
+                    "description": ""
+                },
+                {
+                    "value": "Менеджер",
+                    "description": ""
+                },
+                {
+                    "value": "Методист по дошкольному воспитанию",
+                    "description": ""
+                },
+                {
+                    "value": "Преподаватель",
+                    "description": ""
+                },
+                {
+                    "value": "Психолог",
+                    "description": ""
+                },
+                {
+                    "value": "Референт",
+                    "description": ""
+                },
+                {
+                    "value": "Тренер-преподаватель",
+                    "description": ""
+                },
+                {
+                    "value": "Учитель",
+                    "description": ""
+                },
+                {
+                    "value": "Юрисконсульт",
+                    "description": ""
+                }
+            ],
+            "work_subject": "HUMAN",
+            "work_character": "CREATOR"
+        },
+                {
+            "description": "Поздравлям тест показал вы исполнитеьный и амбициозный человек...",
+            "professions": [
+                {
+                    "value": "Авиамеханик по приборам",
+                    "description": ""
+                },
+                {
+                    "value": "Автоматчик",
+                    "description": ""
+                },
+                {
+                    "value": "Автоспециалисты",
+                    "description": ""
+                },
+                {
+                    "value": "Авиаспециалисты",
+                    "description": ""
+                },
+                {
+                    "value": "Аппаратчик",
+                    "description": ""
+                },
+                {
+                    "value": "Арматурщик",
+                    "description": ""
+                },
+                {
+                    "value": "Асфальтобетонщик",
+                    "description": ""
+                },
+                {
+                    "value": "Бурильщик",
+                    "description": ""
+                },
+                {
+                    "value": "Вальцовщик",
+                    "description": ""
+                },
+                {
+                    "value": "Водитель",
+                    "description": ""
+                },
+                {
+                    "value": "Волочильщик",
+                    "description": ""
+                },
+                {
+                    "value": "Вырубщик",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Гальваник",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Газоэлектросварщик",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Жестянщик",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Заправщик",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Заточник",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Каменщик",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Кочегар",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Кузнец",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Кузнец",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Кузнец",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Кузнец",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Кузнец",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Кузнец",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Маляр",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Машинист",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Монтажник",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Монтер",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Моторист",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Наладчик",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Обработчик",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Оператор",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Оптик",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Ремонтник",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Слесарь",
+                    "description": ""
+                },
+                {
+                    "value": "Столяр",
+                    "description": ""
+                },
+                {
+                    "value": "Техник",
+                    "description": ""
+                },
+                {
+                    "value": "Токарь",
+                    "description": ""
+                },
+                {
+                    "value": "Формовщик",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Фрезеровщик",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Часовщик",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Швея",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Шлифовщик",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Штамповщик",
+                    "description": ""
+                }
+                
+            ],
+            "work_subject": "TECHNICS",
+            "work_character": "EXECUTOR"
+        },
+                {
+            "description": "Поздравлям тест показал вы творческий и амбициозный человек...",
+            "professions": [
+                {
+                    "value": "Инженер",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Испытатель двигателей",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Контролер",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Технолог",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Конструктор",
+                    "description": ""
+                }
+            ],
+            "work_subject": "TECHNICS",
+            "work_character": "CREATOR"
+        },
+        {
+            "description": "Поздравлям тест показал вы исполнитеьный и амбициозный человек...",
+            "professions": [
+                {
+                    "value": "Дозировщик",
+                    "description": ""
+                },
+                {
+                    "value": "Изготовитель трафаретов и плат",
+                    "description": ""
+                },
+                {
+                    "value": "Кассир",
+                    "description": ""
+                },
+                {
+                    "value": "Машинистка",
+                    "description": ""
+                },
+                {
+                    "value": "Наборщик",
+                    "description": ""
+                },
+                {
+                    "value": "Печатник",
+                    "description": ""
+                },
+                {
+                    "value": "Телефонист",
+                    "description": ""
+                }
+            ],
+            "work_subject": "ZNAK",
+            "work_character": "EXECUTOR"
+        },
+        {
+            "description": "Поздравлям тест показал вы творческий и амбициозный человек...",
+            "professions": [
+                {
+                    "value": "Архивариус",
+                    "description": ""
+                },
+                {
+                    "value": "Архивист",
+                    "description": ""
+                },
+                {
+                    "value": "Бухгалтер",
+                    "description": ""
+                },
+                {
+                    "value": "Геодезист",
+                    "description": ""
+                },
+                {
+                    "value": "Дефектоскопист",
+                    "description": ""
+                },
+                {
+                    "value": "Корректор",
+                    "description": ""
+                },
+                {
+                    "value": "Математик",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Рентгенолог",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Сортировщик",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Статистик",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Специалист по маркетингу",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Топограф",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Товаровед",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Экономист",
+                    "description": ""
+                }
+            ],
+            "work_subject": "ZNAK",
+            "work_character": "CREATOR"
+        },
+        {
+            "description": "Поздравлям тест показал вы исполнитеьный и амбициозный человек...",
+            "professions": [
+                {
+                    "value": "Артист",
+                    "description": ""
+                },
+                {
+                    "value": "Гравер",
+                    "description": ""
+                },
+                {
+                    "value": "Закройщик",
+                    "description": ""
+                },
+                {
+                    "value": "Мозаичник",
+                    "description": ""
+                },
+                {
+                    "value": "Модельщик",
+                    "description": ""
+                },
+                {
+                    "value": "Мебельщик-обойщик",
+                    "description": ""
+                },
+                {
+                    "value": "Осветитель",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Парикмахер",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Портной",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Разрисовщик ткани",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Фотограф",
+                    "description": ""
+                }
+            ],
+            "work_subject": "ART",
+            "work_character": "EXECUTOR"
+        },
+        {
+            "description": "Поздравлям тест показал вы творческий и амбициозный человек...",
+            "professions": [
+                {
+                    "value": "Архитектор",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Художник",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Музыкант",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Хореограф",
+                    "description": ""
+                }
+            ],
+            "work_subject": "ART",
+            "work_character": "CREATOR"
+        },
+        {
+            "description": "Поздравлям тест показал вы исполнитеьный и амбициозный человек...",
+            "professions": [
+                {
+                    "value": "Вальщик леса",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Зоолаборант",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Озеленитель",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Проводник служебной собаки",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Рабочий зеленого строительства",
+                    "description": ""
+                }
+            ],
+            "work_subject": "NATURE",
+            "work_character": "EXECUTOR"
+        },
+        {
+            "description": "Поздравлям тест показал вы творческий и амбициозный человек...",
+            "professions": [
+                {
+                    "value": "Физик",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Химик",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Геолог",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Агроном",
+                    "description": ""
+                }
+                ,
+                {
+                    "value": "Ветеринар",
+                    "description": ""
+                }
+            ],
+            "work_subject": "NATURE",
+            "work_character": "CREATOR"
+        }
+    ]
+}
