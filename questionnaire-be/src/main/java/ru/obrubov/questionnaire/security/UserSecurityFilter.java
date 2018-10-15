@@ -37,8 +37,8 @@ public class UserSecurityFilter extends GenericFilterBean {
             if(token != null && tokenProvider.validateToken(token)) {
                 Authentication authentication = tokenProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                filterChain.doFilter(servletRequest, servletResponse);
             }
+            filterChain.doFilter(servletRequest, servletResponse);
         } catch (ValidateTokenException e) {
             HttpServletResponse response = (HttpServletResponse) servletResponse;
             response.getWriter().append(objectMapper.writeValueAsString(ErrorResponse.create(401)));
