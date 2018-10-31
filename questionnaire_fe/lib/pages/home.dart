@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:questionnaire_fe/pages/login.dart';
+import 'package:questionnaire_fe/pages/register.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -50,12 +52,22 @@ class Home extends StatelessWidget {
               ],
             ),
             MaterialButton(
-              child: Text("Войти"),
+              onPressed: () =>
+                  Navigator
+                      .of(context)
+                      .push(MaterialPageRoute(builder: (context) => new LoginPage()))
+              ,
+              child: Text("Вход"),
               color: Theme.of(context).accentColor,
               textColor: Colors.white,
             ),
             MaterialButton(
-              child: Text("Зарегистрироваться"),
+              onPressed: () =>
+                  Navigator
+                      .of(context)
+                      .push(MaterialPageRoute(builder: (context) => new RegisterPage()))
+              ,
+              child: Text("Регистрация"),
               color: Theme.of(context).accentColor,
               textColor: Colors.white,
             ),
