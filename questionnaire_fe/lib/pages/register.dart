@@ -105,13 +105,19 @@ class RegisterPageState extends State<RegisterPage> {
                     ],
                   ),
                 ),
-
                 RaisedButton(
                   onPressed: _submit,
-                  child: Text(
-                    "Зарегистрироваться",
-                    style: TextStyle(fontSize: 18.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "Зарегистрироваться",
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                    ],
                   ),
+                  color: Theme.of(context).accentColor,
+                  textColor: Colors.white,
                 ),
               ],
             ),

@@ -38,13 +38,19 @@ class _LoginPageState extends State<LoginPage> {
                 validator: _emptyFieldValidator,
                 onFieldSubmitted: (val) => _password = val,
               ),
-
               RaisedButton(
                 onPressed: _submit,
-                child: Text(
-                  "Войти",
-                  style: TextStyle(fontSize: 18.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "Войти",
+                      style: TextStyle(fontSize: 18.0),
+                    ),
+                  ],
                 ),
+                color: Theme.of(context).accentColor,
+                textColor: Colors.white,
               ),
             ],
           ),

@@ -51,23 +51,37 @@ class Home extends StatelessWidget {
                 Divider()
               ],
             ),
-            MaterialButton(
+            RaisedButton(
               onPressed: () =>
                   Navigator
                       .of(context)
-                      .push(MaterialPageRoute(builder: (context) => new LoginPage()))
-              ,
-              child: Text("Вход"),
+                      .push(MaterialPageRoute(builder: (context) => new LoginPage())),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Вход",
+                    style: TextStyle(fontSize: 18.0),
+                  )
+                ],
+              ),
               color: Theme.of(context).accentColor,
               textColor: Colors.white,
             ),
-            MaterialButton(
+            RaisedButton(
               onPressed: () =>
                   Navigator
                       .of(context)
-                      .push(MaterialPageRoute(builder: (context) => new RegisterPage()))
-              ,
-              child: Text("Регистрация"),
+                      .push(MaterialPageRoute(builder: (context) => new RegisterPage())),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Регистрация",
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                ],
+              ),
               color: Theme.of(context).accentColor,
               textColor: Colors.white,
             ),
