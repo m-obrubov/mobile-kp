@@ -7,6 +7,30 @@ import 'package:questionnaire_fe/pages/register.dart';
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Widget bodyButtons;
+    if(1 < 2) {
+      //authenticated
+      bodyButtons = WideRaisedButton(
+        onPressed: () => moveWithHistoryClean(context, null /* Страница с вопросами */),
+        text: "Начать тест",
+        fontSize: 20.0,
+      );
+    } else {
+      //not authenticated
+      bodyButtons = Column(
+        children: <Widget>[
+          WideRaisedButton(
+            onPressed: () => moveWithHistory(context, new LoginPage()),
+            text: "Вход",
+          ),
+          WideRaisedButton(
+            onPressed: () => moveWithHistory(context, new RegisterPage()),
+            text: "Регистрация",
+          ),
+        ],
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Главная'),
@@ -53,14 +77,7 @@ class Home extends StatelessWidget {
                 Divider()
               ],
             ),
-            WideRaisedButton(
-              onPressed: () => moveWithHistory(context, new LoginPage()),
-              text: "Вход",
-            ),
-            WideRaisedButton(
-              onPressed: () => moveWithHistory(context, new RegisterPage()),
-              text: "Регистрация",
-            ),
+            bodyButtons
           ],
         ),
       )
