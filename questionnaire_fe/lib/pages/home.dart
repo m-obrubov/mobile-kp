@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:questionnaire_fe/pages/button.dart';
 import 'package:questionnaire_fe/pages/login.dart';
@@ -51,6 +53,12 @@ class Home extends StatelessWidget {
           children: <Widget>[
             Column(
               children: <Widget>[
+                Image.asset(
+                  'images/logo.png',
+                  alignment: Alignment.center,
+                  width: 100.0,
+                  height: 100.0,
+                ),
                 Text(
                   "Описание",
                   style: TextStyle(
