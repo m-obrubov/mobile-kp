@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:questionnaire_fe/pages/button.dart';
 import 'package:questionnaire_fe/pages/home.dart';
+import 'package:questionnaire_fe/pages/navigation.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -10,13 +11,13 @@ class RegisterPage extends StatefulWidget {
 class RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
 
-  String _name;
-  String _surname;
-  int _age;
-  String _city;
-  String _email;
-  String _password;
-  var _gender;
+  final _nameController = new TextEditingController();
+  final _surnameController = new TextEditingController();
+  final _ageController = new TextEditingController();
+  final _cityController = new TextEditingController();
+  final _emailController = new TextEditingController();
+  final _passwordController = new TextEditingController();
+  String _gender;
 
   @override
   Widget build(BuildContext context) {
@@ -33,40 +34,40 @@ class RegisterPageState extends State<RegisterPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 TextFormField(
+                  controller: _nameController,
                   decoration: InputDecoration(labelText: "Имя"),
                   keyboardType: TextInputType.text,
                   validator: _emptyFieldValidator,
-                  onFieldSubmitted: (val) => _name = val,
                 ),
                 TextFormField(
+                  controller: _surnameController,
                   decoration: InputDecoration(labelText: "Фамилия"),
                   keyboardType: TextInputType.text,
                   validator: _emptyFieldValidator,
-                  onFieldSubmitted: (val) => _surname = val,
                 ),
                 TextFormField(
+                  controller: _ageController,
                   decoration: InputDecoration(labelText: "Возраст"),
                   keyboardType: TextInputType.number,
-                  validator: _emptyFieldValidator,
-                  onFieldSubmitted: (val) => _age = val as int,
+                  validator: _ageValidator,
                 ),
                 TextFormField(
+                  controller: _cityController,
                   decoration: InputDecoration(labelText: "Город"),
                   keyboardType: TextInputType.text,
                   validator: _emptyFieldValidator,
-                  onFieldSubmitted: (val) => _city = val,
                 ),
                 TextFormField(
+                  controller: _emailController,
                   decoration: InputDecoration(labelText: "Адрес электронной почты"),
                   keyboardType: TextInputType.emailAddress,
-                  validator: _emptyFieldValidator,
-                  onFieldSubmitted: (val) => _email = val,
+                  validator: _emailValidator,
                 ),
                 TextFormField(
+                  controller: _passwordController,
                   decoration: InputDecoration(labelText: "Пароль"),
                   keyboardType: TextInputType.text,
                   validator: _emptyFieldValidator,
-                  onFieldSubmitted: (val) => _password = val,
                   obscureText: true,
                 ),
                 TextFormField(
@@ -74,6 +75,9 @@ class RegisterPageState extends State<RegisterPage> {
                   keyboardType: TextInputType.text,
                   validator: _repeatPasswordValidator,
                   obscureText: true,
+                ),
+                SizedBox(
+                  height: 12.0,
                 ),
                 Text(
                   "Пол:",
@@ -119,32 +123,66 @@ class RegisterPageState extends State<RegisterPage> {
   }
 
   void _submit() {
-    if (_formKey.currentState.validate()) {
+    final form = _formKey.currentState;
+    if (form.validate()) {
+      form.save();
       //TODO вызвать API регистрации
-      //TODO сбрасывать route
-      Navigator
-          .of(context)
-          .push(MaterialPageRoute(builder: (context) => new Home()));
+      moveWithHistoryClean(context, new Home());
     }
   }
 
-  String _emptyFieldValidator(val) {
+  String _emptyFieldValidator(String val) {
     if(val.isEmpty) {
       return 'Заполните поле';
     } else {
-      return '';
+      return null;
     }
   }
 
-  String _repeatPasswordValidator(val) {
+  String _emailValidator(String val) {
     String empty = _emptyFieldValidator(val);
-    if(empty != '') {
+    if(empty != null) {
       return empty;
     }
-    if(val != _password) {
-      return 'Введите верный пароль';
+
+    String exp = "[a-zA-Z0-9\+\.\_\%\-\+]{1,256}" +
+        "\\@" +
+        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+        "(" +
+        "\\." +
+        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+        ")+";
+    RegExp regExp = new RegExp(exp);
+    if (!regExp.hasMatch(val)) {
+      return "Введите корректный адрес электронной почты";
     }
-    return '';
+
+    return null;
+  }
+
+  String _repeatPasswordValidator(String val) {
+    String empty = _emptyFieldValidator(val);
+    if(empty != null) {
+      return empty;
+    }
+    if(val != _passwordController.text) {
+      return 'Пароли не совпадают';
+    }
+    return null;
+  }
+
+  String _ageValidator(String val) {
+    String empty = _emptyFieldValidator(val);
+    if(empty != null) {
+      return empty;
+    }
+
+    int age = double.parse(val).round();
+    if(age <= 0 && age > 100) {
+      return 'Введите корректный возраст';
+    }
+
+    return null;
   }
 
   void _handleGenderChoice(String value) {

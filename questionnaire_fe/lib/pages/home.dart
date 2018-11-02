@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:questionnaire_fe/pages/button.dart';
 import 'package:questionnaire_fe/pages/login.dart';
+import 'package:questionnaire_fe/pages/navigation.dart';
 import 'package:questionnaire_fe/pages/register.dart';
 
 class Home extends StatelessWidget {
@@ -53,17 +54,11 @@ class Home extends StatelessWidget {
               ],
             ),
             WideRaisedButton(
-              onPressed: () =>
-                  Navigator
-                      .of(context)
-                      .push(MaterialPageRoute(builder: (context) => new LoginPage())),
+              onPressed: () => moveWithHistory(context, new LoginPage()),
               text: "Вход",
             ),
             WideRaisedButton(
-              onPressed: () =>
-                  Navigator
-                      .of(context)
-                      .push(MaterialPageRoute(builder: (context) => new RegisterPage())),
+              onPressed: () => moveWithHistory(context, new RegisterPage()),
               text: "Регистрация",
             ),
           ],

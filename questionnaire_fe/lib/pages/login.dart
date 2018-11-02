@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:questionnaire_fe/pages/button.dart';
 import 'package:questionnaire_fe/pages/home.dart';
+import 'package:questionnaire_fe/pages/navigation.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -10,8 +11,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
-  String _login;
-  String _password;
+  final _loginController = new TextEditingController();
+  final _passwordController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,17 +28,17 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               TextFormField(
+                controller: _loginController,
                 decoration: InputDecoration(labelText: "Адрес электронной почты"),
-                keyboardType: TextInputType.text,
-                validator: _emptyFieldValidator,
-                onFieldSubmitted: (val) => _login = val,
+                keyboardType: TextInputType.emailAddress,
+                validator: _emailValidator,
               ),
               TextFormField(
+                controller: _passwordController,
                 decoration: InputDecoration(labelText: "Пароль"),
                 keyboardType: TextInputType.text,
                 obscureText: true,
                 validator: _emptyFieldValidator,
-                onFieldSubmitted: (val) => _password = val,
               ),
               WideRaisedButton(
                 onPressed: _submit,
@@ -50,21 +51,41 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  String _emptyFieldValidator(val) {
-    if(val.isEmpty) {
-      return 'Заполните поле';
-    } else {
-      return '';
+  void _submit() {
+    final form = _formKey.currentState;
+    if (form.validate()) {
+      //TODO вызвать API получения токена
+      form.save();
+      moveWithHistoryClean(context, new Home());
     }
   }
 
-  void _submit() {
-    if (_formKey.currentState.validate()) {
-      //TODO вызвать API получения токена
-      //TODO сбрасывать route
-      Navigator
-          .of(context)
-          .push(MaterialPageRoute(builder: (context) => new Home()));
+  String _emptyFieldValidator(String val) {
+    if(val.isEmpty) {
+      return 'Заполните поле';
+    } else {
+      return null;
     }
+  }
+
+  String _emailValidator(String val) {
+    String empty = _emptyFieldValidator(val);
+    if(empty != null) {
+      return empty;
+    }
+
+    String exp = "[a-zA-Z0-9\+\.\_\%\-\+]{1,256}" +
+        "\\@" +
+        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+        "(" +
+        "\\." +
+        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+        ")+";
+    RegExp regExp = new RegExp(exp);
+    if (!regExp.hasMatch(val)) {
+      return "Введите корректный адрес электронной почты";
+    }
+
+    return null;
   }
 }
