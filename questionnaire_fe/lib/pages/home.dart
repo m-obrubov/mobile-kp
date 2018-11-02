@@ -8,6 +8,8 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget bodyButtons;
+    var profileIcon;
+
     if(1 < 2) {
       //authenticated
       bodyButtons = WideRaisedButton(
@@ -15,6 +17,13 @@ class Home extends StatelessWidget {
         text: "Начать тест",
         fontSize: 20.0,
       );
+
+      profileIcon = <Widget>[
+        IconButton(
+          icon: Icon(Icons.account_circle),
+          onPressed: () => moveWithHistory(context, null)
+        )
+      ];
     } else {
       //not authenticated
       bodyButtons = Column(
@@ -34,6 +43,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Главная'),
+        actions: profileIcon
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),
