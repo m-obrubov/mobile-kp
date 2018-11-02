@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:questionnaire_fe/pages/button.dart';
 import 'package:questionnaire_fe/pages/home.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -105,19 +106,9 @@ class RegisterPageState extends State<RegisterPage> {
                     ],
                   ),
                 ),
-                RaisedButton(
+                WideRaisedButton(
                   onPressed: _submit,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        "Зарегистрироваться",
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                    ],
-                  ),
-                  color: Theme.of(context).accentColor,
-                  textColor: Colors.white,
+                  text: "Зарегистрироваться",
                 ),
               ],
             ),

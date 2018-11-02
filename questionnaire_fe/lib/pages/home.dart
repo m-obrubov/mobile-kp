@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:questionnaire_fe/pages/button.dart';
 import 'package:questionnaire_fe/pages/login.dart';
 import 'package:questionnaire_fe/pages/register.dart';
 
@@ -51,39 +52,19 @@ class Home extends StatelessWidget {
                 Divider()
               ],
             ),
-            RaisedButton(
+            WideRaisedButton(
               onPressed: () =>
                   Navigator
                       .of(context)
                       .push(MaterialPageRoute(builder: (context) => new LoginPage())),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "Вход",
-                    style: TextStyle(fontSize: 18.0),
-                  )
-                ],
-              ),
-              color: Theme.of(context).accentColor,
-              textColor: Colors.white,
+              text: "Вход",
             ),
-            RaisedButton(
+            WideRaisedButton(
               onPressed: () =>
                   Navigator
                       .of(context)
                       .push(MaterialPageRoute(builder: (context) => new RegisterPage())),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "Регистрация",
-                    style: TextStyle(fontSize: 18.0),
-                  ),
-                ],
-              ),
-              color: Theme.of(context).accentColor,
-              textColor: Colors.white,
+              text: "Регистрация",
             ),
           ],
         ),
