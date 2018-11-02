@@ -51,53 +51,53 @@ class Home extends StatelessWidget {
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            Column(
-              children: <Widget>[
-                Image.asset(
-                  'images/logo.png',
-                  alignment: Alignment.center,
-                  width: 100.0,
-                  height: 100.0,
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Image.asset(
+                      'images/logo.png',
+                      alignment: Alignment.center,
+                      width: 100.0,
+                      height: 100.0,
+                    ),
+                    Text(
+                      "Описание",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0
+                      ),
+                    ),
+                    Text(
+                      "Анкета 'Ориентация' определяет профессиональную направленность "
+                          "личности к определенной сфере деятельности.",
+                      style: TextStyle(
+                          fontSize: 18.0
+                      ),
+                    ),
+                    Divider(),
+                    Text(
+                      "Правила",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0
+                      ),
+                    ),
+                    Text(
+                      "В первой части (\"Я хочу\") вы можете оценить по 4-х бальной"
+                          "шкале степень своего желания заниматься...",
+                      style: TextStyle(
+                          fontSize: 18.0
+                      ),
+                    ),
+                    Divider(),
+                  ],
                 ),
-                Text(
-                  "Описание",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18.0
-                  ),
-                ),
-                Text(
-                  "Анкета 'Ориентация' определяет профессиональную направленность "
-                      "личности к определенной сфере деятельности.",
-                  style: TextStyle(
-                      fontSize: 18.0
-                  ),
-                ),
-                Divider()
-              ],
-            ),
-            Column(
-              children: <Widget>[
-                Text(
-                  "Правила",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0
-                  ),
-                ),
-                Text(
-                  "В первой части (\"Я хочу\") вы можете оценить по 4-х бальной"
-                      "шкале степень своего желания заниматься...",
-                  style: TextStyle(
-                      fontSize: 18.0
-                  ),
-                ),
-                Divider()
-              ],
+              ),
             ),
             bodyButtons
           ],
-        ),
+        )
       )
     );
   }
