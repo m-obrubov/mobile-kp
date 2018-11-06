@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:questionnaire_fe/pages/edit_profile.dart';
 import 'package:questionnaire_fe/pages/navigation.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -29,7 +30,7 @@ class ProfilePageState extends State<ProfilePage> {
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.edit),
-              onPressed: () => moveWithHistory(context, null /* Изменение профиля */)
+              onPressed: () => moveWithHistory(context, new EditProfilePage())
           )
         ],
       ),
