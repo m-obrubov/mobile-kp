@@ -12,12 +12,12 @@ class RegisterPageState extends State<RegisterPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
 
-  final _nameController = new TextEditingController();
-  final _surnameController = new TextEditingController();
-  final _ageController = new TextEditingController();
-  final _cityController = new TextEditingController();
-  final _emailController = new TextEditingController();
-  final _passwordController = new TextEditingController();
+  String _name;
+  String _surname;
+  int _age;
+  String _city;
+  String _email;
+  TextEditingController _passwordController = new TextEditingController();
   String _gender;
 
   @override
@@ -36,34 +36,34 @@ class RegisterPageState extends State<RegisterPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 TextFormField(
-                   controller: _nameController,
                   decoration: InputDecoration(labelText: "Имя"),
                   keyboardType: TextInputType.text,
                   validator: _emptyFieldValidator,
+                  onSaved: (String val) { _name = val; },
                 ),
                 TextFormField(
-                  controller: _surnameController,
                   decoration: InputDecoration(labelText: "Фамилия"),
                   keyboardType: TextInputType.text,
                   validator: _emptyFieldValidator,
+                  onSaved: (String val) { _surname = val; },
                 ),
                 TextFormField(
-                  controller: _ageController,
                   decoration: InputDecoration(labelText: "Возраст"),
                   keyboardType: TextInputType.number,
                   validator: _ageValidator,
+                  onSaved: (String val) { _age = int.parse(val); },
                 ),
                 TextFormField(
-                  controller: _cityController,
                   decoration: InputDecoration(labelText: "Город"),
                   keyboardType: TextInputType.text,
                   validator: _emptyFieldValidator,
+                  onSaved: (String val) { _city = val; },
                 ),
                 TextFormField(
-                  controller: _emailController,
                   decoration: InputDecoration(labelText: "Адрес электронной почты"),
                   keyboardType: TextInputType.emailAddress,
                   validator: _emailValidator,
+                  onSaved: (String val) { _email = val; },
                 ),
                 TextFormField(
                   controller: _passwordController,
@@ -186,5 +186,11 @@ class RegisterPageState extends State<RegisterPage> {
     }
 
     return null;
+  }
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    super.dispose();
   }
 }
