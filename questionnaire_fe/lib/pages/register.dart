@@ -9,6 +9,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class RegisterPageState extends State<RegisterPage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
 
   final _nameController = new TextEditingController();
@@ -22,6 +23,7 @@ class RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Регистрация'),
       ),
@@ -34,7 +36,7 @@ class RegisterPageState extends State<RegisterPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 TextFormField(
-                  controller: _nameController,
+                   controller: _nameController,
                   decoration: InputDecoration(labelText: "Имя"),
                   keyboardType: TextInputType.text,
                   validator: _emptyFieldValidator,
@@ -87,26 +89,18 @@ class RegisterPageState extends State<RegisterPage> {
                   padding: EdgeInsets.only(left: 2.0),
                   child: Column(
                     children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Radio<String>(
-                            value: 'MALE',
-                            groupValue: _gender,
-                            onChanged: _handleGenderChoice,
-                          ),
-                          Text("Мужской"),
-                        ],
+                      RadioListTile<String>(
+                        title: Text("Мужской"),
+                        value: 'MALE',
+                        groupValue: _gender,
+                        onChanged: (value) { setState(() { _gender = value; }); },
                       ),
-                      Row(
-                        children: <Widget>[
-                          Radio<String>(
-                            value: 'FEMALE',
-                            groupValue: _gender,
-                            onChanged: _handleGenderChoice,
-                          ),
-                          Text("Женский"),
-                        ],
-                      )
+                      RadioListTile<String>(
+                        title: Text("Женский"),
+                        value: 'FEMALE',
+                        groupValue: _gender,
+                        onChanged: (value) { setState(() { _gender = value; }); },
+                      ),
                     ],
                   ),
                 ),
@@ -125,6 +119,15 @@ class RegisterPageState extends State<RegisterPage> {
   void _submit() {
     final form = _formKey.currentState;
     if (form.validate()) {
+      //валидация Radio
+      if(_gender == null) {
+        //высплывающее окно
+        final snackBar = new SnackBar(
+          content: new Text('Выберите пол'),
+        );
+        _scaffoldKey.currentState.showSnackBar(snackBar);
+        return;
+      }
       form.save();
       //TODO вызвать API регистрации
       moveWithHistoryClean(context, new Home());
@@ -183,18 +186,5 @@ class RegisterPageState extends State<RegisterPage> {
     }
 
     return null;
-  }
-
-  void _handleGenderChoice(String value) {
-    setState(() {
-      switch(value) {
-        case 'MALE':
-          _gender = 'MALE';
-          break;
-        case 'FEMALE':
-          _gender = 'FEMALE';
-          break;
-      }
-    });
   }
 }

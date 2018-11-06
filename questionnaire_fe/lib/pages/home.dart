@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:questionnaire_fe/pages/button.dart';
 import 'package:questionnaire_fe/pages/login.dart';
@@ -12,7 +10,7 @@ class Home extends StatelessWidget {
     Widget bodyButtons;
     var profileIcon;
 
-    if(1 < 2) {
+    if(1 < 0) {
       //authenticated
       bodyButtons = WideRaisedButton(
         onPressed: () => moveWithHistoryClean(context, null /* Страница с вопросами */),
@@ -23,7 +21,7 @@ class Home extends StatelessWidget {
       profileIcon = <Widget>[
         IconButton(
           icon: Icon(Icons.account_circle),
-          onPressed: () => moveWithHistory(context, null)
+          onPressed: () => moveWithHistory(context, null /* new ProfilePage()*/)
         )
       ];
     } else {
