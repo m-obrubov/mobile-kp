@@ -11,8 +11,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
-  final _loginController = new TextEditingController();
-  final _passwordController = new TextEditingController();
+
+  String _login;
+  String _password;
 
   @override
   Widget build(BuildContext context) {
@@ -28,17 +29,17 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               TextFormField(
-                controller: _loginController,
                 decoration: InputDecoration(labelText: "Адрес электронной почты"),
                 keyboardType: TextInputType.emailAddress,
                 validator: _emailValidator,
+                onSaved: (val) { _login = val; },
               ),
               TextFormField(
-                controller: _passwordController,
                 decoration: InputDecoration(labelText: "Пароль"),
                 keyboardType: TextInputType.text,
                 obscureText: true,
                 validator: _emptyFieldValidator,
+                onSaved: (val) { _password = val; },
               ),
               WideRaisedButton(
                 onPressed: _submit,
@@ -54,8 +55,8 @@ class _LoginPageState extends State<LoginPage> {
   void _submit() {
     final form = _formKey.currentState;
     if (form.validate()) {
-      //TODO вызвать API получения токена
       form.save();
+      //TODO вызвать API получения токена
       moveWithHistoryClean(context, new Home());
     }
   }
