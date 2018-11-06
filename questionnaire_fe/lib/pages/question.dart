@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:questionnaire_fe/pages/testHome.dart';
 
 class Question extends StatefulWidget {
 
@@ -8,9 +9,9 @@ class Question extends StatefulWidget {
 }
 
 class RegisterPageState extends State<StatefulWidget> {
-  String _question; // TODO
+  String _question; // TODO текуший вопрос!
   List<String> _answer; // TODO
-  int _countQuestion;
+  int _countQuestion; //Общее кол-во вопросов
 
   var _answerUser; // TODO
 
@@ -32,9 +33,9 @@ class RegisterPageState extends State<StatefulWidget> {
         ),
         body: SingleChildScrollView(
             child: Container(
+
               padding: EdgeInsets.only(left: 2.0),
               child: Column(
-                // TODO тут дожен появиться цикл
                 children: <Widget>[
                   Text(
                     _question,
@@ -42,6 +43,7 @@ class RegisterPageState extends State<StatefulWidget> {
                         fontSize: 18.0
                     ),
                   ),
+                  // TODO тут дожен появиться цикл
                   Row(
                     children: <Widget>[
                       Radio<String>(
@@ -98,12 +100,22 @@ class RegisterPageState extends State<StatefulWidget> {
                       ],
                     ),
                     color: Theme.of(context).accentColor,
+                      onPressed: _event
                   )
                 ],
               ),
             )
         )
     );
+  }
+
+  //Метод нажатия на кнопку
+  void _event(){
+    if (_answerUser != null){
+      Navigator
+          .of(context)
+          .push(MaterialPageRoute(builder: (context) => new TestHome()));
+    }
   }
 
   void _handleChoice(String value) {
