@@ -34,58 +34,59 @@ class ProfilePageState extends State<ProfilePage> {
           )
         ],
       ),
-      body: Container(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              "Иван Иванов",
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-              ),
+      body: Column(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.all(16.0),
+            alignment: Alignment.topLeft,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "Иван Иванов",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 16.0,
+                ),
+                Text(
+                  "21 год",
+                  style: TextStyle(
+                    fontSize: 18.0,
+                  ),
+                ),
+                SizedBox(
+                  height: 16.0,
+                ),
+                Text(
+                  "Москва",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                  ),
+                ),
+              ],
             ),
-            SizedBox(
-              height: 16.0,
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemBuilder: (context, i) {
+                if (i.isOdd) return Divider(height: 12.0);
+                final index = i ~/ 2;
+                return ListTile(
+                  title: Text(
+                      results[index]
+                  ),
+                  onTap: () => moveWithHistory(context, null /* Страница с результатами*/),
+                  trailing: Icon(Icons.keyboard_arrow_right),
+                );
+              },
+              itemCount: results.length * 2,
             ),
-            Text(
-              "21 год",
-              style: TextStyle(
-                fontSize: 18.0,
-              ),
-            ),
-            SizedBox(
-              height: 16.0,
-            ),
-            Text(
-              "Москва",
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
-            ),
-            SizedBox(
-              height: 16.0,
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, i) {
-                  if (i.isOdd) return Divider(height: 12.0);
-                  final index = i ~/ 2;
-                  return ListTile(
-                    title: Text(
-                        results[index]
-                    ),
-                    onTap: () => moveWithHistory(context, null /* Страница с результатами*/),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                  );
-                },
-                itemCount: results.length * 2,
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
