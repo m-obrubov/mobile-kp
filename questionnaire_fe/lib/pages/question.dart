@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:questionnaire_fe/pages/testHome.dart';
+import 'package:questionnaire_fe/domain/answer.dart';
+import 'package:questionnaire_fe/domain/question.dart';
+import 'package:questionnaire_fe/pages/button.dart';
+import 'package:questionnaire_fe/pages/navigation.dart';
+import 'package:questionnaire_fe/pages/result.dart';
 
 class Question extends StatefulWidget {
 
@@ -9,99 +13,64 @@ class Question extends StatefulWidget {
 }
 
 class RegisterPageState extends State<StatefulWidget> {
-  String _question; // TODO текуший вопрос!
-  List<String> _answer; // TODO
   int _countQuestion; //Общее кол-во вопросов
 
-  var _answerUser; // TODO
+  QuestionWithAnswers _question;
+  var _answerUser; // ответ пользователя
 
   RegisterPageState() {
-    this._question = "Что тебе сейчас необходимо?";
-    List<String> list = new List();
-    list.add("Чай");
-    list.add("Еще чай!");
-    list.add("Печеньки");
-    this._answer = list;
+    List<Answer> list = new List();
+    list.add(new Answer("1", "Спать!"));
+    list.add(new Answer("2", "Есть!"));
+    list.add(new Answer("3", "Не чего не хочу!"));
+    list.add(new Answer("4", "Рисовать"));
+    _question = new QuestionWithAnswers("1",1,"Чего ты хочешь?",list);
     _countQuestion = 40;
   }
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> listRadioListTile  = new List();
+    Widget widgetRadioListTile;
+    for (int i = 0; i < _question.answer.length; i++) {
+      Answer answer = _question.answer[i];
+      listRadioListTile.add (RadioListTile<String>(
+        value: answer.id,
+        groupValue: _answerUser,
+        onChanged: _handleChoice,
+        title:
+          Text(
+            answer.value,
+            style: TextStyle(
+                fontSize: 18.0
+            ),
+          ),
+        )
+      );
+    }
+    widgetRadioListTile = new Column(children: listRadioListTile);
     return Scaffold(
         appBar: AppBar(
-          title: Text("Вопрос 30 из $_countQuestion"),
+          title: Text("Вопрос " + _question.numberInOrder.toString() + " из " + _countQuestion.toString() + "."),
         ),
         body: SingleChildScrollView(
             child: Container(
-
               padding: EdgeInsets.only(left: 2.0),
               child: Column(
                 children: <Widget>[
                   Text(
-                    _question,
-                    style: TextStyle(
-                        fontSize: 18.0
-                    ),
+                      "\n" + _question.value + "\n",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0
+                      )
                   ),
                   // TODO тут дожен появиться цикл
-                  Row(
-                    children: <Widget>[
-                      Radio<String>(
-                        value: _answer[0],
-                        groupValue: _answerUser,
-                        onChanged: _handleChoice,
-                      ),
-                      Text(
-                        _answer[0],
-                        style: TextStyle(
-                            fontSize: 18.0
-                        ),
-                      ),
-                    ],
+                  widgetRadioListTile,
+                  WideRaisedButton(
+                      text: "Ответить",
+                      onPressed: _submit
                   ),
-                  Row(
-                    children: <Widget>[
-                      Radio<String>(
-                        value: _answer[1],
-                        groupValue: _answerUser,
-                        onChanged: _handleChoice,
-                      ),
-                      Text(
-                        _answer[1],
-                        style: TextStyle(
-                            fontSize: 18.0
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Radio<String>(
-                        value: _answer[2],
-                        groupValue: _answerUser,
-                        onChanged: _handleChoice,
-                      ),
-                      Text(
-                          _answer[2],
-                          style: TextStyle(
-                              fontSize: 18.0
-                          ),
-                      ),
-                    ],
-                  ),
-                  RaisedButton( // TODO у МАКСА есть класс кнопки!
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "Ответить",
-                          style: TextStyle(fontSize: 18.0),
-                        ),
-                      ],
-                    ),
-                    color: Theme.of(context).accentColor,
-                      onPressed: _event
-                  )
                 ],
               ),
             )
@@ -109,12 +78,10 @@ class RegisterPageState extends State<StatefulWidget> {
     );
   }
 
-  //Метод нажатия на кнопку
-  void _event(){
-    if (_answerUser != null){
-      Navigator
-          .of(context)
-          .push(MaterialPageRoute(builder: (context) => new TestHome()));
+  void _submit() {
+    if (_answerUser != null) {
+      //TODO вызвать переход на эту же страницу с новым вопросом
+      moveWithHistoryClean(context, new Result());
     }
   }
 

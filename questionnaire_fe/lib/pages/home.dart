@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:questionnaire_fe/pages/button.dart';
 import 'package:questionnaire_fe/pages/login.dart';
 import 'package:questionnaire_fe/pages/navigation.dart';
+import 'package:questionnaire_fe/pages/question.dart';
 import 'package:questionnaire_fe/pages/register.dart';
 
 class Home extends StatelessWidget {
@@ -10,10 +11,10 @@ class Home extends StatelessWidget {
     Widget bodyButtons;
     var profileIcon;
 
-    if(1 < 0) {
+    if(0 == 0) {
       //authenticated
       bodyButtons = WideRaisedButton(
-        onPressed: () => moveWithHistoryClean(context, null /* Страница с вопросами */),
+        onPressed: () => moveWithHistoryClean(context, new Question() /* Страница с вопросами */),
         text: "Начать тест",
         fontSize: 20.0,
       );
