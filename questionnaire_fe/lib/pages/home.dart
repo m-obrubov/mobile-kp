@@ -4,6 +4,7 @@ import 'package:questionnaire_fe/pages/login.dart';
 import 'package:questionnaire_fe/pages/navigation.dart';
 import 'package:questionnaire_fe/pages/profile.dart';
 import 'package:questionnaire_fe/pages/register.dart';
+import 'package:questionnaire_fe/pages/statistics.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -20,6 +21,11 @@ class Home extends StatelessWidget {
       );
 
       profileIcon = <Widget>[
+        IconButton(
+            icon: Icon(Icons.warning),
+            color: Colors.yellow,
+            onPressed: () => moveWithHistory(context, new StatisticsPage())
+        ),
         IconButton(
           icon: Icon(Icons.account_circle),
           onPressed: () => moveWithHistory(context, new ProfilePage())
