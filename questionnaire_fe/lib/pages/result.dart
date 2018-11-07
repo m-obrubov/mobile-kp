@@ -24,11 +24,16 @@ class Result extends StatelessWidget {
     for (int i = 0; i < _result.professions.length; i++) {
       String professions = _result.professions[i];
       listProfessions.add (
-        Text(professions,
-            style: TextStyle(
+        ListTile(
+          title:
+            Text(professions,
+                style: TextStyle(
                 fontSize: 18.0
-            )),
-
+                )
+            ),
+          onTap: () => moveWithHistory(context, null /* Страница с результатами*/),
+          trailing: Icon(Icons.keyboard_arrow_right),
+        )
       );
     }
     widgetProfessions = new Column(children: listProfessions);
@@ -87,6 +92,4 @@ class Result extends StatelessWidget {
         )
     );
   }
-
-
 }
