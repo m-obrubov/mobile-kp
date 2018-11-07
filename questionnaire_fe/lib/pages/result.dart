@@ -3,6 +3,7 @@ import 'package:questionnaire_fe/domain/answer.dart';
 import 'package:questionnaire_fe/domain/profession.dart';
 import 'package:questionnaire_fe/domain/question.dart';
 import 'package:questionnaire_fe/domain/resultTest.dart';
+import 'package:questionnaire_fe/pages/home.dart';
 import 'package:questionnaire_fe/pages/navigation.dart';
 
 class Result extends StatelessWidget {
@@ -84,8 +85,8 @@ class Result extends StatelessWidget {
     var profileIcon;
       profileIcon = <Widget>[
         IconButton(
-            icon: Icon(Icons.account_circle),
-            onPressed: () => moveWithHistory(context, null)
+            icon: Icon(Icons.check),
+            onPressed: () => moveWithHistory(context, new Home())
         )
       ];
       //not authenticate
