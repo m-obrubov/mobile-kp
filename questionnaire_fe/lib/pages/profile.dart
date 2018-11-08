@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:questionnaire_fe/pages/edit_profile.dart';
 import 'package:questionnaire_fe/pages/navigation.dart';
+import 'package:questionnaire_fe/pages/result.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -79,7 +80,7 @@ class ProfilePageState extends State<ProfilePage> {
                   title: Text(
                       results[index]
                   ),
-                  onTap: () => moveWithHistory(context, null /* Страница с результатами*/),
+                  onTap: () => moveWithHistory(context, new Result()),
                   trailing: Icon(Icons.keyboard_arrow_right),
                 );
               },
