@@ -42,27 +42,6 @@ class Result extends StatelessWidget {
       String _professionsName = _result.professions[i].value;
       listProfessions.add (
 
-//        ListTile(
-//          title:
-//            Text(professions,
-//                style: TextStyle(
-//                fontSize: 18.0
-//                )
-//            ),
-//         // onTap: () =>  new Text("описание"),
-//          trailing: Icon(Icons.keyboard_arrow_right),
-//        ),
-//            DropdownButton<String>(
-//              items: <String>['А', 'B', 'C', 'D'].map((String professions) {
-//                return new DropdownMenuItem<String>(
-//                  value: professions,
-//                  child: new ListTile(
-//                    title: Text(professions),
-//                  ),
-//                );
-//              }).toList(),
-//              onChanged: (_) {},
-//            ),
           DropdownButton<String>(
             items: <String>[_professionsName,_professionsDescription].map((String value) {
               return new DropdownMenuItem<String>(
@@ -72,7 +51,6 @@ class Result extends StatelessWidget {
             }).toList(),
             value: _professionsName,
             isExpanded: true,
-            //style: TextStyle( fontSize: 13),
             onChanged: (_) {},
           )
       );
@@ -94,12 +72,15 @@ class Result extends StatelessWidget {
       );
       listResultQuestions.add (
         ListTile(
+          leading: Icon(Icons.check_box),
+
           title:
-          Text("  " + answer,
+          Text(answer,
               style: TextStyle(
                   fontSize: 18.0,
               )
           ),
+
         ),
       );
     }
@@ -148,7 +129,9 @@ class Result extends StatelessWidget {
                      style: TextStyle(
                          fontWeight: FontWeight.bold,
                          fontSize: 21.0
+
                      ),
+                     textAlign: TextAlign.center,
                    ),
                    Divider(),
                    Text(
@@ -157,6 +140,7 @@ class Result extends StatelessWidget {
                          fontWeight: FontWeight.bold,
                          fontSize: 18.0
                      ),
+                     textAlign: TextAlign.justify,
                    ),
                   Divider(),
                   Text(
@@ -165,6 +149,7 @@ class Result extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         fontSize: 18.0
                     ),
+                    textAlign: TextAlign.justify,
                   ),
                    widgetProfessions,
                 ],

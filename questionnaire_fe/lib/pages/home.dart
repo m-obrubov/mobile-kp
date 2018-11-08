@@ -73,6 +73,7 @@ class Home extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 18.0
                       ),
+                      textAlign: TextAlign.justify,
                     ),
                     Divider(),
                     Text(
@@ -88,6 +89,7 @@ class Home extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 18.0
                       ),
+                      textAlign: TextAlign.justify,
                     ),
                     Divider(),
                   ],
