@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:questionnaire_fe/pages/button.dart';
+import 'package:questionnaire_fe/pages/filters.dart';
 import 'package:questionnaire_fe/pages/login.dart';
 import 'package:questionnaire_fe/pages/navigation.dart';
 import 'package:questionnaire_fe/pages/question.dart';
 import 'package:questionnaire_fe/pages/register.dart';
+import 'package:questionnaire_fe/pages/profile.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -11,7 +13,7 @@ class Home extends StatelessWidget {
     Widget bodyButtons;
     var profileIcon;
 
-    if(0 == 0) {
+    if(1 < 0) {
       //authenticated
       bodyButtons = WideRaisedButton(
         onPressed: () => moveWithHistoryClean(context, new Question() /* Страница с вопросами */),
@@ -21,8 +23,13 @@ class Home extends StatelessWidget {
 
       profileIcon = <Widget>[
         IconButton(
+            icon: Icon(Icons.warning),
+            color: Colors.yellow,
+            onPressed: () => moveWithHistory(context, new StatisticsFilterPage())
+        ),
+        IconButton(
           icon: Icon(Icons.account_circle),
-          onPressed: () => moveWithHistory(context, null /* new ProfilePage()*/)
+          onPressed: () => moveWithHistory(context, new ProfilePage())
         )
       ];
     } else {
@@ -46,59 +53,58 @@ class Home extends StatelessWidget {
         title: Text('Главная'),
         actions: profileIcon
       ),
-      body: Container(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Image.asset(
-                      'images/logo.png',
-                      alignment: Alignment.center,
-                      width: 100.0,
-                      height: 100.0,
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                children: <Widget>[
+                  Image.asset(
+                    'images/logo.png',
+                    alignment: Alignment.center,
+                    width: 100.0,
+                    height: 100.0,
+                  ),
+                  Text(
+                    "Описание",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0
                     ),
-                    Text(
-                      "Описание",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0
-                      ),
+                  ),
+                  Text(
+                    "Анкета 'Ориентация' определяет профессиональную направленность "
+                        "личности к определенной сфере деятельности.",
+                    style: TextStyle(
+                        fontSize: 18.0
                     ),
-                    Text(
-                      "Анкета 'Ориентация' определяет профессиональную направленность "
-                          "личности к определенной сфере деятельности.",
-                      style: TextStyle(
-                          fontSize: 18.0
-                      ),
-                      textAlign: TextAlign.justify,
+                  ),
+                  Divider(),
+                  Text(
+                    "Правила",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0
                     ),
-                    Divider(),
-                    Text(
-                      "Правила",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0
-                      ),
+                  ),
+                  Text(
+                    "В первой части (\"Я хочу\") вы можете оценить по 4-х балльной "
+                        "шкале степень своего желания заниматься...",
+                    style: TextStyle(
+                        fontSize: 18.0
                     ),
-                    Text(
-                      "В первой части (\"Я хочу\") вы можете оценить по 4-х бальной"
-                          "шкале степень своего желания заниматься...",
-                      style: TextStyle(
-                          fontSize: 18.0
-                      ),
-                      textAlign: TextAlign.justify,
-                    ),
-                    Divider(),
-                  ],
-                ),
+                  ),
+                  Divider(),
+                ],
               ),
             ),
-            bodyButtons
-          ],
-        )
+          ),
+          Container(
+            padding: EdgeInsets.all(16.0),
+            child: bodyButtons,
+          )
+        ],
       )
     );
   }
