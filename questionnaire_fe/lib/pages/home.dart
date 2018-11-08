@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:questionnaire_fe/pages/button.dart';
+import 'package:questionnaire_fe/pages/filters.dart';
 import 'package:questionnaire_fe/pages/login.dart';
 import 'package:questionnaire_fe/pages/navigation.dart';
 import 'package:questionnaire_fe/pages/profile.dart';
@@ -24,7 +25,7 @@ class Home extends StatelessWidget {
         IconButton(
             icon: Icon(Icons.warning),
             color: Colors.yellow,
-            onPressed: () => moveWithHistory(context, new StatisticsPage())
+            onPressed: () => moveWithHistory(context, new StatisticsFilterPage())
         ),
         IconButton(
           icon: Icon(Icons.account_circle),

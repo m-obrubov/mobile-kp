@@ -7,7 +7,7 @@ class StatisticsPage extends StatefulWidget {
 }
 
 class _StatisticsPageState extends State<StatisticsPage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   List<String> results;
 
   @override
@@ -15,17 +15,10 @@ class _StatisticsPageState extends State<StatisticsPage> {
     _search();
 
     return Scaffold(
-      key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Статистика'),
-        actions : <Widget>[
-          IconButton(
-            icon: Icon(Icons.filter_list),
-            onPressed: () => _showFilters()
-          )
-        ],
       ),
-      body: _resultList(),
+      body: _resultList()
     );
   }
 
@@ -66,50 +59,4 @@ class _StatisticsPageState extends State<StatisticsPage> {
       padding: EdgeInsets.all(16.0),
     );
   }
-
-  Future<void> _showFilters() {
-    return showModalBottomSheet<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return new Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              new ListTile(
-                leading: new Icon(Icons.music_note),
-                title: new Text('Music'),
-              ),
-              new ListTile(
-                leading: new Icon(Icons.photo_album),
-                title: new Text('Photos'),
-              ),
-              new ListTile(
-                leading: new Icon(Icons.videocam),
-                title: new Text('Video'),
-              ),
-            ],
-          );
-        });
-  }
 }
-
-
-/*
-
-Column(
-  children: <Widget>[
-    Text('Дата'),
-    Row(
-      children: <Widget>[
-        TextField(
-          decoration: InputDecoration(labelText: 'Дата'),
-        ),
-        IconButton(
-          icon: Icon(Icons.calendar_today),
-          onPressed: () {},
-        )
-      ],
-    )
-  ],
-)
-
-*/

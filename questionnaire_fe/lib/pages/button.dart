@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class WideRaisedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
+  final Color color;
   final double fontSize;
   final Color textColor;
 
   const WideRaisedButton({
     @required this.onPressed,
     this.text,
+    this.color,
     this.fontSize = 16.0,
     this.textColor = Colors.white
   });
@@ -26,7 +28,7 @@ class WideRaisedButton extends StatelessWidget {
           ),
         ],
       ),
-      color: Theme.of(context).accentColor,
+      color: color ?? Theme.of(context).accentColor,
       textColor: textColor,
     );
   }
