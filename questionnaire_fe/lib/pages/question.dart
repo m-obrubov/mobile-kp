@@ -67,10 +67,14 @@ class RegisterPageState extends State<StatefulWidget> {
                   ),
                   // TODO тут дожен появиться цикл
                   widgetRadioListTile,
-                  WideRaisedButton(
-                      text: "Ответить",
-                      onPressed: _submit
-                  ),
+                  Container(
+                    padding: EdgeInsets.all(16.0),
+                    child: WideRaisedButton(
+                        text: "Ответить",
+                        onPressed: _submit,
+                        fontSize: 20.0,
+                    )
+                  )
                 ],
               ),
             )
