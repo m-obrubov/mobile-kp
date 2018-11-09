@@ -6,6 +6,9 @@ class ResultTest {
   final String description;
   final List<Profession> professions;
   final List<QuestionWithAnswers> QuestionWithAnswersUser;
+  final String group;//Предмет труда
+  final String part; //Характер труда
+  final DateTime date;
 
-  ResultTest(this.id, this.description, this.professions, this.QuestionWithAnswersUser);
+  ResultTest(this.id, this.description, this.professions, this.QuestionWithAnswersUser, this.group, this.part, this.date);
 }

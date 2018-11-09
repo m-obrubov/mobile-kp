@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:questionnaire_fe/domain/answer.dart';
 import 'package:questionnaire_fe/domain/profession.dart';
 import 'package:questionnaire_fe/domain/question.dart';
@@ -10,10 +11,11 @@ class Result extends StatelessWidget {
 
   ResultTest _result;
 
+
   Result(){
     List<Profession> professions = new List();
     professions.add(new Profession("1","Строит дома и не только!","Архитектор"));
-    professions.add(new Profession("1","Картиты его конек!","Художник"));
+    professions.add(new Profession("1","Картины его конек!","Художник"));
     professions.add(new Profession("1","Что я слышу? Это же музыкант!","Музыкант"));
     professions.add(new Profession("1","Стой! Стой! Стой! Блин ну ты танцор!","Хореограф"));
     String description = "Вы уверенный в себе и амбициозный человек, для вас нет нечего невозможного. Выша жизнь не возможна без творчества!";
@@ -27,7 +29,7 @@ class Result extends StatelessWidget {
     questions.add(new QuestionWithAnswers("1",1,"Чего ты хочешь?",answers1));
     questions.add(new QuestionWithAnswers("2",2,"Что для тебя важно?",answers2));
     questions.add(new QuestionWithAnswers("3",3,"Любишь ли ты программировать?",answers3));
-    _result = new ResultTest("1",description, professions, questions);
+    _result = new ResultTest("1",description, professions, questions,"природа","творческие профессии",DateTime.now());
   }
 
   @override
@@ -135,7 +137,16 @@ class Result extends StatelessWidget {
                    ),
                    Divider(),
                    Text(
-                     "\n" + _result.description + "\n",
+                     'Предмет труда: ' + _result.group + '\n'
+                         'Характер труда: ' + _result.part ,
+                     style: TextStyle(
+                         fontWeight: FontWeight.bold,
+                         fontSize: 18.0
+                     ),
+                     textAlign: TextAlign.left,
+                   ),
+                   Text(
+                         '\n' + _result.description + '\n',
                      style: TextStyle(
                          fontWeight: FontWeight.bold,
                          fontSize: 18.0
@@ -144,7 +155,7 @@ class Result extends StatelessWidget {
                    ),
                   Divider(),
                   Text(
-                    "\nСписок профессий подходящих вам:\n",
+                    '\nСписок профессий подходящих вам:\n',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18.0
@@ -160,6 +171,14 @@ class Result extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                Text(
+                  "\nВаш тест пройден: " + DateFormat('yyyy-MM-dd   kk:mm').format(_result.date) + "\n",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0
+                  ),
+                  textAlign: TextAlign.justify,
+                ),
                   widgetResultQuestions,
                 ],
               ),
