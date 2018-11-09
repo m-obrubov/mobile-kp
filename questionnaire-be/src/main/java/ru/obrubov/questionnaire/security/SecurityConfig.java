@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     // ACCOUNT
-                    .antMatchers("/account/register", "/account/token").permitAll()
+                    .antMatchers("/account/register", "/account/token", "/init").permitAll()
                     // USER
                     .antMatchers("/user").hasAuthority(Role.STUDENT.toString())
                     // TEST
