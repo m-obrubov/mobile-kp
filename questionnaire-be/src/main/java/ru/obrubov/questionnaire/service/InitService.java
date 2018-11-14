@@ -6,10 +6,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import ru.obrubov.questionnaire.domain.Test;
-import ru.obrubov.questionnaire.exception.init.AlreadyInitializedException;
 import ru.obrubov.questionnaire.exception.init.InitializationException;
 
-import java.io.IOException;
+import javax.annotation.PostConstruct;
 
 @Service
 public class InitService {
@@ -24,19 +23,25 @@ public class InitService {
         this.objectMapper = objectMapper;
     }
 
-    public void init() throws AlreadyInitializedException, InitializationException {
-        if(testService.getTest() != null) {
-            throw new AlreadyInitializedException();
+    @PostConstruct
+    public void init() throws Exception {
+        Test savedTest = testService.getTest();
+
+        Resource jsonResource = new ClassPathResource("json/test.json");
+        Test jsonTest = objectMapper.readValue(jsonResource.getInputStream(), Test.class);
+
+        if(savedTest == null) {
+            Test createdTest = testService.create(jsonTest);
+            if(createdTest == null) {
+                throw new InitializationException("Тест не был создан");
+            }
+            return;
         }
-        Test test;
-        try {
-            Resource jsonResource = new ClassPathResource("json/test.json");
-            test = objectMapper.readValue(jsonResource.getInputStream(), Test.class);
-        } catch (IOException e) {
-            throw new InitializationException("Ошибка чтения JSON", e);
-        }
-        if(testService.create(test) == null) {
-            throw new InitializationException("Тест не создан");
+        if(!savedTest.equals(jsonTest)) {
+            Test updatedTest = testService.update(jsonTest);
+            if(updatedTest == null) {
+                throw new InitializationException("Тест не был обновлен");
+            }
         }
     }
 }

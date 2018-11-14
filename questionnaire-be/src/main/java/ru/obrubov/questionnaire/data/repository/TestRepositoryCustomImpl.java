@@ -26,8 +26,7 @@ public class TestRepositoryCustomImpl implements TestRepositoryCustom {
         CriteriaQuery<Test> query = criteriaBuilder.createQuery(Test.class);
         Root<Test> from = query.from(Test.class);
         query
-                .select(from)
-                .orderBy(criteriaBuilder.desc(from.get("id")));
+                .select(from);
         List<Test> resultList = em.createQuery(query)
                 .setFirstResult(0)
                 .setMaxResults(1)

@@ -23,10 +23,7 @@ public class TestDataAccess {
         return testRepository.getOne();
     }
 
-    public void delete() {
-        Test testToDelete = getOne();
-        if(testToDelete != null) {
-            testRepository.delete(testToDelete);
-        }
+    public Test update(Test test) {
+        return testRepository.save(test);
     }
 }

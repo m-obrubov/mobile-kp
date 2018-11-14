@@ -1,6 +1,5 @@
 package ru.obrubov.questionnaire.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -16,9 +15,8 @@ public class Result {
     private ProfessionalClass workSubject;
     private ProfessionalClass workCharacter;
 
-    @JsonIgnore
+    @JsonProperty("id")
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     public Long getId() {
         return id;
@@ -40,7 +38,7 @@ public class Result {
     }
 
     @JsonProperty("professions")
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable
             (
                     name = "result_profession_join",
@@ -84,12 +82,13 @@ public class Result {
         Result result = (Result) o;
         return Objects.equals(getId(), result.getId()) &&
                 Objects.equals(getDescription(), result.getDescription()) &&
+                Objects.equals(getProfessions(), result.getProfessions()) &&
                 getWorkSubject() == result.getWorkSubject() &&
                 getWorkCharacter() == result.getWorkCharacter();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getDescription(), getWorkSubject(), getWorkCharacter());
+        return Objects.hash(getId(), getDescription(), getProfessions(), getWorkSubject(), getWorkCharacter());
     }
 }

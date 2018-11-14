@@ -13,15 +13,14 @@ public class Profession {
     private String value;
     private String description;
 
-    @JsonIgnore
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @JsonIgnore
     @Column(name = "id")
     public Long getId() {
         return id;
     }
 
-    @JsonIgnore
+    @JsonProperty("id")
     public void setId(Long id) {
         this.id = id;
     }
@@ -60,7 +59,6 @@ public class Profession {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(getId(), getValue(), getDescription());
     }
 }
