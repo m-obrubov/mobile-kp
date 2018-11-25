@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:questionnaire_fe/pages/button.dart';
 import 'package:questionnaire_fe/pages/home.dart';
 import 'package:questionnaire_fe/pages/navigation.dart';
+import 'package:questionnaire_fe/services/auth.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -10,7 +11,6 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-
 
   String _login;
   String _password;
@@ -56,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
-      //TODO вызвать API получения токена
+      AuthService.auth(_login, _password);
       moveWithHistoryClean(context, new Home());
     }
   }

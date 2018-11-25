@@ -13,7 +13,7 @@ class Home extends StatelessWidget {
     Widget bodyButtons;
     var profileIcon;
 
-    if(1 < 2) {
+    if(1 < 0) {
       //authenticated
       bodyButtons = WideRaisedButton(
         onPressed: () => moveWithHistoryClean(context, new Question() /* Страница с вопросами */),
