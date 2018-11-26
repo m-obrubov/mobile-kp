@@ -3,6 +3,8 @@ package ru.obrubov.questionnaire.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.obrubov.questionnaire.domain.Role;
 import ru.obrubov.questionnaire.domain.User;
@@ -69,5 +71,14 @@ public class AccountController {
             return ErrorResponse.create(1001);
         }
         return TokenResponse.create(token);
+    }
+
+    @GetMapping("/check")
+    public ResponseEntity checkAuthenticated(@RequestParam("token") String token) {
+        if(tokenService.checkToken(token)) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 }

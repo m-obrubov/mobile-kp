@@ -45,4 +45,8 @@ public class TokenService {
         AuthInfo createdAuthInfo = authInfoDataAccess.create(authInfo);
         return createdAuthInfo.getToken();
     }
+
+    public boolean checkToken(String token) {
+        return tokenProvider.validateToken(token);
+    }
 }
