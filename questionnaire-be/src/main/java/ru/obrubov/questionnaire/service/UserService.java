@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.obrubov.questionnaire.data.access.UserDataAccess;
 import ru.obrubov.questionnaire.domain.User;
-
-import java.util.List;
+import ru.obrubov.questionnaire.exception.account.UsernameAlreadyExistsException;
 
 @Service
 public class UserService {
@@ -17,20 +16,16 @@ public class UserService {
         this.userDataAccess = userDataAccess;
     }
 
-    public User create(User user) {
+    public User create(User user) throws UsernameAlreadyExistsException {
+        User storedUser = userDataAccess.getByEmail(user.getEmail());
+        if(storedUser != null) {
+            throw new UsernameAlreadyExistsException();
+        }
         return userDataAccess.create(user);
     }
 
-    public User getById(Long id) {
-        return userDataAccess.getById(id);
-    }
-
-    public List<User> getAll() {
-        return userDataAccess.getAll();
-    }
-
     public User update(User user) {
-        User storedUser = getById(user.getId());
+        User storedUser = userDataAccess.getById(user.getId());
         if(user.getFirstName() != null) {
             storedUser.setFirstName(user.getFirstName());
         }
@@ -50,5 +45,10 @@ public class UserService {
             storedUser.setEmail(user.getEmail());
         }
         return userDataAccess.update(storedUser);
+    }
+
+    public boolean isUserExists(String email) {
+        User user = userDataAccess.getByEmail(email);
+        return user != null;
     }
 }

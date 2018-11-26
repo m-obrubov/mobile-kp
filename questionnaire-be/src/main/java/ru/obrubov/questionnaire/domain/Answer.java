@@ -14,7 +14,6 @@ public class Answer {
 
     @JsonProperty("id")
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     public Long getId() {
         return id;

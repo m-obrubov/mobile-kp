@@ -1,14 +1,18 @@
 package ru.obrubov.questionnaire.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "question_result")
 public class QuestionResult {
+    @JsonIgnore
     private Long id;
-    private Answer answer;
     private Question question;
+    private Answer answer;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -21,16 +25,7 @@ public class QuestionResult {
         this.id = id;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "answer_id")
-    public Answer getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(Answer answer) {
-        this.answer = answer;
-    }
-
+    @JsonProperty("question")
     @ManyToOne
     @JoinColumn(name = "question_id")
     public Question getQuestion() {
@@ -39,6 +34,17 @@ public class QuestionResult {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    @JsonProperty("answer")
+    @ManyToOne
+    @JoinColumn(name = "answer_id")
+    public Answer getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
     }
 
     @Override
@@ -51,6 +57,6 @@ public class QuestionResult {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(getId(), getAnswer(), getQuestion());
     }
 }
