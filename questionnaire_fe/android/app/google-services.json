@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "333231510619",
+    "firebase_url": "https://questionnaire-5251c.firebaseio.com",
+    "project_id": "questionnaire-5251c",
+    "storage_bucket": "questionnaire-5251c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:333231510619:android:584b430bba8ae9bf",
+        "android_client_info": {
+          "package_name": "ru.obrubov.questionnairefe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "333231510619-ru4ij7s9ubhml2fgen8vqd5qia5edjdf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwGicNIAoBbElGsS6-xmJa8twE7AyGyBQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
