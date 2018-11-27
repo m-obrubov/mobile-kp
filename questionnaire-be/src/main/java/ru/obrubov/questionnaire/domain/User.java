@@ -22,9 +22,8 @@ public class User {
     private String password;
     private LocalDateTime createdAt;
 
+    @JsonIgnore
     private Role role;
-
-    private Set<TestResult> testResults;
 
     @JsonProperty("id")
     @Id
@@ -34,6 +33,7 @@ public class User {
         return id;
     }
 
+    @JsonIgnore
     public void setId(Long id) {
         this.id = id;
     }
@@ -124,11 +124,11 @@ public class User {
         return createdAt != null ? createdAt.withNano(0) : null;
     }
 
+    @JsonIgnore
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    @JsonIgnore
     @Basic
     @Column(name = "role")
     public Role getRole() {
@@ -137,17 +137,6 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    public Set<TestResult> getTestResults() {
-        return testResults;
-    }
-
-    public void setTestResults(Set<TestResult> testResults) {
-        this.testResults = testResults;
     }
 
     @Override

@@ -1,5 +1,9 @@
 package ru.obrubov.questionnaire.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -8,11 +12,13 @@ import java.util.Set;
 @Entity
 @Table(name = "test_result")
 public class TestResult {
+    @JsonIgnore
     private Long id;
     private LocalDateTime passedAt;
     private Test test;
     private User user;
-    private Result result;
+    private Result resultCan;
+    private Result resultWant;
     private Set<QuestionResult> questionResults;
 
     @Id
@@ -26,16 +32,20 @@ public class TestResult {
         this.id = id;
     }
 
+    @JsonProperty("passed_at")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Basic
     @Column(name = "passed_at")
     public LocalDateTime getPassedAt() {
         return passedAt;
     }
 
+    @JsonIgnore
     public void setPassedAt(LocalDateTime passedAt) {
         this.passedAt = passedAt;
     }
 
+    @JsonProperty("test")
     @ManyToOne
     @JoinColumn(name = "test_id", referencedColumnName = "id")
     public Test getTest() {
@@ -46,6 +56,7 @@ public class TestResult {
         this.test = test;
     }
 
+    @JsonProperty("user")
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     public User getUser() {
@@ -56,17 +67,30 @@ public class TestResult {
         this.user = user;
     }
 
+    @JsonProperty("result_can")
     @ManyToOne
-    @JoinColumn(name = "result_id", referencedColumnName = "id")
-    public Result getResult() {
-        return result;
+    @JoinColumn(name = "result_can_id", referencedColumnName = "id")
+    public Result getResultCan() {
+        return resultCan;
     }
 
-    public void setResult(Result result) {
-        this.result = result;
+    public void setResultCan(Result resultCan) {
+        this.resultCan = resultCan;
     }
 
-    @OneToMany
+    @JsonProperty("result_want")
+    @ManyToOne
+    @JoinColumn(name = "result_want_id", referencedColumnName = "id")
+    public Result getResultWant() {
+        return resultWant;
+    }
+
+    public void setResultWant(Result resultWant) {
+        this.resultWant = resultWant;
+    }
+
+    @JsonProperty("question_results")
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
             (
                     name = "test_result_question_result_join",

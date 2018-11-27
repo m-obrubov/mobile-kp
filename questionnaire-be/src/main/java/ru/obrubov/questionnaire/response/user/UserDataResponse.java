@@ -1,6 +1,7 @@
-package ru.obrubov.questionnaire.response;
+package ru.obrubov.questionnaire.response.user;
 
 import ru.obrubov.questionnaire.domain.User;
+import ru.obrubov.questionnaire.response.Response;
 
 public class UserDataResponse extends User implements Response {
     private UserDataResponse(User user) {
@@ -13,7 +14,6 @@ public class UserDataResponse extends User implements Response {
         this.setGender(user.getGender());
         this.setEmail(user.getEmail());
         this.setCreatedAt(user.getCreatedAt());
-
     }
 
     public static UserDataResponse create(User user) {

@@ -10,7 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.obrubov.questionnaire.config.QuestionnaireConfig;
-import ru.obrubov.questionnaire.exception.jwt.ValidateTokenException;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +40,7 @@ public class UserTokenProvider {
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    String getUserName(String token) {
+    private String getUserName(String token) {
         return Jwts.parser().setSigningKey(questionnaireConfig.getTokenSecretKey()).parseClaimsJws(token).getBody().getSubject();
     }
 
@@ -49,12 +48,12 @@ public class UserTokenProvider {
         return req.getHeader("Authorization");
     }
 
-    boolean validateToken(String token) throws ValidateTokenException {
+    public boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(questionnaireConfig.getTokenSecretKey()).parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
-            throw new ValidateTokenException("Expired or invalid JWT token");
+            return false;
         }
     }
 

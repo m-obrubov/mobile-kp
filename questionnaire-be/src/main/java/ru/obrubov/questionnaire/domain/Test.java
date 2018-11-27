@@ -22,7 +22,6 @@ public class Test {
 
     @JsonProperty("id")
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     public Long getId() {
         return id;
@@ -66,7 +65,7 @@ public class Test {
     }
 
     @JsonProperty("questions")
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable
             (
                     name = "test_question_join",
@@ -82,7 +81,7 @@ public class Test {
     }
 
     @JsonProperty("answers")
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable
             (
                     name = "test_answer_join",
@@ -98,7 +97,7 @@ public class Test {
     }
 
     @JsonProperty("results")
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable
             (
                     name = "test_result_join",
@@ -131,11 +130,15 @@ public class Test {
         return Objects.equals(getId(), test.getId()) &&
                 Objects.equals(getName(), test.getName()) &&
                 Objects.equals(getAbout(), test.getAbout()) &&
-                Objects.equals(getRules(), test.getRules());
+                Objects.equals(getRules(), test.getRules()) &&
+                Objects.equals(getQuestions(), test.getQuestions()) &&
+                Objects.equals(getAnswers(), test.getAnswers()) &&
+                Objects.equals(getResults(), test.getResults());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getAbout(), getRules());
+
+        return Objects.hash(getId(), getName(), getAbout(), getRules(), getQuestions(), getAnswers(), getResults());
     }
 }

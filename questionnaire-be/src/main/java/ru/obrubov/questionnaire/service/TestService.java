@@ -23,9 +23,8 @@ public class TestService {
         return testDataAccess.getOne();
     }
 
-    public boolean delete() {
-        testDataAccess.delete();
-        return testDataAccess.getOne() == null;
+    public Test update(Test test) {
+        return testDataAccess.update(test);
     }
 
 }
