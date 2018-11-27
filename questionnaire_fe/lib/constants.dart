@@ -1,9 +1,9 @@
 
 
 class RestPaths {
-  static const BASE_URL = "http://localhost:8080";
+  static const BASE_URL = "10.0.2.2:8080";
 
   static const TOKEN = "/account/token";
   static const REGISTER = "/account/register";
-  static const AUTH_CHECK = "/account/auth_check";
+  static const AUTH_CHECK = "/account/check";
 }

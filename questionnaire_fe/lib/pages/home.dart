@@ -6,14 +6,15 @@ import 'package:questionnaire_fe/pages/navigation.dart';
 import 'package:questionnaire_fe/pages/question.dart';
 import 'package:questionnaire_fe/pages/register.dart';
 import 'package:questionnaire_fe/pages/profile.dart';
+import 'package:questionnaire_fe/services/auth.dart';
 
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget bodyButtons;
     var profileIcon;
-
-    if(1 < 0) {
+    AuthService.isAuthenticated();
+    if(false) {
       //authenticated
       bodyButtons = WideRaisedButton(
         onPressed: () => moveWithHistoryClean(context, new Question() /* Страница с вопросами */),
