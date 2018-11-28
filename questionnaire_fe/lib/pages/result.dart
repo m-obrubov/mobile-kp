@@ -94,7 +94,7 @@ class Result extends StatelessWidget {
       profileIcon = <Widget>[
         IconButton(
             icon: Icon(Icons.check),
-            onPressed: () => moveWithHistory(context, new Home())
+            onPressed: () => moveWithHistory(context, new HomePage())
         )
       ];
       //not authenticate

@@ -4,17 +4,24 @@ import 'rest.dart';
 import 'package:questionnaire_fe/constants.dart';
 
 class AuthService {
-  static void auth(String login, String password) async {
+  static Future<bool> auth(String login, String password) async {
     try {
       final response = await RestClient.get(RestPaths.TOKEN, params: { "login" : login, "password" : password });
       if (response.statusCode == 200) {
         String token = json.decode(response.body)["token"];
         final prefs = await SharedPreferences.getInstance();
         prefs.setString("token", token);
+        return true;
       }
+      return false;
     } catch (e) {
-      print(e);
+      return false;
     }
+  }
+
+  static void logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove("token");
   }
 
   static Future<bool> isAuthenticated() async {
