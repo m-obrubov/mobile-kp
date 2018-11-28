@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Опросник Соломина',
-      home: new Home(),
+      home: new HomePage(),
     );
   }
 }

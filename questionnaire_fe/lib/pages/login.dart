@@ -56,8 +56,13 @@ class _LoginPageState extends State<LoginPage> {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
-      AuthService.auth(_login, _password);
-      moveWithHistoryClean(context, new Home());
+      AuthService.auth(_login, _password).then((bool b) {
+        if(b) {
+          moveWithHistoryClean(context, new HomePage());
+        } else {
+          _neverSatisfied();
+        }
+      });
     }
   }
 
@@ -88,5 +93,26 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     return null;
+  }
+
+  Future<void> _neverSatisfied() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Ошибка'),
+          content: Text('Неправильный логин или пароль'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('ОК'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

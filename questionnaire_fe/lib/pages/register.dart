@@ -130,7 +130,7 @@ class RegisterPageState extends State<RegisterPage> {
       }
       form.save();
       //TODO вызвать API регистрации
-      moveWithHistoryClean(context, new Home());
+      moveWithHistoryClean(context, new HomePage());
     }
   }
 
