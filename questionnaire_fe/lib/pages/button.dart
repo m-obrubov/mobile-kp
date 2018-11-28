@@ -11,7 +11,7 @@ class WideRaisedButton extends StatelessWidget {
     @required this.onPressed,
     this.text,
     this.color,
-    this.fontSize = 16.0,
+    this.fontSize = 18.0,
     this.textColor = Colors.white
   });
 

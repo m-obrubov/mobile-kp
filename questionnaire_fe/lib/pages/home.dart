@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:questionnaire_fe/domain/test.dart';
 import 'package:questionnaire_fe/pages/button.dart';
 import 'package:questionnaire_fe/pages/filters.dart';
 import 'package:questionnaire_fe/pages/login.dart';
@@ -6,7 +7,7 @@ import 'package:questionnaire_fe/pages/navigation.dart';
 import 'package:questionnaire_fe/pages/question.dart';
 import 'package:questionnaire_fe/pages/register.dart';
 import 'package:questionnaire_fe/pages/profile.dart';
-import 'package:questionnaire_fe/services/auth.dart';
+import 'package:questionnaire_fe/services/requester.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,6 +19,7 @@ class _HomePageState extends State<HomePage> {
 
   bool _isAuthenticated = false;
   Widget _home = Center(child: CircularProgressIndicator());
+  Test _test;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,13 @@ class _HomePageState extends State<HomePage> {
         _home = _getNormalScreen();
       });
     });
+    if(_isAuthenticated) {
+      DataProvider.getTest().then((Test test) {
+        setState(() {
+          _test = test;
+        });
+      });
+    }
     return _home;
   }
 
@@ -37,9 +46,8 @@ class _HomePageState extends State<HomePage> {
     if(_isAuthenticated) {
       //authenticated
       bodyButtons = WideRaisedButton(
-        onPressed: () => moveWithHistoryClean(context, new Question() /* Страница с вопросами */),
+        onPressed: () => moveWithHistoryClean(context, new QuestionPage() /* Страница с вопросами */),
         text: "Начать тест",
-        fontSize: 20.0,
       );
 
       profileIcon = <Widget>[
@@ -105,8 +113,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Text(
-                      "Анкета 'Ориентация' определяет профессиональную направленность "
-                          "личности к определенной сфере деятельности.",
+                      _test != null ? _test.about : "",
                       style: TextStyle(
                           fontSize: 18.0
                       ),
@@ -120,8 +127,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Text(
-                      "В первой части (\"Я хочу\") вы можете оценить по 4-х балльной "
-                          "шкале степень своего желания заниматься...",
+                      _test != null ? _test.rules : "",
                       style: TextStyle(
                           fontSize: 18.0
                       ),

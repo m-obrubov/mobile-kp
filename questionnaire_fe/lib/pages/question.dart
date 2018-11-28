@@ -5,26 +5,26 @@ import 'package:questionnaire_fe/pages/button.dart';
 import 'package:questionnaire_fe/pages/navigation.dart';
 import 'package:questionnaire_fe/pages/result.dart';
 
-class Question extends StatefulWidget {
+class QuestionPage extends StatefulWidget {
 
   @override
-  State<StatefulWidget> createState() => new RegisterPageState();
+  State<StatefulWidget> createState() => new _QuestionPageState();
 
 }
 
-class RegisterPageState extends State<StatefulWidget> {
+class _QuestionPageState extends State<QuestionPage> {
   int _countQuestion; //Общее кол-во вопросов
 
   QuestionWithAnswers _question;
   var _answerUser; // ответ пользователя
 
-  RegisterPageState() {
+  _QuestionPageState() {
     List<Answer> list = new List();
-    list.add(new Answer("1", "Спать!"));
-    list.add(new Answer("2", "Есть!"));
-    list.add(new Answer("3", "Не чего не хочу!"));
-    list.add(new Answer("4", "Рисовать"));
-    _question = new QuestionWithAnswers("1",1,"Чего ты хочешь?",list);
+    list.add(new Answer(1, "Спать!"));
+    list.add(new Answer(2, "Есть!"));
+    list.add(new Answer(3, "Не чего не хочу!"));
+    list.add(new Answer(4, "Рисовать"));
+    _question = new QuestionWithAnswers(1,"Чего ты хочешь?",1,list);
     _countQuestion = 40;
   }
 
@@ -35,7 +35,7 @@ class RegisterPageState extends State<StatefulWidget> {
     for (int i = 0; i < _question.answer.length; i++) {
       Answer answer = _question.answer[i];
       listRadioListTile.add (RadioListTile<String>(
-        value: answer.id,
+        value: answer.id.toString(),
         groupValue: _answerUser,
         onChanged: _handleChoice,
         title:

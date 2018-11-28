@@ -101,27 +101,27 @@ class _StatisticsPageState extends State<StatisticsPage> {
     ];
   }
 
-_StatisticsPageState(){
+  _StatisticsPageState(){
     _results  = new List();
     List<Profession> professions = new List();
-    professions.add(new Profession("1","Строит дома и не только!","Архитектор"));
-    professions.add(new Profession("1","Картиты его конек!","Художник"));
-    professions.add(new Profession("1","Что я слышу? Это же музыкант!","Музыкант"));
-    professions.add(new Profession("1","Стой! Стой! Стой! Блин ну ты танцор!","Хореограф"));
+    professions.add(new Profession("Строит дома и не только!","Архитектор"));
+    professions.add(new Profession("Картиты его конек!","Художник"));
+    professions.add(new Profession("Что я слышу? Это же музыкант!","Музыкант"));
+    professions.add(new Profession("Стой! Стой! Стой! Блин ну ты танцор!","Хореограф"));
     String description = "Вы уверенный в себе и амбициозный человек, для вас нет нечего невозможного. Выша жизнь не возможна без творчества!";
     List<Answer> answers1 = new List();
     List<Answer> answers2 = new List();
     List<Answer> answers3 = new List();
-    answers1.add(new Answer("4", "Рисовать"));
-    answers2.add(new Answer("1", "Семья"));
-    answers3.add(new Answer("3", "Очень люблю"));
+    answers1.add(new Answer(4, "Рисовать"));
+    answers2.add(new Answer(1, "Семья"));
+    answers3.add(new Answer(3, "Очень люблю"));
     List<QuestionWithAnswers> questions = new List();
-    questions.add(new QuestionWithAnswers("1",1,"Чего ты хочешь?",answers1));
-    questions.add(new QuestionWithAnswers("2",2,"Что для тебя важно?",answers2));
-    questions.add(new QuestionWithAnswers("3",3,"Любишь ли ты программировать?",answers3));
-    _results.add(new ResultTest("1",description, professions, questions,"природа","творческие профессии",DateTime.now()));
-    _results.add(new ResultTest("1",description, professions, questions,"природа","творческие профессии",DateTime.now()));
-    _results.add(new ResultTest("1",description, professions, questions,"природа","творческие профессии",DateTime.now()));
+    questions.add(new QuestionWithAnswers(1,"Чего ты хочешь?", 1, answers1));
+    questions.add(new QuestionWithAnswers(2,"Что для тебя важно?", 2, answers2));
+    questions.add(new QuestionWithAnswers(2,"Любишь ли ты программировать?", 3, answers3));
+    _results.add(new ResultTest(1,description, professions, questions,"природа","творческие профессии",DateTime.now()));
+    _results.add(new ResultTest(2,description, professions, questions,"природа","творческие профессии",DateTime.now()));
+    _results.add(new ResultTest(3,description, professions, questions,"природа","творческие профессии",DateTime.now()));
     seriesList = _createSampleData();
     seriesList2 = _createSampleData2();
     seriesList3 = _createSampleData3();

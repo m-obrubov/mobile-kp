@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:questionnaire_fe/pages/button.dart';
 import 'package:questionnaire_fe/pages/home.dart';
 import 'package:questionnaire_fe/pages/navigation.dart';
-import 'package:questionnaire_fe/services/auth.dart';
+import 'package:questionnaire_fe/services/requester.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
       form.save();
       AuthService.auth(_login, _password).then((bool b) {
         if(b) {
-          moveWithHistoryClean(context, new HomePage());
+          Navigator.of(context).pop();
         } else {
           _neverSatisfied();
         }

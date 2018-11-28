@@ -6,4 +6,6 @@ class RestPaths {
   static const TOKEN = "/account/token";
   static const REGISTER = "/account/register";
   static const AUTH_CHECK = "/account/check";
+
+  static const GET_TEST = "/test";
 }

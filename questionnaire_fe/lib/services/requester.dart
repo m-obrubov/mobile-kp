@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:questionnaire_fe/domain/test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'rest.dart';
 import 'package:questionnaire_fe/constants.dart';
@@ -39,5 +40,21 @@ class AuthService {
       return false;
     }
     return false;
+  }
+}
+
+class DataProvider {
+  static Future<Test> getTest() async {
+    final prefs = await SharedPreferences.getInstance();
+    String jsonTest = prefs.getString('test');
+    if(jsonTest == null) {
+      final response = await RestClient.get(RestPaths.GET_TEST, auth: true);
+      if (response.statusCode == 200) {
+        jsonTest = response.body;
+        prefs.setString("test", jsonTest);
+      }
+      return null;
+    }
+    return Test.fromJson(json.decode(jsonTest));
   }
 }
