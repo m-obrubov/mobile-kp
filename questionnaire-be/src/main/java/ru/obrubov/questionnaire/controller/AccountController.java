@@ -11,8 +11,8 @@ import ru.obrubov.questionnaire.domain.User;
 import ru.obrubov.questionnaire.exception.account.PermissionDeniedException;
 import ru.obrubov.questionnaire.exception.account.UsernameAlreadyExistsException;
 import ru.obrubov.questionnaire.response.ErrorResponse;
-import ru.obrubov.questionnaire.response.OkResponse;
 import ru.obrubov.questionnaire.response.Response;
+import ru.obrubov.questionnaire.response.account.Token;
 import ru.obrubov.questionnaire.response.account.TokenResponse;
 import ru.obrubov.questionnaire.security.AccessResolver;
 import ru.obrubov.questionnaire.service.TokenService;
@@ -40,7 +40,7 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    public Response register(@RequestBody User user) {
+    public ResponseEntity<Response> register(@RequestBody User user) {
         user.setCreatedAt(LocalDateTime.now());
         user.setRole(Role.STUDENT);
         user.setPassword(accessResolver.encryptPassword(user.getPassword()));
@@ -49,36 +49,28 @@ public class AccountController {
             createdUser = userService.create(user);
         } catch (UsernameAlreadyExistsException e) {
             logger.info("Пользователь с email = {} уже существует", user.getEmail());
-            return ErrorResponse.create(1000);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse.create("Пользователь с таким Email уже существует."));
         }
         if(createdUser == null) {
-            return ErrorResponse.create(500);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorResponse.create("Ошибка на сервере. Обратитесь в службу поддержки."));
         }
-        return OkResponse.create();
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/token")
-    public Response getTokenByLoginAndPassword(@RequestParam("login") String login,
+    public ResponseEntity<Response> getTokenByLoginAndPassword(@RequestParam("login") String login,
                                                @RequestParam("password") String password) {
         if(!userService.isUserExists(login)) {
-            return ErrorResponse.create(1001);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse.create("Не правильный логин или пароль."));
         }
-        String token;
+        Token token;
         try {
             token = tokenService.generateToken(login, password);
         } catch (PermissionDeniedException e) {
             logger.info("Пользователь с логином {} ввел неправильный пароль", login);
-            return ErrorResponse.create(1001);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse.create("Не правильный логин или пароль."));
         }
-        return TokenResponse.create(token);
+        return ResponseEntity.ok(TokenResponse.create(token));
     }
 
-    @GetMapping("/check")
-    public ResponseEntity checkAuthenticated(@RequestParam("token") String token) {
-        if(tokenService.checkToken(token)) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-    }
 }

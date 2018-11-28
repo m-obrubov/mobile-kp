@@ -31,13 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     // ACCOUNT
-                    .antMatchers("/account/*").permitAll()
+                    .antMatchers("/account/*","/test").permitAll()
                     // USER
                     .antMatchers("/user").hasAuthority(Role.STUDENT.toString())
-                    // TEST
-                    .mvcMatchers(HttpMethod.POST, "/test").hasAuthority(Role.TEACHER.toString())
-                    .mvcMatchers(HttpMethod.DELETE, "/test").hasAuthority(Role.TEACHER.toString())
-                    .mvcMatchers(HttpMethod.GET, "/test").hasAnyAuthority(Role.STUDENT.toString(), Role.TEACHER.toString())
                     // RESULT
                     .antMatchers("/result").hasAuthority(Role.STUDENT.toString())
                     .antMatchers("/result/all").hasAuthority(Role.TEACHER.toString())

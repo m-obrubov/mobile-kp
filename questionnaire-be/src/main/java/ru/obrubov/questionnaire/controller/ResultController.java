@@ -3,6 +3,8 @@ package ru.obrubov.questionnaire.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.obrubov.questionnaire.domain.Gender;
 import ru.obrubov.questionnaire.domain.TestResult;
@@ -38,25 +40,25 @@ public class ResultController {
     }
 
     @PostMapping
-    public Response addResult(@RequestBody @NotNull TestResult testResult) {
+    public ResponseEntity<Response> addResult(@RequestBody @NotNull TestResult testResult) {
         try {
             User user = accessResolver.getCurrentUser();
             TestResult calculatedResult = testResultService.add(testResult,user);
-            return ResultDataResponse.create(calculatedResult);
+            return ResponseEntity.ok(ResultDataResponse.create(calculatedResult));
         } catch (TestNotFoundException e) {
             logger.error(e.getMessage());
-            return ErrorResponse.create(1002);
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ErrorResponse.create("Неизвестная ошибка. Обратитесь в службу поддержки."));
         }
     }
 
     @GetMapping
-    public Response getOwnResults() {
+    public ResponseEntity<Response> getOwnResults() {
         User user = accessResolver.getCurrentUser();
-        return ResultsDataResponse.create(testResultService.getOwnResults(user.getId()));
+        return ResponseEntity.ok(ResultsDataResponse.create(testResultService.getOwnResults(user.getId())));
     }
 
     @GetMapping("/all")
-    public Response getAllResults(@RequestParam(value = TestResultFilter.DATE_FROM, required = false) LocalDateTime dateFrom,
+    public ResponseEntity<Response> getAllResults(@RequestParam(value = TestResultFilter.DATE_FROM, required = false) LocalDateTime dateFrom,
                                   @RequestParam(value = TestResultFilter.DATE_TO, required = false) LocalDateTime dateTo,
                                   @RequestParam(value = TestResultFilter.GENDER, required = false) Gender gender,
                                   @RequestParam(value = TestResultFilter.CITY, required = false) String city,
@@ -69,6 +71,6 @@ public class ResultController {
         filter.put(TestResultFilter.CITY, city);
         filter.put(TestResultFilter.AGE_FROM, ageFrom);
         filter.put(TestResultFilter.AGE_TO, ageTo);
-        return ResultsDataResponse.create(testResultService.getByFilter(filter));
+        return ResponseEntity.ok(ResultsDataResponse.create(testResultService.getByFilter(filter)));
     }
 }

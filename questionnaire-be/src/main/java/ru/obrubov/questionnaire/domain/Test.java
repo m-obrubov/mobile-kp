@@ -96,7 +96,8 @@ public class Test {
         this.answers = answers;
     }
 
-    @JsonProperty("results")
+    //@JsonProperty("results")
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable
             (
@@ -108,6 +109,7 @@ public class Test {
         return results;
     }
 
+    @JsonProperty("results")
     public void setResults(Set<Result> results) {
         this.results = results;
     }
