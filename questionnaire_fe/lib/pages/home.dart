@@ -29,13 +29,11 @@ class _HomePageState extends State<HomePage> {
         _home = _getNormalScreen();
       });
     });
-    if(_isAuthenticated) {
-      DataProvider.getTest().then((Test test) {
-        setState(() {
-          _test = test;
-        });
+    DataProvider.getTest().then((Test test) {
+      setState(() {
+        _test = test;
       });
-    }
+    });
     return _home;
   }
 

@@ -31,7 +31,7 @@ public class UserSecurityFilter extends OncePerRequestFilter {
             if(authentication != null) {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
         }
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }

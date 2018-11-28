@@ -44,10 +44,16 @@ class AuthService {
 }
 
 class DataProvider {
+
+  static void dropTestStore() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove('test');
+  }
+
   static Future<Test> getTest() async {
     final prefs = await SharedPreferences.getInstance();
     String jsonTest = prefs.getString('test');
-    if(jsonTest == null) {
+    if(prefs != null && jsonTest == null) {
       final response = await RestClient.get(RestPaths.GET_TEST, auth: true);
       if (response.statusCode == 200) {
         jsonTest = response.body;

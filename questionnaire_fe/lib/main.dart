@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:questionnaire_fe/domain/test.dart';
 import 'package:questionnaire_fe/pages/home.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:questionnaire_fe/services/requester.dart';
 
 void main() => runApp(new MyApp());
 
@@ -12,6 +14,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   FirebaseMessaging _firebaseMessaging;
+  Test _test;
 
   @override
   void initState() {
@@ -33,6 +36,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    DataProvider.dropTestStore();
     return new MaterialApp(
       title: 'Опросник Соломина',
       home: new HomePage(),
