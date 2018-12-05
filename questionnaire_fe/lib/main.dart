@@ -4,8 +4,15 @@ import 'package:questionnaire_fe/pages/home.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:questionnaire_fe/services/requester.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:questionnaire_fe/services/requester.dart' as requester;
 
-void main() => runApp(new MyApp());
+void main() {
+  SharedPreferences.getInstance().then((prefs) {
+    requester.prefs = prefs;
+    runApp(new MyApp());
+  });
+}
 
 class MyApp extends StatefulWidget {
   @override

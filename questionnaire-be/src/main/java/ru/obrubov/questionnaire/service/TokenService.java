@@ -40,7 +40,7 @@ public class TokenService {
         AuthInfo authInfo = new AuthInfo();
         authInfo.setUser(user);
         authInfo.setToken(token.getToken());
-        if (authInfoDataAccess.create(authInfo) == null) {
+        if (authInfoDataAccess.create(authInfo) != null) {
             return token;
         }
         return null;

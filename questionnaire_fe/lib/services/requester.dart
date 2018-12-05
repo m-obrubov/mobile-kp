@@ -4,57 +4,66 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'rest.dart';
 import 'package:questionnaire_fe/constants.dart';
 
+SharedPreferences prefs;
+
 class AuthService {
-  static Future<bool> auth(String login, String password) async {
-    try {
-      final response = await RestClient.get(RestPaths.TOKEN, params: { "login" : login, "password" : password });
-      if (response.statusCode == 200) {
-        String token = json.decode(response.body)["token"];
-        final prefs = await SharedPreferences.getInstance();
-        prefs.setString("token", token);
-        return true;
-      }
-      return false;
-    } catch (e) {
-      return false;
-    }
+
+  static bool auth(String login, String password){
+    bool result = false;
+    String token;
+    int lifetime;
+    String role;
+    DateTime currentDateTime;
+    RestClient.get(RestPaths.TOKEN, params: { "login" : login, "password" : password })
+      .then((response) {
+        if (response.statusCode == 200) {
+          var tokenJson = json.decode(response.body)["token"];
+          token = tokenJson["token"];
+          lifetime = tokenJson["lifetime"];
+          role = tokenJson["role"];
+          currentDateTime = DateTime.now();
+          result =  true;
+        } else {
+          result =  false;
+        }
+        if (token != null) {
+          prefs.setString("token", token);
+          prefs.setInt("tokenLifetime", lifetime);
+          prefs.setString("role", role);
+          prefs.setString("tokenСomingTime", currentDateTime.toString());
+        }
+      });
+    return result;
   }
 
-  static void logout() async {
-    final prefs = await SharedPreferences.getInstance();
+  static void logout()  {
     prefs.remove("token");
+    prefs.remove("tokenLifetime");
+    prefs.remove("role");
+    prefs.remove("tokenСomingTime");
   }
 
-  static Future<bool> isAuthenticated() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      String token = prefs.getString("token");
-      if(token == null) {
-        return false;
-      }
-      final response = await RestClient.get(RestPaths.AUTH_CHECK, params: { "token" : token });
-      if (response.statusCode == 200) {
-        return true;
-      }
-    } catch (e) {
-      return false;
+  static bool isAuthenticated()  {
+    bool result = false;
+    int tokenLifeTime = prefs.getInt("tokenLifetime");
+    String tokenComingTime = prefs.getString("tokenСomingTime");
+    if (tokenComingTime != null && tokenLifeTime != null && (DateTime.parse(tokenComingTime).millisecondsSinceEpoch+tokenLifeTime*60000) < DateTime.now().millisecondsSinceEpoch){
+        result = true;
     }
-    return false;
+    return result;
   }
 }
 
 class DataProvider {
 
-  static void dropTestStore() async {
-    final prefs = await SharedPreferences.getInstance();
+  static void dropTestStore() {
     prefs.remove('test');
   }
 
   static Future<Test> getTest() async {
-    final prefs = await SharedPreferences.getInstance();
     String jsonTest = prefs.getString('test');
-    if(prefs != null && jsonTest == null) {
-      final response = await RestClient.get(RestPaths.GET_TEST, auth: true);
+    if(jsonTest == null) {
+      final response = await RestClient.get(RestPaths.GET_TEST);
       if (response.statusCode == 200) {
         jsonTest = response.body;
         prefs.setString("test", jsonTest);

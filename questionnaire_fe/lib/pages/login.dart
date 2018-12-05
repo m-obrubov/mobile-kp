@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:questionnaire_fe/pages/button.dart';
-import 'package:questionnaire_fe/pages/home.dart';
-import 'package:questionnaire_fe/pages/navigation.dart';
 import 'package:questionnaire_fe/services/requester.dart';
 
 class LoginPage extends StatefulWidget {
@@ -56,13 +54,14 @@ class _LoginPageState extends State<LoginPage> {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
-      AuthService.auth(_login, _password).then((bool b) {
-        if(b) {
-          Navigator.of(context).pop();
-        } else {
-          _neverSatisfied();
-        }
-      });
+      Navigator.of(context).pop();
+//      if(AuthService.auth(_login, _password)) {
+//        Navigator.of(context).pop();
+//      } else {
+//        _neverSatisfied('Неправильный логин или пароль');
+//      }
+//        print(e);
+//        _neverSatisfied('Неожиданная ошибка');
     }
   }
 
@@ -95,14 +94,14 @@ class _LoginPageState extends State<LoginPage> {
     return null;
   }
 
-  Future<void> _neverSatisfied() async {
+  Future<void> _neverSatisfied(String text) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Ошибка'),
-          content: Text('Неправильный логин или пароль'),
+          content: Text(text),
           actions: <Widget>[
             FlatButton(
               child: Text('ОК'),

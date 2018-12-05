@@ -23,12 +23,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    AuthService.isAuthenticated().then((val) {
-      setState(() {
-        _isAuthenticated = val;
-        _home = _getNormalScreen();
-      });
-    });
+
+    _isAuthenticated = AuthService.isAuthenticated();
+    _home = _getNormalScreen();
+
     DataProvider.getTest().then((Test test) {
       setState(() {
         _test = test;
