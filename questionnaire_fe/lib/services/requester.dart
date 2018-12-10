@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:questionnaire_fe/domain/profession.dart';
+import 'package:questionnaire_fe/domain/resultTest.dart';
 import 'package:questionnaire_fe/domain/test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'rest.dart';
@@ -61,5 +63,15 @@ class DataProvider {
       return null;
     }
     return Test.fromJson(json.decode(jsonTest));
+  }
+
+  //Записать ответ на сервер и получить результат тестирования
+  static Future<ResultTest> getResult() async {
+    final response = await RestClient.post(RestPaths.RESULT);
+    if (response.statusCode == 200){
+      return ResultTest.fromJson(json.decode(response.body));
+    }
+    return null;
+
   }
 }

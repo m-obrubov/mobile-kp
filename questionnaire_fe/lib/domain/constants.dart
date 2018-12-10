@@ -19,8 +19,6 @@ class Gender extends Constant {
 }
 
 class Work extends Constant {
-  static final Work CAN = new Work('Могу', 'CAN');
-  static final Work WANT = new Work('Хочу', 'WANT');
   static final Work HUMAN = new Work('Человек', 'HUMAN');
   static final Work TECHNICS = new Work('Техника', 'TECHNICS');
   static final Work ZNAK = new Work('Знак', 'ZNAK');
@@ -33,12 +31,6 @@ class Work extends Constant {
 
   factory Work.fromTitle(String title) {
     switch(title) {
-      case 'CAN':
-        return CAN;
-        break;
-      case 'WANT':
-        return WANT;
-        break;
       case 'HUMAN':
         return HUMAN;
         break;

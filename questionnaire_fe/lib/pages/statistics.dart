@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:questionnaire_fe/domain/answer.dart';
-import 'package:questionnaire_fe/domain/profession.dart';
-import 'package:questionnaire_fe/domain/question.dart';
 import 'package:questionnaire_fe/domain/resultTest.dart';
 import 'package:questionnaire_fe/pages/navigation.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -10,14 +7,17 @@ import 'package:charts_flutter/flutter.dart' as charts;
 
 class StatisticsPage extends StatefulWidget {
 
+  final List<ResultTest> results;
+  const StatisticsPage({Key key, this.results}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => new _StatisticsPageState();
+  State<StatefulWidget> createState() => new _StatisticsPageState(this.results);
 
 }
 
 class _StatisticsPageState extends State<StatisticsPage> {
 
-  List<ResultTest> _results;
+  final List<ResultTest> _results;
   List<charts.Series> seriesList;
   List<charts.Series> seriesList2;
   List<charts.Series> seriesList3;
@@ -101,30 +101,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
     ];
   }
 
-  _StatisticsPageState(){
-    _results  = new List();
-    List<Profession> professions = new List();
-    professions.add(new Profession("Строит дома и не только!","Архитектор"));
-    professions.add(new Profession("Картиты его конек!","Художник"));
-    professions.add(new Profession("Что я слышу? Это же музыкант!","Музыкант"));
-    professions.add(new Profession("Стой! Стой! Стой! Блин ну ты танцор!","Хореограф"));
-    String description = "Вы уверенный в себе и амбициозный человек, для вас нет нечего невозможного. Выша жизнь не возможна без творчества!";
-    List<Answer> answers1 = new List();
-    List<Answer> answers2 = new List();
-    List<Answer> answers3 = new List();
-    answers1.add(new Answer(4, "Рисовать"));
-    answers2.add(new Answer(1, "Семья"));
-    answers3.add(new Answer(3, "Очень люблю"));
-    List<QuestionWithAnswers> questions = new List();
-    questions.add(new QuestionWithAnswers(1,"Чего ты хочешь?", 1, answers1));
-    questions.add(new QuestionWithAnswers(2,"Что для тебя важно?", 2, answers2));
-    questions.add(new QuestionWithAnswers(2,"Любишь ли ты программировать?", 3, answers3));
-    _results.add(new ResultTest(1,description, professions, questions,"природа","творческие профессии",DateTime.now()));
-    _results.add(new ResultTest(2,description, professions, questions,"природа","творческие профессии",DateTime.now()));
-    _results.add(new ResultTest(3,description, professions, questions,"природа","творческие профессии",DateTime.now()));
-    seriesList = _createSampleData();
-    seriesList2 = _createSampleData2();
-    seriesList3 = _createSampleData3();
+  _StatisticsPageState(this._results){
     animate = false;
   }
 
@@ -293,8 +270,8 @@ class _StatisticsPageState extends State<StatisticsPage> {
          ListTile(
           title: Text(
               DateFormat('yyyy-MM-dd  kk:mm').format(_results[i].date)+'\n'
-                  'Предмет труда: ' + _results[i].group + '\n'
-                  'Характер труда: ' + _results[i].part,
+                  "Хочу: " + "Предмент труда" + _results[i].resultWant.character.value + "Характер труда" + _results[i].resultWant.subject.value + '\n'
+                  "Могу: " + "Предмент труда" + _results[i].resultCan.character.value + "Характер труда" + _results[i].resultCan.subject.value,
           ),
           onTap: () => moveWithHistory(context, null /* Страница с результатами*/),
           trailing: Icon(Icons.keyboard_arrow_right),

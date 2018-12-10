@@ -7,5 +7,8 @@ class RestPaths {
   static const REGISTER = "/account/register";
   static const AUTH_CHECK = "/account/check";
 
+  static const RESULT = "/result"; //получить и записть результат тестирования
+  static const RESULT_ALL = "/result/all"; //получить по критериям
+
   static const GET_TEST = "/test";
 }

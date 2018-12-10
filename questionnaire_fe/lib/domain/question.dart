@@ -28,4 +28,19 @@ class QuestionWithAnswers extends Question {
 
   QuestionWithAnswers(int id, String value, int numberInOrder, this.answer) : super(id, value, numberInOrder);
 
+  factory QuestionWithAnswers.fromJson(Map<String, dynamic> json) {
+    return new QuestionWithAnswers(
+      json['id'],
+      json['value'],
+      json['number_in_order'],
+      Answer.listFromJson(json['answer'])
+    );
+  }
+  static List<QuestionWithAnswers> listFromJson(List<dynamic> json) {
+    List<QuestionWithAnswers> questionsWithAnswers = new List();
+    for(dynamic d in json) {
+      questionsWithAnswers.add(QuestionWithAnswers.fromJson(d));
+    }
+    return questionsWithAnswers;
+  }
 }
