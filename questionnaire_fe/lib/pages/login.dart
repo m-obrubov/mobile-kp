@@ -13,13 +13,15 @@ class _LoginPageState extends State<LoginPage> {
   String _login;
   String _password;
 
+  bool _loadingInProgress = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Вход'),
       ),
-      body: Container(
+      body: _loadingInProgress ? _getSpinner() : Container(
         padding: EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
@@ -50,20 +52,27 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Widget _getSpinner() {
+    return new Center(child: CircularProgressIndicator());
+  }
+
   void _submit() {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
       try {
+        setState(() {
+          _loadingInProgress = true;
+        });
         AuthService.auth(_login, _password).then((res) {
           if (res) {
             Navigator.of(context).pop();
           } else {
-            _error('Неправильный логин или пароль');
+            _showError("Неправильный логин или пароль");
           }
         });
       } catch (e) {
-        _error('Ошибка');
+        _showError("Ошибка");
       }
     }
   }
@@ -97,7 +106,14 @@ class _LoginPageState extends State<LoginPage> {
     return null;
   }
 
-  Future<void> _error(String text) async {
+  void _showError(String text) {
+    setState(() {
+      _loadingInProgress = false;
+    });
+    _errorDialog(text);
+  }
+
+  Future<void> _errorDialog(String text) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
