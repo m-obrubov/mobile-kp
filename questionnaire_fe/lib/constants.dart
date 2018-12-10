@@ -9,3 +9,12 @@ class RestPaths {
 
   static const GET_TEST = "/test";
 }
+
+class StorageDataNames {
+  static const TOKEN = "token";
+  static const TOKEN_LIFETIME = "tokenLifetime";
+  static const TOKEN_COMING_TIME = "tokenСomingTime";
+  static const ROLE = "role";
+  static const TEST = "test";
+
+}
