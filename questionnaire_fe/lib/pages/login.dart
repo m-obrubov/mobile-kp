@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:questionnaire_fe/pages/button.dart';
 import 'package:questionnaire_fe/services/requester.dart';
+import 'exception_handler.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -52,9 +53,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _getSpinner() {
-    return new Center(child: CircularProgressIndicator());
-  }
+  Widget _getSpinner() => new Center(child: CircularProgressIndicator());
 
   void _submit() {
     final form = _formKey.currentState;
@@ -110,27 +109,6 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       _loadingInProgress = false;
     });
-    _errorDialog(text);
-  }
-
-  Future<void> _errorDialog(String text) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Ошибка'),
-          content: Text(text),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('ОК'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+    errorDialog(context, text);
   }
 }

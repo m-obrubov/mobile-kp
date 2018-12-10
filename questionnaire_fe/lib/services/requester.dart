@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:questionnaire_fe/domain/test.dart';
+import 'package:questionnaire_fe/domain/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'rest.dart';
 import 'package:questionnaire_fe/constants.dart';
@@ -63,5 +64,17 @@ class DataProvider {
       return null;
     }
     return Test.fromJson(json.decode(jsonTest));
+  }
+
+  static Future<bool> register(User user) async {
+    final response = await RestClient.post(RestPaths.REGISTER,
+        body: json.encode(user.toJsonRegister()),
+        contentType: Http.JSON_CONTENT_TYPE
+    );
+    if(response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

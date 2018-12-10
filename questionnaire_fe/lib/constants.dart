@@ -1,4 +1,10 @@
+class Http {
+  static const JSON_CONTENT_TYPE = "application/json";
+  static const PLAIN_TEXT_CONTENT_TYPE = "text/plain";
 
+  static const HEADER_CONTENT_TYPE = "Content-Type";
+  static const HEADER_AUTHORIZATION = "Authorization";
+}
 
 class RestPaths {
   static const BASE_URL = "10.0.2.2:8080";

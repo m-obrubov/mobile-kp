@@ -16,6 +16,10 @@ class Gender extends Constant {
         return null;
     }
   }
+
+  bool equals(Gender other) {
+    return other.value == value && other.title == title;
+  }
 }
 
 class Constant {

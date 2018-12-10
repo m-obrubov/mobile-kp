@@ -6,7 +6,7 @@ class RestClient {
   static Future<http.Response> get(String path, { Map<String, String> params, bool auth = false }) async {
     Uri uri = Uri.http(RestPaths.BASE_URL, path, params);
     if(auth) {
-      return await http.get(uri, headers: { "Authorization" : await _getToken() });
+      return await http.get(uri, headers: { Http.HEADER_AUTHORIZATION : await _getToken() });
     } else {
       return await http.get(uri);
     }
@@ -16,13 +16,13 @@ class RestClient {
       {
         Map<String, String> params,
         body,
-        String contentType = "text/plain",
+        String contentType = Http.PLAIN_TEXT_CONTENT_TYPE,
         bool auth = false
       }) async {
     var uri = Uri.http(RestPaths.BASE_URL, path, params);
-    Map<String, String> headers = { "Content-Type" : contentType };
+    Map<String, String> headers = { Http.HEADER_CONTENT_TYPE : contentType };
     if(auth) {
-      headers['Authorization'] = await _getToken();
+      headers[Http.HEADER_AUTHORIZATION] = await _getToken();
     }
     return await http.post(uri, body: body, headers: headers);
   }
@@ -31,19 +31,19 @@ class RestClient {
       {
         Map<String, String> params,
         body,
-        String contentType = "text/plain",
+        String contentType = Http.PLAIN_TEXT_CONTENT_TYPE,
         bool auth = false
       }) async {
     var uri = Uri.http(RestPaths.BASE_URL, path, params);
-    Map<String, String> headers = { "Content-Type" : contentType };
+    Map<String, String> headers = { Http.HEADER_CONTENT_TYPE : contentType };
     if(auth) {
-      headers['Authorization'] = await _getToken();
+      headers[Http.HEADER_AUTHORIZATION] = await _getToken();
     }
     return await http.put(uri, body: body, headers: headers);
   }
 
   static Future<String> _getToken() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString("token");
+    return prefs.getString(StorageDataNames.TOKEN);
   }
 }
