@@ -8,32 +8,22 @@ SharedPreferences prefs;
 
 class AuthService {
 
-  static bool auth(String login, String password){
-    bool result = false;
-    String token;
-    int lifetime;
-    String role;
-    DateTime currentDateTime;
-    RestClient.get(RestPaths.TOKEN, params: { "login" : login, "password" : password })
-      .then((response) {
-        if (response.statusCode == 200) {
-          var tokenJson = json.decode(response.body)["token"];
-          token = tokenJson["token"];
-          lifetime = tokenJson["lifetime"];
-          role = tokenJson["role"];
-          currentDateTime = DateTime.now();
-          result =  true;
-        } else {
-          result =  false;
-        }
-        if (token != null) {
-          prefs.setString("token", token);
-          prefs.setInt("tokenLifetime", lifetime);
-          prefs.setString("role", role);
-          prefs.setString("tokenСomingTime", currentDateTime.toString());
-        }
-      });
-    return result;
+  static Future<bool> auth(String login, String password) async {
+    var response = await RestClient.get(RestPaths.TOKEN, params: { "login" : login, "password" : password });
+    if (response.statusCode == 200) {
+      var tokenJson = json.decode(response.body)["token"];
+      String token = tokenJson["token"];
+      int lifetime = tokenJson["lifetime"];
+      String role = tokenJson["role"];
+      DateTime currentDateTime = DateTime.now();
+      prefs.setString("token", token);
+      prefs.setInt("tokenLifetime", lifetime);
+      prefs.setString("role", role);
+      prefs.setString("tokenСomingTime", currentDateTime.toString());
+      return true;
+    } else {
+      return false;
+    }
   }
 
   static void logout()  {
@@ -44,13 +34,13 @@ class AuthService {
   }
 
   static bool isAuthenticated()  {
-    bool result = false;
     int tokenLifeTime = prefs.getInt("tokenLifetime");
     String tokenComingTime = prefs.getString("tokenСomingTime");
-    if (tokenComingTime != null && tokenLifeTime != null && (DateTime.parse(tokenComingTime).millisecondsSinceEpoch+tokenLifeTime*60000) < DateTime.now().millisecondsSinceEpoch){
-        result = true;
+    if (tokenComingTime != null && tokenLifeTime != null) {
+      bool nonExpired = (DateTime.parse(tokenComingTime).difference(DateTime.now()).inMinutes < tokenLifeTime);
+      if(nonExpired) return true;
     }
-    return result;
+    return false;
   }
 }
 

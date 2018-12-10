@@ -54,14 +54,17 @@ class _LoginPageState extends State<LoginPage> {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
-      Navigator.of(context).pop();
-//      if(AuthService.auth(_login, _password)) {
-//        Navigator.of(context).pop();
-//      } else {
-//        _neverSatisfied('Неправильный логин или пароль');
-//      }
-//        print(e);
-//        _neverSatisfied('Неожиданная ошибка');
+      try {
+        AuthService.auth(_login, _password).then((res) {
+          if (res) {
+            Navigator.of(context).pop();
+          } else {
+            _error('Неправильный логин или пароль');
+          }
+        });
+      } catch (e) {
+        _error('Ошибка');
+      }
     }
   }
 
@@ -94,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
     return null;
   }
 
-  Future<void> _neverSatisfied(String text) async {
+  Future<void> _error(String text) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
