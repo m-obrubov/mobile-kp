@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:questionnaire_fe/domain/constants.dart';
 import 'package:questionnaire_fe/domain/test.dart';
 import 'package:questionnaire_fe/pages/button.dart';
 import 'package:questionnaire_fe/pages/filters.dart';
@@ -18,45 +19,32 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   bool _isAuthenticated = false;
-  Widget _home = Center(child: CircularProgressIndicator());
+  Role _role;
   Test _test;
 
   @override
-  Widget build(BuildContext context) {
-
-    _isAuthenticated = AuthService.isAuthenticated();
-    _home = _getNormalScreen();
-
-    DataProvider.getTest().then((Test test) {
-      setState(() {
-        _test = test;
-      });
-    });
-    return _home;
+  void initState() {
+    _test = DataProvider.getTestFromStorage();
+    super.initState();
   }
 
-  Widget _getNormalScreen() {
-    Widget bodyButtons;
+  @override
+  Widget build(BuildContext context) {
+    _isAuthenticated = AuthService.isAuthenticated();
+    if(_isAuthenticated) {
+      _role = AuthService.getRole();
+    }
     var profileIcon;
     Widget exitButton;
     if(_isAuthenticated) {
-      //authenticated
-      bodyButtons = WideRaisedButton(
-        onPressed: () => moveWithHistoryClean(context, new QuestionPage() /* Страница с вопросами */),
-        text: "Начать тест",
-      );
-
-      profileIcon = <Widget>[
-        IconButton(
-            icon: Icon(Icons.warning),
-            color: Colors.yellow,
-            onPressed: () => moveWithHistory(context, new StatisticsFilterPage())
-        ),
-        IconButton(
-            icon: Icon(Icons.account_circle),
-            onPressed: () => moveWithHistory(context, new ProfilePage())
-        )
-      ];
+      if(_role == Role.STUDENT) {
+        profileIcon = <Widget>[
+          IconButton(
+              icon: Icon(Icons.account_circle),
+              onPressed: () => moveWithHistory(context, new ProfilePage())
+          )
+        ];
+      }
 
       exitButton = IconButton(
           icon: Icon(Icons.exit_to_app),
@@ -66,8 +54,34 @@ class _HomePageState extends State<HomePage> {
             });
           }
       );
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Главная'),
+        leading: exitButton,
+        actions: profileIcon
+      ),
+      body: _getNormalScreen()
+    );
+  }
+
+  Widget _getNormalScreen() {
+    Widget bodyButtons;
+    if(_isAuthenticated) {
+      if(_role == Role.STUDENT) {
+        bodyButtons = WideRaisedButton(
+            onPressed: () => moveWithHistoryClean(context, new QuestionPage()),
+            text: "Начать тест",
+        );
+      } else {
+        bodyButtons = WideRaisedButton(
+          onPressed: () => moveWithHistory(context, new StatisticsFilterPage()),
+          color: Colors.lightGreen,
+          text: "Статистика",
+        );
+      }
     } else {
-      //not authenticated
       bodyButtons = Column(
         children: <Widget>[
           WideRaisedButton(
@@ -82,63 +96,56 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    return Scaffold(
-        appBar: AppBar(
-            title: Text('Главная'),
-            leading: exitButton,
-            actions: profileIcon
-        ),
-        body: Column(
-          children: <Widget>[
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  children: <Widget>[
-                    Image.asset(
-                      'images/logo.png',
-                      alignment: Alignment.center,
-                      width: 100.0,
-                      height: 100.0,
-                    ),
-                    Text(
-                      "Описание",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0
-                      ),
-                    ),
-                    Text(
-                      _test != null ? _test.about : "",
-                      style: TextStyle(
-                          fontSize: 18.0
-                      ),
-                    ),
-                    Divider(),
-                    Text(
-                      "Правила",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0
-                      ),
-                    ),
-                    Text(
-                      _test != null ? _test.rules : "",
-                      style: TextStyle(
-                          fontSize: 18.0
-                      ),
-                    ),
-                    Divider(),
-                  ],
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              children: <Widget>[
+                Image.asset(
+                  'images/logo.png',
+                  alignment: Alignment.center,
+                  width: 100.0,
+                  height: 100.0,
                 ),
-              ),
+                Text(
+                  "Описание",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0
+                  ),
+                ),
+                Text(
+                  _test.about,
+                  style: TextStyle(
+                      fontSize: 18.0
+                  ),
+                ),
+                Divider(),
+                Text(
+                  "Правила",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0
+                  ),
+                ),
+                Text(
+                  _test.rules,
+                  style: TextStyle(
+                      fontSize: 18.0
+                  ),
+                ),
+                Divider(),
+              ],
             ),
-            Container(
-              padding: EdgeInsets.all(16.0),
-              child: bodyButtons,
-            )
-          ],
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.all(16.0),
+          child: bodyButtons,
         )
+      ],
     );
   }
 }

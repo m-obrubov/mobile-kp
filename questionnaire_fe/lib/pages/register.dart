@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:questionnaire_fe/domain/constants.dart';
+import 'package:questionnaire_fe/domain/user.dart';
 import 'package:questionnaire_fe/pages/button.dart';
-import 'package:questionnaire_fe/pages/home.dart';
-import 'package:questionnaire_fe/pages/navigation.dart';
+import 'package:questionnaire_fe/pages/exception_handler.dart';
+import 'package:questionnaire_fe/services/requester.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -18,7 +20,9 @@ class RegisterPageState extends State<RegisterPage> {
   String _city;
   String _email;
   TextEditingController _passwordController = new TextEditingController();
-  String _gender;
+  Gender _gender;
+
+  bool _loadingInProgress = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,7 @@ class RegisterPageState extends State<RegisterPage> {
       appBar: AppBar(
         title: Text('Регистрация'),
       ),
-      body: SingleChildScrollView(
+      body: _loadingInProgress ? _getSpinner() : SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(16.0),
           child: Form(
@@ -89,15 +93,15 @@ class RegisterPageState extends State<RegisterPage> {
                   padding: EdgeInsets.only(left: 2.0),
                   child: Column(
                     children: <Widget>[
-                      RadioListTile<String>(
-                        title: Text("Мужской"),
-                        value: 'MALE',
+                      RadioListTile<Gender>(
+                        title: Text(Gender.MALE.title),
+                        value: Gender.MALE,
                         groupValue: _gender,
                         onChanged: (value) { setState(() { _gender = value; }); },
                       ),
-                      RadioListTile<String>(
-                        title: Text("Женский"),
-                        value: 'FEMALE',
+                      RadioListTile<Gender>(
+                        title: Text(Gender.FEMALE.title),
+                        value: Gender.FEMALE,
                         groupValue: _gender,
                         onChanged: (value) { setState(() { _gender = value; }); },
                       ),
@@ -116,6 +120,8 @@ class RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  Widget _getSpinner() => new Center(child: CircularProgressIndicator());
+
   void _submit() {
     final form = _formKey.currentState;
     if (form.validate()) {
@@ -129,8 +135,30 @@ class RegisterPageState extends State<RegisterPage> {
         return;
       }
       form.save();
-      //TODO вызвать API регистрации
-      Navigator.of(context).pop();
+      try{
+        setState(() {
+          _loadingInProgress = true;
+        });
+        User user = new User(
+          firstName: _name,
+          lastName: _surname,
+          age: _age,
+          city: _city,
+          gender: _gender,
+          email: _email,
+          password: _passwordController.text
+        );
+        DataProvider.register(user).then((res) {
+          if(res) {
+            Navigator.of(context).pop();
+          } else {
+            _showError("Регистрация не удалась");
+          }
+        });
+      } catch(e) {
+        _showError("Неожиданная ошибка");
+      }
+
     }
   }
 
@@ -186,6 +214,13 @@ class RegisterPageState extends State<RegisterPage> {
     }
 
     return null;
+  }
+
+  void _showError(String text) {
+    setState(() {
+      _loadingInProgress = false;
+    });
+    errorDialog(context, text);
   }
 
   @override
