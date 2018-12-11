@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:questionnaire_fe/domain/constants.dart';
+import 'package:questionnaire_fe/domain/question.dart';
 import 'package:questionnaire_fe/domain/resultTest.dart';
 import 'package:questionnaire_fe/domain/test.dart';
 import 'package:questionnaire_fe/domain/user.dart';
@@ -85,12 +86,11 @@ class DataProvider {
   }
 
   //Записать ответ на сервер и получить результат тестирования
-  static Future<ResultTest> getResult() async {
+  static Future<ResultTest> getResult(List<QuestionWithAnswers> result) async {
     final response = await RestClient.post(RestPaths.RESULT);
     if (response.statusCode == 200){
       return ResultTest.fromJson(json.decode(response.body));
     }
     return null;
-
   }
 }
