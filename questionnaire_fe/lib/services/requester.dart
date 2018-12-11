@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:questionnaire_fe/domain/constants.dart';
 import 'package:questionnaire_fe/domain/test.dart';
 import 'package:questionnaire_fe/domain/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,6 +43,10 @@ class AuthService {
       if(nonExpired) return true;
     }
     return false;
+  }
+
+  static Role getRole() {
+    return Role.fromValue(prefs.getString(StorageDataNames.ROLE));
   }
 }
 

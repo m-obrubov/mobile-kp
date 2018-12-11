@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:questionnaire_fe/domain/constants.dart';
 import 'package:questionnaire_fe/domain/test.dart';
 import 'package:questionnaire_fe/pages/button.dart';
 import 'package:questionnaire_fe/pages/filters.dart';
@@ -18,6 +19,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   bool _isAuthenticated = false;
+  Role _role;
   Test _test;
 
   @override
@@ -29,20 +31,20 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     _isAuthenticated = AuthService.isAuthenticated();
+    if(_isAuthenticated) {
+      _role = AuthService.getRole();
+    }
     var profileIcon;
     Widget exitButton;
     if(_isAuthenticated) {
-      profileIcon = <Widget>[
-        IconButton(
-            icon: Icon(Icons.warning),
-            color: Colors.yellow,
-            onPressed: () => moveWithHistory(context, new StatisticsFilterPage())
-        ),
-        IconButton(
-            icon: Icon(Icons.account_circle),
-            onPressed: () => moveWithHistory(context, new ProfilePage())
-        )
-      ];
+      if(_role == Role.STUDENT) {
+        profileIcon = <Widget>[
+          IconButton(
+              icon: Icon(Icons.account_circle),
+              onPressed: () => moveWithHistory(context, new ProfilePage())
+          )
+        ];
+      }
 
       exitButton = IconButton(
           icon: Icon(Icons.exit_to_app),
@@ -67,10 +69,18 @@ class _HomePageState extends State<HomePage> {
   Widget _getNormalScreen() {
     Widget bodyButtons;
     if(_isAuthenticated) {
-      bodyButtons = WideRaisedButton(
-        onPressed: () => moveWithHistoryClean(context, new QuestionPage() /* Страница с вопросами */),
-        text: "Начать тест",
-      );
+      if(_role == Role.STUDENT) {
+        bodyButtons = WideRaisedButton(
+            onPressed: () => moveWithHistoryClean(context, new QuestionPage()),
+            text: "Начать тест",
+        );
+      } else {
+        bodyButtons = WideRaisedButton(
+          onPressed: () => moveWithHistory(context, new StatisticsFilterPage()),
+          color: Colors.lightGreen,
+          text: "Статистика",
+        );
+      }
     } else {
       bodyButtons = Column(
         children: <Widget>[
