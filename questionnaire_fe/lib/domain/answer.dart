@@ -1,11 +1,11 @@
 class Answer {
    final int id;
-   final String value;
+   String value;
 
-   Answer(this.id, this.value); //Значение
+   Answer(this.id, {this.value}); //Значение
 
    factory Answer.fromJson(Map<String, dynamic> json) {
-     return new Answer(json['id'], json['value']);
+     return new Answer(json['id'], value: json['value']);
    }
 
    static List<Answer> listFromJson(List<dynamic> json) {

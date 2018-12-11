@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:questionnaire_fe/domain/profession.dart';
 import 'package:questionnaire_fe/domain/resultTest.dart';
 import 'package:questionnaire_fe/domain/test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

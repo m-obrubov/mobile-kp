@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:questionnaire_fe/domain/answer.dart';
 import 'package:questionnaire_fe/domain/question.dart';
+import 'package:questionnaire_fe/domain/test.dart';
 import 'package:questionnaire_fe/pages/button.dart';
 import 'package:questionnaire_fe/pages/navigation.dart';
 import 'package:questionnaire_fe/pages/result.dart';
@@ -13,27 +14,29 @@ class QuestionPage extends StatefulWidget {
 }
 
 class _QuestionPageState extends State<QuestionPage> {
+
+  Test _test;
   int _countQuestion; //Общее кол-во вопросов
-
-  QuestionWithAnswers _question;
+  QuestionWithAnswers _currentQuestion; //текущий вопрос
   var _answerUser; // ответ пользователя
+  List<QuestionWithAnswers> _questionsWithAnswers; //Список ответов на вопросы пользователя
 
-  _QuestionPageState() {
-    List<Answer> list = new List();
-    list.add(new Answer(1, "Спать!"));
-    list.add(new Answer(2, "Есть!"));
-    list.add(new Answer(3, "Не чего не хочу!"));
-    list.add(new Answer(4, "Рисовать"));
-    _question = new QuestionWithAnswers(1,"Чего ты хочешь?",1,list);
-    _countQuestion = 40;
+  _QuestionPageState();
+
+  @override
+  void initState() {
+    // TODO: достать тест
+    _test.questions.sort((o1,o2) => o1.numberInOrder.compareTo(o2.numberInOrder));
+    _countQuestion = _test.questions.length;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     List<Widget> listRadioListTile  = new List();
     Widget widgetRadioListTile;
-    for (int i = 0; i < _question.answer.length; i++) {
-      Answer answer = _question.answer[i];
+    for (int i = 0; i < _currentQuestion.answer.length; i++) {
+      Answer answer = _currentQuestion.answer[i];
       listRadioListTile.add (RadioListTile<String>(
         value: answer.id.toString(),
         groupValue: _answerUser,
@@ -51,7 +54,7 @@ class _QuestionPageState extends State<QuestionPage> {
     widgetRadioListTile = new Column(children: listRadioListTile);
     return Scaffold(
         appBar: AppBar(
-          title: Text("Вопрос " + _question.numberInOrder.toString() + " из " + _countQuestion.toString() + "."),
+          title: Text("Вопрос " + _currentQuestion.numberInOrder.toString() + " из " + _countQuestion.toString() + "."),
         ),
         body: SingleChildScrollView(
             child: Container(
@@ -59,7 +62,7 @@ class _QuestionPageState extends State<QuestionPage> {
               child: Column(
                 children: <Widget>[
                   Text(
-                      "\n" + _question.value + "\n",
+                      "\n" + _currentQuestion.value + "\n",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18.0
@@ -84,8 +87,15 @@ class _QuestionPageState extends State<QuestionPage> {
 
   void _submit() {
     if (_answerUser != null) {
-      //TODO вызвать переход на эту же страницу с новым вопросом
-      moveWithHistoryClean(context, new Result());
+      List<Answer> ansver = new List(1);
+      ansver.add(Answer(_answerUser)); //заворачиваем ответ пользователя
+      _questionsWithAnswers.add(new QuestionWithAnswers(_currentQuestion.id,ansver);
+      if (_currentQuestion.numberInOrder != _countQuestion) {
+        //TODO вызвать переход на эту же страницу с новым вопросом
+      } else {
+        //TODO вызов получения результата
+      moveWithHistoryClean(context, new ResultPage());
+      }
     }
   }
 

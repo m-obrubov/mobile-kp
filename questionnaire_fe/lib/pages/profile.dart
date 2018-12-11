@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:questionnaire_fe/domain/resultTest.dart';
 import 'package:questionnaire_fe/pages/edit_profile.dart';
 import 'package:questionnaire_fe/pages/navigation.dart';
 import 'package:questionnaire_fe/pages/result.dart';
@@ -9,22 +11,18 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
+  List<ResultTest> results;
+
+  @override
+  void initState() {
+    // TODO: Вынуть результаты
+    results = new List();
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    var results = <String>[
-      '21.10.2018\n'
-          'Предмет труда: человек\n'
-          'Характер труда: исполнительские профессии',
-      '23.10.2018\n'
-          'Предмет труда: техника\n'
-          'Характер труда: творческие профессии',
-      '22.10.2018\n'
-          'Предмет труда: знаковая система\n'
-          'Характер труда: исполнительские профессии',
-      '23.10.2018\n'
-          'Предмет труда: природа\n'
-          'Характер труда: творческие профессии'
-    ];
     return Scaffold(
       appBar: AppBar(
         title: Text('Профиль'),
@@ -78,9 +76,10 @@ class ProfilePageState extends State<ProfilePage> {
                 final index = i ~/ 2;
                 return ListTile(
                   title: Text(
-                      results[index]
+                    _getResultString(results[index])
                   ),
-                  onTap: () => moveWithHistory(context, new Result()),
+                  //todo вынуть конктретный результат
+                  onTap: () => moveWithHistory(context, new ResultPage(results[index])),
                   trailing: Icon(Icons.keyboard_arrow_right),
                 );
               },
@@ -90,6 +89,13 @@ class ProfilePageState extends State<ProfilePage> {
         ],
       ),
     );
+  }
+
+  String _getResultString(ResultTest result) {
+      return
+        DateFormat('yyyy-MM-dd  kk:mm').format(result.date)+'\n'
+          "Хочу: " + "Предмент труда" + result.resultWant.character.value + "Характер труда" + result.resultWant.subject.value + '\n'
+          "Могу: " + "Предмент труда" + result.resultCan.character.value + "Характер труда" + result.resultCan.subject.value;
   }
 
 }

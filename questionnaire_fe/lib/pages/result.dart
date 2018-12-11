@@ -7,11 +7,11 @@ import 'package:questionnaire_fe/domain/resultTest.dart';
 import 'package:questionnaire_fe/pages/home.dart';
 import 'package:questionnaire_fe/pages/navigation.dart';
 
-class Result extends StatelessWidget {
+class ResultPage extends StatelessWidget {
 
   final ResultTest _result;
 
-  Result(this._result);
+  ResultPage(this._result);
 
   @override
   Widget build(BuildContext context) {

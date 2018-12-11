@@ -2,16 +2,16 @@ import 'package:questionnaire_fe/domain/answer.dart';
 
 class Question {
   final int id;
-  final String value;
-  final int numberInOrder;
+  String value;
+  int numberInOrder;
 
-  Question(this.id, this.value, this.numberInOrder);
+  Question(this.id, {this.value, this.numberInOrder});
 
   factory Question.fromJson(Map<String, dynamic> json) {
     return new Question(
       json['id'],
-      json['value'],
-      json['number_in_order'],
+      value: json['value'],
+      numberInOrder: json['number_in_order'],
     );
   }
   static List<Question> listFromJson(List<dynamic> json) {
@@ -26,14 +26,14 @@ class Question {
 class QuestionWithAnswers extends Question {
   final List<Answer> answer;
 
-  QuestionWithAnswers(int id, String value, int numberInOrder, this.answer) : super(id, value, numberInOrder);
+  QuestionWithAnswers(int id, this.answer, {String value, int numberInOrder}) : super(id, value: value, numberInOrder: numberInOrder);
 
   factory QuestionWithAnswers.fromJson(Map<String, dynamic> json) {
     return new QuestionWithAnswers(
       json['id'],
-      json['value'],
-      json['number_in_order'],
-      Answer.listFromJson(json['answer'])
+      Answer.listFromJson(json['answer']),
+      value: json['value'],
+      numberInOrder: json['number_in_order'],
     );
   }
   static List<QuestionWithAnswers> listFromJson(List<dynamic> json) {
