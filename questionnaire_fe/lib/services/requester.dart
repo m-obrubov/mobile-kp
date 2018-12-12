@@ -86,8 +86,13 @@ class DataProvider {
   }
 
   //Записать ответ на сервер и получить результат тестирования
-  static Future<ResultTest> getResult(List<QuestionWithAnswers> result) async {
-    final response = await RestClient.post(RestPaths.RESULT);
+  static Future<ResultTest> getResult(List<QuestionWithAnswers> result, int idTest) async {
+
+    final response = await RestClient.post(RestPaths.RESULT,
+        body: json.encode(QuestionWithAnswers.toJsonResult(result, idTest)),
+        contentType: Http.JSON_CONTENT_TYPE,
+        auth: true
+    );
     if (response.statusCode == 200){
       return ResultTest.fromJson(json.decode(response.body));
     }

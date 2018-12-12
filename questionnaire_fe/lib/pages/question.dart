@@ -19,20 +19,26 @@ class _QuestionPageState extends State<QuestionPage> {
 
   Test _test;
   int _countQuestion; //Общее кол-во вопросов
-  QuestionWithAnswers _currentQuestion; //текущий вопрос
+  int _numberCurrentQuestion;
+  Question _currentQuestion; //текущий вопрос
   var _answerUser; // ответ пользователя
   List<QuestionWithAnswers> _questionsWithAnswers; //Список ответов на вопросы пользователя
+  List<Answer> _answer; //
 
   bool _loadingInProgress = false;
 
-  _QuestionPageState();
+  _QuestionPageState(){
+    _questionsWithAnswers = new List();
+  }
 
   @override
   void initState() {
-    // TODO: достать тест
+    _numberCurrentQuestion = 0;
     _test = DataProvider.getTestFromStorage();
     _test.questions.sort((o1,o2) => o1.numberInOrder.compareTo(o2.numberInOrder));
     _countQuestion = _test.questions.length;
+    _answer = _test.answers;
+    _currentQuestion = _test.questions[_numberCurrentQuestion];
     super.initState();
   }
 
@@ -40,10 +46,10 @@ class _QuestionPageState extends State<QuestionPage> {
   Widget build(BuildContext context) {
     List<Widget> listRadioListTile  = new List();
     Widget widgetRadioListTile;
-    for (int i = 0; i < _currentQuestion.answer.length; i++) {
-      Answer answer = _currentQuestion.answer[i];
-      listRadioListTile.add (RadioListTile<String>(
-        value: answer.id.toString(),
+    for (int i = 0; i < _answer.length; i++) {
+      Answer answer = _answer[i];
+      listRadioListTile.add (RadioListTile<int>(
+        value: answer.id,
         groupValue: _answerUser,
         onChanged: _handleChoice,
         title:
@@ -67,14 +73,16 @@ class _QuestionPageState extends State<QuestionPage> {
               padding: EdgeInsets.only(left: 2.0),
               child: Column(
                 children: <Widget>[
-                  Text(
-                      "\n" + _currentQuestion.value + "\n",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0
-                      )
+                  Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text(
+                        "\n" + _currentQuestion.value + "\n",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.0
+                        )
+                    ),
                   ),
-                  // TODO тут дожен появиться цикл
                   widgetRadioListTile,
                   Container(
                     padding: EdgeInsets.all(16.0),
@@ -95,16 +103,19 @@ class _QuestionPageState extends State<QuestionPage> {
 
   void _submit() {
     if (_answerUser != null) {
-      List<Answer> answer = new List(1);
+      List<Answer> answer = new List();
       answer.add(Answer(_answerUser)); //заворачиваем ответ пользователя
       _questionsWithAnswers.add(new QuestionWithAnswers(_currentQuestion.id,answer));
       if (_currentQuestion.numberInOrder != _countQuestion) {
-        //TODO вызвать переход на эту же страницу с новым вопросом
+        setState(() {
+          _answerUser = null;//
+          _currentQuestion = _test.questions[++_numberCurrentQuestion];
+        });
       } else {
         setState(() {
           _loadingInProgress = true;
         });
-        DataProvider.getResult(_questionsWithAnswers).then((res) {
+        DataProvider.getResult(_questionsWithAnswers,_test.id).then((res) {
           if (res != null) {
             moveWithHistoryClean(context, new ResultPage(res));
           } else {
@@ -112,10 +123,12 @@ class _QuestionPageState extends State<QuestionPage> {
           }
         });
       }
+    } else {
+      _showError("Ответ на вопрос обязателен!");
     }
   }
 
-  void _handleChoice(String value) {
+  void _handleChoice(int value) {
     setState(() {
       _answerUser = value;
     });

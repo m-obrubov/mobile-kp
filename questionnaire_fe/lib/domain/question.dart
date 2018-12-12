@@ -36,6 +36,29 @@ class QuestionWithAnswers extends Question {
       numberInOrder: json['number_in_order'],
     );
   }
+
+  static Map<String, dynamic> toJsonResult(List<QuestionWithAnswers> result,int idTest) {
+    return
+    {
+      "test": {
+        "id": idTest
+      },
+      "question_results": [
+        result.map((q) {
+          return {
+            "question": {
+              "id": q.id
+            },
+            "answer": {
+              "id": q.answer[0].id
+            }
+          };
+        })
+      ]
+    };
+  }
+
+
   static List<QuestionWithAnswers> listFromJson(List<dynamic> json) {
     List<QuestionWithAnswers> questionsWithAnswers = new List();
     for(dynamic d in json) {

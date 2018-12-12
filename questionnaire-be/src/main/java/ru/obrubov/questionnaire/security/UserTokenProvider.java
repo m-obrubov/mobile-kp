@@ -82,6 +82,7 @@ public class UserTokenProvider {
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(validity)
+                .setIssuer(user.getEmail())
                 .setSubject(user.getRole().toString())
                 .signWith(SignatureAlgorithm.HS256, questionnaireConfig.getTokenSecretKey()) //в кодировочке
                 .compact();
