@@ -59,20 +59,16 @@ class _LoginPageState extends State<LoginPage> {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
-      try {
-        setState(() {
-          _loadingInProgress = true;
-        });
-        AuthService.auth(_login, _password).then((res) {
-          if (res) {
-            Navigator.of(context).pop();
-          } else {
-            _showError("Неправильный логин или пароль");
-          }
-        });
-      } catch (e) {
-        _showError("Ошибка");
-      }
+      setState(() {
+        _loadingInProgress = true;
+      });
+      AuthService.auth(_login, _password).then((res) {
+        if (res) {
+          Navigator.of(context).pop();
+        } else {
+          _showError("Неправильный логин или пароль");
+        }
+      }).catchError((e) => _showError("Ошибка"));
     }
   }
 

@@ -20,6 +20,14 @@ class ResultTest {
       Result.fromJson(json['result_want']),
     );
   }
+
+  static List<ResultTest> listFromJson(List<dynamic> json) {
+    List<ResultTest> results = new List();
+    for(dynamic d in json) {
+      results.add(ResultTest.fromJson(d));
+    }
+    return results;
+  }
 }
 
 class Result{

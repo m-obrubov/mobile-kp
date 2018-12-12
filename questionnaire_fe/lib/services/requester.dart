@@ -85,6 +85,14 @@ class DataProvider {
     }
   }
 
+  static Future<User> getUserData() async {
+    final response = await RestClient.get(RestPaths.USER_DATA, auth: true);
+    if (response.statusCode == 200) {
+      return User.fromJson(json.decode(response.body));
+    }
+    return null;
+  }
+
   //Записать ответ на сервер и получить результат тестирования
   static Future<ResultTest> getResult(List<QuestionWithAnswers> result, int idTest) async {
 
@@ -95,6 +103,14 @@ class DataProvider {
     );
     if (response.statusCode == 200){
       return ResultTest.fromJson(json.decode(response.body));
+    }
+    return null;
+  }
+
+  static Future<List<ResultTest>> getUserResults() async {
+    final response = await RestClient.post(RestPaths.RESULTS_OWN, auth: true);
+    if (response.statusCode == 200){
+      return ResultTest.listFromJson(json.decode(response.body));
     }
     return null;
   }

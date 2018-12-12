@@ -11,8 +11,10 @@ class RestPaths {
 
   static const TOKEN = "/account/token";
   static const REGISTER = "/account/register";
-  static const AUTH_CHECK = "/account/check";
 
+  static const USER_DATA = "/user";
+
+  static const RESULTS_OWN = "/result";
   static const RESULT = "/result"; //получить и записть результат тестирования
   static const RESULT_ALL = "/result/all"; //получить по критериям
 

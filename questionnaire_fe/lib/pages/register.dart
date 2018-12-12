@@ -135,30 +135,25 @@ class RegisterPageState extends State<RegisterPage> {
         return;
       }
       form.save();
-      try{
-        setState(() {
-          _loadingInProgress = true;
-        });
-        User user = new User(
-          firstName: _name,
-          lastName: _surname,
-          age: _age,
-          city: _city,
-          gender: _gender,
-          email: _email,
-          password: _passwordController.text
-        );
-        DataProvider.register(user).then((res) {
-          if(res) {
-            Navigator.of(context).pop();
-          } else {
-            _showError("Регистрация не удалась");
-          }
-        });
-      } catch(e) {
-        _showError("Неожиданная ошибка");
-      }
-
+      setState(() {
+        _loadingInProgress = true;
+      });
+      User user = new User(
+        firstName: _name,
+        lastName: _surname,
+        age: _age,
+        city: _city,
+        gender: _gender,
+        email: _email,
+        password: _passwordController.text
+      );
+      DataProvider.register(user).then((res) {
+        if(res) {
+          Navigator.of(context).pop();
+        } else {
+          _showError("Регистрация не удалась");
+        }
+      }).catchError((e) => _showError("Неожиданная ошибка"));
     }
   }
 
