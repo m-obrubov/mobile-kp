@@ -36,6 +36,7 @@ class _QuestionPageState extends State<QuestionPage> {
     _numberCurrentQuestion = 0;
     _test = DataProvider.getTestFromStorage();
     _test.questions.sort((o1,o2) => o1.numberInOrder.compareTo(o2.numberInOrder));
+    _test.answers.sort((o1,o2) => o1.id.compareTo(o2.id));
     _countQuestion = _test.questions.length;
     _answer = _test.answers;
     _currentQuestion = _test.questions[_numberCurrentQuestion];
@@ -63,11 +64,16 @@ class _QuestionPageState extends State<QuestionPage> {
       );
     }
     widgetRadioListTile = new Column(children: listRadioListTile);
+    String textButton;
+    if (_currentQuestion.numberInOrder != _countQuestion){
+      textButton = "Ответить";
+    } else {
+      textButton = "Завершить тестирование";
+    }
     return Scaffold(
-        appBar: AppBar(
-          //TODO условие
-          title: Text("Вопрос " + _currentQuestion.numberInOrder.toString() + " из " + _countQuestion.toString() + "."),
-        ),
+      appBar: AppBar(
+        title: Text("Вопрос " + _currentQuestion.numberInOrder.toString() + " из " + _countQuestion.toString() + "."),
+      ),
         body: _loadingInProgress ? _getSpinner() : SingleChildScrollView(
             child: Container(
               padding: EdgeInsets.only(left: 2.0),
@@ -87,7 +93,7 @@ class _QuestionPageState extends State<QuestionPage> {
                   Container(
                     padding: EdgeInsets.all(16.0),
                     child: WideRaisedButton(
-                        text: "Ответить",
+                        text: textButton,
                         onPressed: _submit,
                         fontSize: 20.0,
                     )
@@ -108,7 +114,7 @@ class _QuestionPageState extends State<QuestionPage> {
       _questionsWithAnswers.add(new QuestionWithAnswers(_currentQuestion.id,answer));
       if (_currentQuestion.numberInOrder != _countQuestion) {
         setState(() {
-          _answerUser = null;//
+          _answerUser = null;
           _currentQuestion = _test.questions[++_numberCurrentQuestion];
         });
       } else {

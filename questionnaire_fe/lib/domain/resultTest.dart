@@ -12,10 +12,11 @@ class ResultTest {
   ResultTest(this.id, this.questionWithAnswersUser, this.date, this.resultCan, this.resultWant);
 
   factory ResultTest.fromJson(Map<String, dynamic> json) {
+    String dataTime = json['passed_at']+"Z";
     return new ResultTest(
       json['id'],
       QuestionWithAnswers.listFromJson(json['question_results']),
-      DateTime.parse(json['date']),
+      DateTime.parse(dataTime),
       Result.fromJson(json['result_can']),
       Result.fromJson(json['result_want']),
     );

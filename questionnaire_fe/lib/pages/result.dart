@@ -42,42 +42,6 @@ class ResultPage extends StatelessWidget {
       );
     }
 
-    for (int i = 0; i < _result.resultWant.professions.length; i++) {
-      String _professionsDescription = _result.resultWant.professions[i].description;
-      String _professionsName = _result.resultWant.professions[i].value;
-      listProfessionsWant.add (
-          DropdownButton<String>(
-            items: <String>[_professionsName,_professionsDescription].map((String value) {
-              return new DropdownMenuItem<String>(
-                value: value,
-                child: new Text(value),
-              );
-            }).toList(),
-            value: _professionsName,
-            isExpanded: true,
-            onChanged: (_) {},
-          )
-      );
-    }
-
-    for (int i = 0; i < _result.resultCan.professions.length; i++) {
-      String _professionsDescription = _result.resultCan.professions[i].description;
-      String _professionsName = _result.resultCan.professions[i].value;
-      listProfessionsCan.add (
-          DropdownButton<String>(
-            items: <String>[_professionsName,_professionsDescription].map((String value) {
-              return new DropdownMenuItem<String>(
-                value: value,
-                child: new Text(value),
-              );
-            }).toList(),
-            value: _professionsName,
-            isExpanded: true,
-            onChanged: (_) {},
-          )
-      );
-    }
-
     for (int i = 0; i < _result.resultCan.professions.length; i++) {
       String _professionsDescription = _result.resultCan.professions[i].description;
       String _professionsName = _result.resultCan.professions[i].value;
@@ -185,8 +149,8 @@ class ResultPage extends StatelessWidget {
                           textAlign: TextAlign.left,
                         ),
                         Text(
-                          'Предмет труда: ' + _result.resultCan.character.value + '\n'
-                              'Характер труда: ' + _result.resultCan.subject.value,
+                          'Предмет труда: ' + _result.resultWant.character.value + '\n'
+                              'Характер труда: ' + _result.resultWant.subject.value,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18.0
@@ -194,7 +158,7 @@ class ResultPage extends StatelessWidget {
                           textAlign: TextAlign.left,
                         ),
                         Text(
-                          '\n' + _result.resultCan.description + '\n',
+                          '\n' + _result.resultWant.description + '\n',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18.0
