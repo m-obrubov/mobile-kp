@@ -17,16 +17,6 @@ class ProfilePageState extends State<ProfilePage> {
   List<ResultTest> _results;
   bool _loadingInProgress = true;
 
-  @override
-  void initState() {
-    _loadData().then((_) {
-      setState(() {
-        _loadingInProgress = false;
-      });
-    });
-    super.initState();
-  }
-
   Future<void> _loadData() async {
     _user = await DataProvider.getUserData();
     _results = await DataProvider.getUserResults();
@@ -34,6 +24,11 @@ class ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    _loadData().then((_) {
+      setState(() {
+        _loadingInProgress = false;
+      });
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -41,7 +36,7 @@ class ProfilePageState extends State<ProfilePage> {
         actions: _loadingInProgress ? [] : <Widget>[
           IconButton(
               icon: Icon(Icons.edit),
-              onPressed: () => moveWithHistory(context, new EditProfilePage())
+              onPressed: () => moveWithHistory(context, new EditProfilePage(user: _user))
           )
         ],
       ),

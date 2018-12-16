@@ -4,6 +4,7 @@ import 'package:questionnaire_fe/domain/question.dart';
 import 'package:questionnaire_fe/domain/resultTest.dart';
 import 'package:questionnaire_fe/domain/test.dart';
 import 'package:questionnaire_fe/domain/user.dart';
+import 'package:questionnaire_fe/exception/exceptions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'rest.dart';
 import 'package:questionnaire_fe/constants.dart';
@@ -83,6 +84,19 @@ class DataProvider {
       return User.fromJson(json.decode(response.body));
     }
     return null;
+  }
+
+  static Future<bool> updateUserData(User user) async {
+    String j = json.encode(user.toJsonUpdate());
+    final response = await RestClient.put(RestPaths.UPDATE_USER,
+        body: j,
+        contentType: Http.JSON_CONTENT_TYPE,
+        auth: true);
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      throw new RestCallException(json.decode(response.body));
+    }
   }
 
   //Записать ответ на сервер и получить результат тестирования

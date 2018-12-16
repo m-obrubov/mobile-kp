@@ -13,6 +13,7 @@ class RestPaths {
   static const REGISTER = "/account/register";
 
   static const USER_DATA = "/user";
+  static const UPDATE_USER = "/user";
 
   static const RESULTS_OWN = "/result";
   static const RESULT = "/result"; //получить и записть результат тестирования

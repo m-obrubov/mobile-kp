@@ -204,7 +204,7 @@ class RegisterPageState extends State<RegisterPage> {
     }
 
     int age = double.parse(val).round();
-    if(age <= 0 && age > 100) {
+    if(age <= 0 || age > 100) {
       return 'Введите корректный возраст';
     }
 

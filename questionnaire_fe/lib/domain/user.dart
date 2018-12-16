@@ -48,6 +48,15 @@ class User {
         "password": password
       };
 
+  Map<String, dynamic> toJsonUpdate() =>
+      {
+        "first_name": firstName,
+        "last_name": lastName,
+        "age": age,
+        "city": city,
+        "gender": gender.value
+      };
+
   Map<String, dynamic> compareFieldsAndGetJson(User updatedUser) {
     Map<String, dynamic> changedFields = new Map();
 
