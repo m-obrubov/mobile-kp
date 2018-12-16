@@ -36,14 +36,14 @@ public class TokenService {
         if(!accessResolver.getAccessByPassword(user.getPassword(), password)) {
             throw new PermissionDeniedException("Доступ запрещен. Пароли не совпадают");
         }
-        Token token = tokenProvider.generate(login);//, password
+        Token token = tokenProvider.generate(login);
         AuthInfo authInfo = new AuthInfo();
         authInfo.setUser(user);
         authInfo.setToken(token.getToken());
-        if (authInfoDataAccess.create(authInfo) != null) {
-            return token;
+        if (authInfoDataAccess.create(authInfo) == null) {
+            return null;
         }
-        return null;
+        return token;
     }
 
 }

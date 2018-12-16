@@ -74,18 +74,13 @@ public class UserTokenProvider {
 
     public Token generate(String login) {
         User user = userDataAccess.getByEmail(login);
-        Claims claims = Jwts.claims().setSubject(user.getEmail());
-        Date now = new Date();
-        long lifetime =  questionnaireConfig.getTokenExpireMinutes();
-        Date validity = new Date(now.getTime()+ lifetime*60000);// действительность в милисикундах
         String token = Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(now)
-                .setExpiration(validity)
+                .setSubject(user.getEmail())
+                .setIssuedAt(new Date())
                 .setIssuer(user.getEmail())
                 .setSubject(user.getRole().toString())
                 .signWith(SignatureAlgorithm.HS256, questionnaireConfig.getTokenSecretKey()) //в кодировочке
                 .compact();
-        return new Token(token,lifetime,user.getRole());
+        return new Token(token, user.getRole());
     }
 }

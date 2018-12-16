@@ -22,9 +22,9 @@ class ResultTest {
     );
   }
 
-  static List<ResultTest> listFromJson(List<dynamic> json) {
+  static List<ResultTest> listFromJson(Map<String, dynamic> json) {
     List<ResultTest> results = new List();
-    for(dynamic d in json) {
+    for(dynamic d in json['results']) {
       results.add(ResultTest.fromJson(d));
     }
     return results;

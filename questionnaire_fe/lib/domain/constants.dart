@@ -17,6 +17,19 @@ class Gender extends Constant {
     }
   }
 
+  factory Gender.fromValue(String value) {
+    switch(value) {
+      case "MALE":
+        return MALE;
+        break;
+      case "FEMALE":
+        return FEMALE;
+        break;
+      default:
+        return null;
+    }
+  }
+
   bool equals(Gender other) {
     return other.value == value && other.title == title;
   }

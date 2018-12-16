@@ -17,13 +17,9 @@ class AuthService {
     if (response.statusCode == 200) {
       var tokenJson = json.decode(response.body)["token"];
       String token = tokenJson["token"];
-      int lifetime = tokenJson["lifetime"];
       String role = tokenJson["role"];
-      DateTime currentDateTime = DateTime.now();
       prefs.setString(StorageDataNames.TOKEN, token);
-      prefs.setInt(StorageDataNames.TOKEN_LIFETIME, lifetime);
       prefs.setString(StorageDataNames.ROLE, role);
-      prefs.setString(StorageDataNames.TOKEN_COMING_TIME, currentDateTime.toString());
       return true;
     } else {
       return false;
@@ -32,17 +28,13 @@ class AuthService {
 
   static void logout()  {
     prefs.remove(StorageDataNames.TOKEN);
-    prefs.remove(StorageDataNames.TOKEN_LIFETIME);
     prefs.remove(StorageDataNames.ROLE);
-    prefs.remove(StorageDataNames.TOKEN_COMING_TIME);
   }
 
   static bool isAuthenticated()  {
-    int tokenLifeTime = prefs.getInt(StorageDataNames.TOKEN_LIFETIME);
-    String tokenComingTime = prefs.getString(StorageDataNames.TOKEN_COMING_TIME);
-    if (tokenComingTime != null && tokenLifeTime != null) {
-      bool nonExpired = (DateTime.parse(tokenComingTime).difference(DateTime.now()).inMinutes < tokenLifeTime);
-      if(nonExpired) return true;
+    var token = prefs.getString(StorageDataNames.TOKEN);
+    if (token != null) {
+      return true;
     }
     return false;
   }
@@ -102,15 +94,15 @@ class DataProvider {
         contentType: Http.JSON_CONTENT_TYPE,
         auth: true
     );
-    if (response.statusCode == 200){
+    if (response.statusCode == 200) {
       return ResultTest.fromJson(json.decode(response.body));
     }
     return null;
   }
 
   static Future<List<ResultTest>> getUserResults() async {
-    final response = await RestClient.post(RestPaths.RESULTS_OWN, auth: true);
-    if (response.statusCode == 200){
+    final response = await RestClient.get(RestPaths.RESULTS_OWN, auth: true);
+    if (response.statusCode == 200) {
       return ResultTest.listFromJson(json.decode(response.body));
     }
     return null;

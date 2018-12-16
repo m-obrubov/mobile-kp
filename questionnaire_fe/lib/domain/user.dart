@@ -31,9 +31,9 @@ class User {
       lastName: json["last_name"],
       age: json["age"],
       city: json["city"],
-      gender: Gender.fromTitle(json["gender"]),
+      gender: Gender.fromValue(json["gender"]),
       email: json["email"],
-      createdAt: json["created_at"]
+      createdAt: DateTime.parse(json["created_at"])
     );
   }
 

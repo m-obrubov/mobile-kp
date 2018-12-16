@@ -83,7 +83,7 @@ class ProfilePageState extends State<ProfilePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                _user != null ? _user.firstName + _user.lastName : "",
+                _user != null ? _user.firstName + " " + _user.lastName : "",
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
@@ -93,7 +93,7 @@ class ProfilePageState extends State<ProfilePage> {
                 height: 16.0,
               ),
               Text(
-                _user != null ? _user.age : "",
+                _user != null ? "Лет: " + _user.age.toString() : "",
                 style: TextStyle(
                   fontSize: 18.0,
                 ),
@@ -102,7 +102,16 @@ class ProfilePageState extends State<ProfilePage> {
                 height: 16.0,
               ),
               Text(
-                _user != null ? _user.city : "",
+                _user != null ? "Город: " + _user.city : "",
+                style: TextStyle(
+                  fontSize: 16.0,
+                ),
+              ),
+              SizedBox(
+                height: 16.0,
+              ),
+              Text(
+                _user != null ? "Пол: " + _user.gender.title : "",
                 style: TextStyle(
                   fontSize: 16.0,
                 ),
@@ -116,10 +125,9 @@ class ProfilePageState extends State<ProfilePage> {
   }
 
   String _getResultString(ResultTest result) {
-      return
-        DateFormat('yyyy-MM-dd  kk:mm').format(result.date)+'\n'
-          "Хочу: " + "Предмент труда" + result.resultWant.character.value + "Характер труда" + result.resultWant.subject.value + '\n'
-          "Могу: " + "Предмент труда" + result.resultCan.character.value + "Характер труда" + result.resultCan.subject.value;
+      return DateFormat('yyyy-MM-dd  kk:mm').format(result.date)+'\n'
+          "Хочу: " + "Предмент труда \"" + result.resultWant.character.title + "\", Характер труда \"" + result.resultWant.subject.title + '\"\n'
+          "Могу: " + "Предмент труда \"" + result.resultCan.character.title + "\", Характер труда \"" + result.resultCan.subject.title + '\"';
   }
 
 }
