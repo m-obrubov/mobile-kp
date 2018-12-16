@@ -1,17 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:questionnaire_fe/domain/answer.dart';
-import 'package:questionnaire_fe/domain/profession.dart';
-import 'package:questionnaire_fe/domain/question.dart';
 import 'package:questionnaire_fe/domain/resultTest.dart';
 import 'package:questionnaire_fe/pages/home.dart';
 import 'package:questionnaire_fe/pages/navigation.dart';
 
-class ResultPage extends StatelessWidget {
+class ResultPage extends StatefulWidget {
 
   final ResultTest _result;
 
   ResultPage(this._result);
+
+  @override
+  State<StatefulWidget> createState() => new _ResultPage(_result);
+
+}
+
+class _ResultPage extends State<ResultPage> with SingleTickerProviderStateMixin {
+
+  final ResultTest _result;
+  TabController _tabController;
+
+  _ResultPage(this._result);
+
+
+  @override
+  void initState() {
+    _tabController = new TabController(vsync: this, length: 2);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,139 +118,140 @@ class ResultPage extends StatelessWidget {
       )
     ];
     //not authenticate
+    return Scaffold(
+        appBar: AppBar(
+          bottom: TabBar(
+            tabs: [
+              Tab(icon: Icon(Icons.accessibility),text: "Результаты",),
+              Tab(icon: Icon(Icons.assignment_turned_in),text: "Мои ответы",)
+            ],
+            controller: _tabController,
+          ),
+          title: Text('Страница результата'),
+          actions: profileIcon,
+        ),
+        body: TabBarView(
+            controller: _tabController,
+            children: [
+              SingleChildScrollView(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Image.asset(
+                      'images/logo.png',
+                      alignment: Alignment.center,
+                      width: 100.0,
+                      height: 100.0,
+                    ),
+                    Text(
+                      '\nПоздравлю вы завершили тестирование!\n',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 21.0
 
-
-    return MaterialApp(
-        home: DefaultTabController(
-            length: 2,
-            child: Scaffold(
-                appBar: AppBar(
-                  bottom: TabBar(
-                    tabs: [
-                      Tab(icon: Icon(Icons.accessibility),text: "Результаты",),
-                      Tab(icon: Icon(Icons.assignment_turned_in),text: "Мои ответы",)
-                    ],
-                  ),
-                  title: Text('Страница результата'),
-                  actions: profileIcon,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    Divider(),
+                    Text(
+                      'Вы можите: ',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      'Предмет труда: ' + _result.resultWant.character.value + '\n'
+                          'Характер труда: ' + _result.resultWant.subject.value,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      '\n' + _result.resultWant.description + '\n',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0
+                      ),
+                      textAlign: TextAlign.justify,
+                    ),
+                    Divider(),
+                    Text(
+                      '\nСписок профессий подходящих вам:\n',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0
+                      ),
+                      textAlign: TextAlign.justify,
+                    ),
+                    widgetProfessionsWant,
+                    Text(
+                      'Вы хотите: ',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      'Предмет труда: ' + _result.resultCan.character.value + '\n'
+                          'Характер труда: ' + _result.resultCan.subject.value,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      '\n' + _result.resultCan.description + '\n',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0
+                      ),
+                      textAlign: TextAlign.justify,
+                    ),
+                    Divider(),
+                    Text(
+                      '\nСписок профессий подходящих вам:\n',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0
+                      ),
+                      textAlign: TextAlign.justify,
+                    ),
+                    widgetProfessionsCan,
+                  ],
                 ),
-                body: TabBarView(children: [
-                  SingleChildScrollView(
-                    padding: EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Image.asset(
-                          'images/logo.png',
-                          alignment: Alignment.center,
-                          width: 100.0,
-                          height: 100.0,
-                        ),
-                        Text(
-                          '\nПоздравлю вы завершили тестирование!\n',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 21.0
-
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        Divider(),
-                        Text(
-                          'Вы можите: ',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          'Предмет труда: ' + _result.resultWant.character.value + '\n'
-                              'Характер труда: ' + _result.resultWant.subject.value,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          '\n' + _result.resultWant.description + '\n',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0
-                          ),
-                          textAlign: TextAlign.justify,
-                        ),
-                        Divider(),
-                        Text(
-                          '\nСписок профессий подходящих вам:\n',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0
-                          ),
-                          textAlign: TextAlign.justify,
-                        ),
-                        widgetProfessionsWant,
-                        Text(
-                          'Вы хотите: ',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          'Предмет труда: ' + _result.resultCan.character.value + '\n'
-                              'Характер труда: ' + _result.resultCan.subject.value,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          '\n' + _result.resultCan.description + '\n',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0
-                          ),
-                          textAlign: TextAlign.justify,
-                        ),
-                        Divider(),
-                        Text(
-                          '\nСписок профессий подходящих вам:\n',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0
-                          ),
-                          textAlign: TextAlign.justify,
-                        ),
-                        widgetProfessionsCan,
-                      ],
+              ),
+              SingleChildScrollView(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "\nВаш тест пройден: " + DateFormat('yyyy-MM-dd   kk:mm').format(_result.date) + "\n",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0
+                      ),
+                      textAlign: TextAlign.justify,
                     ),
-                  ),
-                  SingleChildScrollView(
-                    padding: EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "\nВаш тест пройден: " + DateFormat('yyyy-MM-dd   kk:mm').format(_result.date) + "\n",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0
-                          ),
-                          textAlign: TextAlign.justify,
-                        ),
-                        widgetResultQuestions,
-                      ],
-                    ),
-                  )
-                ])
-            )
+                    widgetResultQuestions,
+                  ],
+                ),
+              )
+            ]
         )
     );
+  }
 
-
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 }

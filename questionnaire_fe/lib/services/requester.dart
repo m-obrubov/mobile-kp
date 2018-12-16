@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:intl/intl.dart';
 import 'package:questionnaire_fe/domain/constants.dart';
 import 'package:questionnaire_fe/domain/question.dart';
 import 'package:questionnaire_fe/domain/resultTest.dart';
@@ -116,6 +117,38 @@ class DataProvider {
 
   static Future<List<ResultTest>> getUserResults() async {
     final response = await RestClient.get(RestPaths.RESULTS_OWN, auth: true);
+    if (response.statusCode == 200) {
+      return ResultTest.listFromJson(json.decode(response.body));
+    }
+    return null;
+  }
+
+  static Future<List<ResultTest>> getStatistics({
+    DateTime dateFrom,
+    DateTime dateTo,
+    String city,
+    Gender gender,
+    int ageFrom,
+    int ageTo
+  }) async {
+    var dateFormatter = new DateFormat('d-M-y');
+    Map<String, String> params = new Map();
+    params.putIfAbsent("date_from", () => dateFormatter.format(dateFrom));
+    params.putIfAbsent("date_to", () => dateFormatter.format(dateTo));
+    if(city != null) {
+      params.putIfAbsent("city", () => city);
+    }
+    if(gender != null) {
+      params.putIfAbsent("gender", () => gender.value);
+    }
+    if(city != null) {
+      params.putIfAbsent("city", () => city);
+    }
+    if(ageFrom != null && ageTo != null) {
+      params.putIfAbsent("age_from", () => ageFrom.toString());
+      params.putIfAbsent("age_to", () => ageTo.toString());
+    }
+    final response = await RestClient.get(RestPaths.RESULT_ALL, params: params, auth: true);
     if (response.statusCode == 200) {
       return ResultTest.listFromJson(json.decode(response.body));
     }

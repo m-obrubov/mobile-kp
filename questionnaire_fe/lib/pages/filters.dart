@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:questionnaire_fe/domain/constants.dart';
+import 'package:questionnaire_fe/domain/resultTest.dart';
 import 'package:questionnaire_fe/pages/button.dart';
 import 'package:questionnaire_fe/pages/navigation.dart';
 import 'package:questionnaire_fe/pages/statistics.dart';
+import 'package:questionnaire_fe/services/requester.dart';
 
 class StatisticsFilterPage extends StatefulWidget {
   @override
@@ -11,12 +13,14 @@ class StatisticsFilterPage extends StatefulWidget {
 }
 
 class _StatisticsFilterPageState extends State<StatisticsFilterPage> {
-  DateTime _dateFrom = DateTime.now();
+  DateTime _dateFrom = DateTime.now().subtract(new Duration(days: 365));
   DateTime _dateTo = DateTime.now();
   TextEditingController _cityController = new TextEditingController();
   Constant _gender;
   TextEditingController _ageFromController = new TextEditingController();
   TextEditingController _ageToController = new TextEditingController();
+
+  bool _loadingInProgress = false;
 
   final _textStyle = TextStyle(fontSize: 18.0);
 
@@ -26,7 +30,7 @@ class _StatisticsFilterPageState extends State<StatisticsFilterPage> {
       appBar: AppBar(
         title: Text('Фильтры'),
       ),
-      body: SingleChildScrollView(
+      body: _loadingInProgress ? _getSpinner() : SingleChildScrollView(
         padding: new EdgeInsets.all(16.0),
         scrollDirection: Axis.vertical,
         child: Column(
@@ -126,7 +130,7 @@ class _StatisticsFilterPageState extends State<StatisticsFilterPage> {
             WideRaisedButton(
               onPressed: () {
                 setState(() {
-                  _dateFrom = DateTime.now();
+                  _dateFrom = DateTime.now().subtract(new Duration(days: 365));
                   _dateTo = DateTime.now();
                   _cityController.text = '';
                   _gender = null;
@@ -139,7 +143,24 @@ class _StatisticsFilterPageState extends State<StatisticsFilterPage> {
               textColor: Colors.black,
             ),
             WideRaisedButton(
-              onPressed: () => moveWithHistory(context, new StatisticsPage()),
+              onPressed: () {
+                setState(() {
+                  _loadingInProgress = true;
+                });
+                DataProvider.getStatistics(
+                  dateFrom: _dateFrom,
+                  dateTo: _dateTo,
+                  city: _cityController.text != '' ? _cityController.text : null,
+                  gender: _gender != null ? _gender : null,
+                  ageFrom: _ageFromController.text != '' ? int.parse(_ageFromController.text) : null,
+                  ageTo: _ageToController.text != '' ? int.parse(_ageToController.text) : null
+                ).then((List<ResultTest> _results) {
+                  moveWithHistory(context, new StatisticsPage(results: _results));
+                  setState(() {
+                    _loadingInProgress = false;
+                  });
+                });
+              },
               text: "Найти",
             ),
           ],
@@ -147,6 +168,8 @@ class _StatisticsFilterPageState extends State<StatisticsFilterPage> {
       ),
     );
   }
+
+  Widget _getSpinner() => new Center(child: CircularProgressIndicator());
 }
 
 class _DatePicker extends StatelessWidget {

@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:questionnaire_fe/domain/resultTest.dart';
 import 'package:questionnaire_fe/pages/navigation.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:questionnaire_fe/pages/result.dart';
 
 
 class StatisticsPage extends StatefulWidget {
@@ -15,7 +16,9 @@ class StatisticsPage extends StatefulWidget {
 
 }
 
-class _StatisticsPageState extends State<StatisticsPage> {
+class _StatisticsPageState extends State<StatisticsPage> with SingleTickerProviderStateMixin {
+
+  TabController _tabController;
 
   final List<ResultTest> _results;
   List<charts.Series> seriesList;
@@ -105,160 +108,153 @@ class _StatisticsPageState extends State<StatisticsPage> {
     animate = false;
   }
 
+  @override
+  void initState() {
+    _tabController = new TabController(vsync: this, length: 2);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    _search();
-    return MaterialApp(
-        home: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-            appBar: AppBar(
-                bottom: TabBar(
-                  tabs: [
-                    Tab(icon: Icon(Icons.youtube_searched_for),text: "Результаты поиска",),
-                    Tab(icon: Icon(Icons.equalizer),text: "Графики",)
-                  ],
-                ),
-            title: Text('Статистика'),
+    return Scaffold(
+        appBar: AppBar(
+          bottom: TabBar(
+            tabs: [
+              Tab(icon: Icon(Icons.youtube_searched_for),text: "Результаты поиска",),
+              Tab(icon: Icon(Icons.equalizer),text: "Графики",)
+            ],
+            controller: _tabController,
+          ),
+          title: Text('Статистика'),
         ),
-            body: TabBarView(children: [
+        body: TabBarView(
+            controller: _tabController,
+            children: [
               _resultList(),
-            SingleChildScrollView(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                      padding: new EdgeInsets.all(32.0),
-                      child: new SizedBox(
-                        height: 300.0,
-                        child: charts.PieChart(seriesList, animate: animate)
-                      )
-                  ),
-                  Padding(
-                      padding: new EdgeInsets.all(32.0),
-                      child: new SizedBox(
-                          height: 300.0,
-                          child: charts.PieChart(seriesList,
-                              animate: animate,
-                              defaultRenderer: new charts.ArcRendererConfig(
-                                  arcWidth: 60,
-                                  arcRendererDecorators: [new charts.ArcLabelDecorator()]))
-                      )
-                  ),
-                  Padding(
-                      padding: new EdgeInsets.all(32.0),
-                      child: new SizedBox(
-                          height: 300.0,
-                          child: charts.PieChart(seriesList,
-                              animate: animate,
-                              defaultRenderer: new charts.ArcRendererConfig(
-                                  arcWidth: 30, startAngle: 4 / 5 * 3.14, arcLength: 7 / 5 * 3.14))),
-                  ),
-                  Padding(
-                      padding: new EdgeInsets.all(32.0),
-                      child: new SizedBox(
-                          height: 300.0,
-                          child: charts.BarChart(
-                            seriesList2,
-                            animate: animate,
-                            defaultRenderer: new charts.BarRendererConfig(
-                                cornerStrategy: const charts.ConstCornerStrategy(30)),
-                          )
-                      )
-                  ),
-                  Padding(
-                      padding: new EdgeInsets.all(32.0),
-                      child: new SizedBox(
-                          height: 300.0,
-                          child: charts.TimeSeriesChart(
-                            seriesList3,
-                            animate: animate,
-                            dateTimeFactory: const charts.LocalDateTimeFactory(),
-                          )
-                      )
-                  ),
-                  Padding(
-                      padding: new EdgeInsets.all(32.0),
-                      child: new SizedBox(
-                          height: 300.0,
-                          child: charts.BarChart(
-                            seriesList2,
-                            animate: animate,
-                            barGroupingType: charts.BarGroupingType.grouped,
-                            vertical: false,
-                            primaryMeasureAxis: new charts.NumericAxisSpec(
-                                tickProviderSpec:
-                                new charts.BasicNumericTickProviderSpec(desiredTickCount: 3)),
-                            secondaryMeasureAxis: new charts.NumericAxisSpec(
-                                tickProviderSpec:
-                                new charts.BasicNumericTickProviderSpec(desiredTickCount: 3)),
-                          )
-                      )
-                  ),
-                  Padding(
-                      padding: new EdgeInsets.all(32.0),
-                      child: new SizedBox(
-                          height: 300.0,
-                          child: charts.BarChart(
-                            seriesList2,
-                            animate: animate,
-                            primaryMeasureAxis: new charts.NumericAxisSpec(
-                                renderSpec: new charts.SmallTickRendererSpec(
-                                  // Tick and Label styling here.
-                                )),
-                          )
-                      )
-                  ),
-                  Padding(
-                      padding: new EdgeInsets.all(32.0),
-                      child: new SizedBox(
-                          height: 300.0,
-                          child: charts.LineChart(seriesList,
-                              defaultRenderer:
-                              new charts.LineRendererConfig(includeArea: true, stacked: true),
-                              animate: animate)
-                      )
-                  ),
-                  Padding(
-                      padding: new EdgeInsets.all(32.0),
-                      child: new SizedBox(
-                          height: 300.0,
-                          child: charts.BarChart(seriesList2, animate: animate)
-                      )
-                  ),
-                  Padding(
-                      padding: new EdgeInsets.all(32.0),
-                      child: new SizedBox(
-                          height: 300.0,
-                          child: charts.TimeSeriesChart(
-                            seriesList3,
-                            animate: animate,
-                            defaultRenderer: new charts.BarRendererConfig<DateTime>(),
-                            domainAxis: new charts.DateTimeAxisSpec(usingBarRenderer: true),
-                            defaultInteractions: false,
-                            behaviors: [new charts.SelectNearest(), new charts.DomainHighlighter()],
-                          )
-                      )
-                  ),
-                ]
+              SingleChildScrollView(
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                            padding: new EdgeInsets.all(32.0),
+                            child: new SizedBox(
+                                height: 300.0,
+                                child: charts.PieChart(seriesList, animate: animate)
+                            )
+                        ),
+                        Padding(
+                            padding: new EdgeInsets.all(32.0),
+                            child: new SizedBox(
+                                height: 300.0,
+                                child: charts.PieChart(seriesList,
+                                    animate: animate,
+                                    defaultRenderer: new charts.ArcRendererConfig(
+                                        arcWidth: 60,
+                                        arcRendererDecorators: [new charts.ArcLabelDecorator()]))
+                            )
+                        ),
+                        Padding(
+                          padding: new EdgeInsets.all(32.0),
+                          child: new SizedBox(
+                              height: 300.0,
+                              child: charts.PieChart(seriesList,
+                                  animate: animate,
+                                  defaultRenderer: new charts.ArcRendererConfig(
+                                      arcWidth: 30, startAngle: 4 / 5 * 3.14, arcLength: 7 / 5 * 3.14))),
+                        ),
+                        Padding(
+                            padding: new EdgeInsets.all(32.0),
+                            child: new SizedBox(
+                                height: 300.0,
+                                child: charts.BarChart(
+                                  seriesList2,
+                                  animate: animate,
+                                  defaultRenderer: new charts.BarRendererConfig(
+                                      cornerStrategy: const charts.ConstCornerStrategy(30)),
+                                )
+                            )
+                        ),
+                        Padding(
+                            padding: new EdgeInsets.all(32.0),
+                            child: new SizedBox(
+                                height: 300.0,
+                                child: charts.TimeSeriesChart(
+                                  seriesList3,
+                                  animate: animate,
+                                  dateTimeFactory: const charts.LocalDateTimeFactory(),
+                                )
+                            )
+                        ),
+                        Padding(
+                            padding: new EdgeInsets.all(32.0),
+                            child: new SizedBox(
+                                height: 300.0,
+                                child: charts.BarChart(
+                                  seriesList2,
+                                  animate: animate,
+                                  barGroupingType: charts.BarGroupingType.grouped,
+                                  vertical: false,
+                                  primaryMeasureAxis: new charts.NumericAxisSpec(
+                                      tickProviderSpec:
+                                      new charts.BasicNumericTickProviderSpec(desiredTickCount: 3)),
+                                  secondaryMeasureAxis: new charts.NumericAxisSpec(
+                                      tickProviderSpec:
+                                      new charts.BasicNumericTickProviderSpec(desiredTickCount: 3)),
+                                )
+                            )
+                        ),
+                        Padding(
+                            padding: new EdgeInsets.all(32.0),
+                            child: new SizedBox(
+                                height: 300.0,
+                                child: charts.BarChart(
+                                  seriesList2,
+                                  animate: animate,
+                                  primaryMeasureAxis: new charts.NumericAxisSpec(
+                                      renderSpec: new charts.SmallTickRendererSpec(
+                                        // Tick and Label styling here.
+                                      )),
+                                )
+                            )
+                        ),
+                        Padding(
+                            padding: new EdgeInsets.all(32.0),
+                            child: new SizedBox(
+                                height: 300.0,
+                                child: charts.LineChart(seriesList,
+                                    defaultRenderer:
+                                    new charts.LineRendererConfig(includeArea: true, stacked: true),
+                                    animate: animate)
+                            )
+                        ),
+                        Padding(
+                            padding: new EdgeInsets.all(32.0),
+                            child: new SizedBox(
+                                height: 300.0,
+                                child: charts.BarChart(seriesList2, animate: animate)
+                            )
+                        ),
+                        Padding(
+                            padding: new EdgeInsets.all(32.0),
+                            child: new SizedBox(
+                                height: 300.0,
+                                child: charts.TimeSeriesChart(
+                                  seriesList3,
+                                  animate: animate,
+                                  defaultRenderer: new charts.BarRendererConfig<DateTime>(),
+                                  domainAxis: new charts.DateTimeAxisSpec(usingBarRenderer: true),
+                                  defaultInteractions: false,
+                                  behaviors: [new charts.SelectNearest(), new charts.DomainHighlighter()],
+                                )
+                            )
+                        ),
+                      ]
 
-            )
-            )
-//                  primaryMeasureAxis: new charts.PieChart(seriesList, animate: animate),
-//                primaryMeasureAxis: new charts.PieChart(seriesList, animate: animate)
-
-
+                  )
+              )
             ])
-        ))
     );
-  }
-
-  void _search() {
-    setState(() {
-      //TODO логика поиска по фильтру
-    });
   }
 
   Widget _resultList() {
@@ -266,20 +262,19 @@ class _StatisticsPageState extends State<StatisticsPage> {
     Widget widget;
 
     for (int i = 0; i < _results.length; i++) {
-    listResult.add(
-         ListTile(
+      listResult.add(
+        ListTile(
           title: Text(
-              DateFormat('yyyy-MM-dd  kk:mm').format(_results[i].date)+'\n'
-                  "Хочу: " + "Предмент труда" + _results[i].resultWant.character.value + "Характер труда" + _results[i].resultWant.subject.value + '\n'
-                  "Могу: " + "Предмент труда" + _results[i].resultCan.character.value + "Характер труда" + _results[i].resultCan.subject.value,
+            DateFormat('yyyy-MM-dd  kk:mm').format(_results[i].date)+'\n'
+                "Хочу: " + "Предмент труда \"" + _results[i].resultWant.character.title + "\", Характер труда \"" + _results[i].resultWant.subject.title + '\"\n'
+                "Могу: " + "Предмент труда \"" + _results[i].resultCan.character.title + "\", Характер труда \"" + _results[i].resultCan.subject.title + '\"',
           ),
-          onTap: () => moveWithHistory(context, null /* Страница с результатами*/),
+          onTap: () => moveWithHistory(context, new ResultPage(_results[i])),
           trailing: Icon(Icons.keyboard_arrow_right),
         ),
-    );
-    };
-    widget = new Column(children: listResult);
-    return widget;
+      );
+    }
+    return new Padding(padding: EdgeInsets.all(16.0), child: Column(children: listResult));
   }
 }
 
