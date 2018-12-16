@@ -88,8 +88,9 @@ class DataProvider {
   //Записать ответ на сервер и получить результат тестирования
   static Future<ResultTest> getResult(List<QuestionWithAnswers> result, int idTest) async {
 
+    String d = json.encode(QuestionWithAnswers.toJsonResult(result, idTest));
     final response = await RestClient.post(RestPaths.RESULT,
-        body: json.encode(QuestionWithAnswers.toJsonResult(result, idTest)),
+        body: d,
         contentType: Http.JSON_CONTENT_TYPE,
         auth: true
     );

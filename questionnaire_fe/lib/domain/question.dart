@@ -29,35 +29,40 @@ class QuestionWithAnswers extends Question {
   QuestionWithAnswers(int id, this.answer, {String value, int numberInOrder}) : super(id, value: value, numberInOrder: numberInOrder);
 
   factory QuestionWithAnswers.fromJson(Map<String, dynamic> json) {
+    Answer answer =  Answer.fromJson(json['answer']);
+    List<Answer> answers = new List();
+    answers.add(answer);
     return new QuestionWithAnswers(
-      json['id'],
-      Answer.listFromJson(json['answer']),
-      value: json['value'],
-      numberInOrder: json['number_in_order'],
+      json['question']["id"],
+      answers,
+      value: json['question']['value'],
+      numberInOrder: json['question']['number_in_order'],
     );
   }
 
   static Map<String, dynamic> toJsonResult(List<QuestionWithAnswers> result,int idTest) {
-    return
-    {
+    List<dynamic> resultQuestionAndAnswers = new List<dynamic>();
+    for (QuestionWithAnswers q in result){
+      resultQuestionAndAnswers.add(toJsonQuestionAndAnswers(q));
+    }
+    return {
       "test": {
         "id": idTest
       },
-      "question_results": [
-        result.map((q) {
-          return {
-            "question": {
-              "id": q.id
-            },
-            "answer": {
-              "id": q.answer[0].id
-            }
-          };
-        })
-      ]
+      "question_results": resultQuestionAndAnswers
     };
   }
 
+  static Map<String, dynamic> toJsonQuestionAndAnswers(QuestionWithAnswers q){
+    return {
+      "question": {
+        "id": q.id
+      },
+      "answer": {
+        "id": q.answer[0].id
+      }
+    };
+  }
 
   static List<QuestionWithAnswers> listFromJson(List<dynamic> json) {
     List<QuestionWithAnswers> questionsWithAnswers = new List();
