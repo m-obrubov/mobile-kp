@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+
 void moveWithHistory(BuildContext context, Widget widget) {
   Navigator
       .of(context)
@@ -9,5 +11,5 @@ void moveWithHistory(BuildContext context, Widget widget) {
 void moveWithHistoryClean(BuildContext context, Widget widget) {
   Navigator
       .of(context)
-      .pushAndRemoveUntil(MaterialPageRoute(builder: (context) => widget), (Route<dynamic> route) => false);
+      .pushAndRemoveUntil(MaterialPageRoute(builder: (context) => widget), (Route<dynamic> route) => route.settings.isInitialRoute);
 }
