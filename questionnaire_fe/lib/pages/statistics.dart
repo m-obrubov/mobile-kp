@@ -265,9 +265,9 @@ class _StatisticsPageState extends State<StatisticsPage> with SingleTickerProvid
       listResult.add(
         ListTile(
           title: Text(
-            DateFormat('yyyy-MM-dd  kk:mm').format(_results[i].date)+'\n'
-                "Хочу: " + "Предмент труда \"" + _results[i].resultWant.character.title + "\", Характер труда \"" + _results[i].resultWant.subject.title + '\"\n'
-                "Могу: " + "Предмент труда \"" + _results[i].resultCan.character.title + "\", Характер труда \"" + _results[i].resultCan.subject.title + '\"',
+            DateFormat('yyyy-MM-dd  kk:mm').format(_results[i].date) + ', ' + _results[i].user.gender.title + ', ' + _results[i].user.age.toString() + ', ' + _results[i].user.city + '\n'
+                "Хочу: " + '"' + _results[i].resultWant.character.title + '-' + _results[i].resultWant.subject.title + '"\n'
+                "Могу: " + '"' + _results[i].resultCan.character.title + '-' + _results[i].resultCan.subject.title + '"\n'
           ),
           onTap: () => moveWithHistory(context, new ResultPage(_results[i])),
           trailing: Icon(Icons.keyboard_arrow_right),

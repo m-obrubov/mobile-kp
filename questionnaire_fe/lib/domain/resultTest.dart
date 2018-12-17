@@ -1,20 +1,23 @@
 import 'package:questionnaire_fe/domain/constants.dart';
 import 'package:questionnaire_fe/domain/profession.dart';
 import 'package:questionnaire_fe/domain/question.dart';
+import 'package:questionnaire_fe/domain/user.dart';
 
 class ResultTest {
   final int id;
+  final User user;
   final Result resultCan;
   final Result resultWant;
   final List<QuestionWithAnswers> questionWithAnswersUser;
   final DateTime date;
 
-  ResultTest(this.id, this.questionWithAnswersUser, this.date, this.resultCan, this.resultWant);
+  ResultTest(this.id, this.user, this.questionWithAnswersUser, this.date, this.resultCan, this.resultWant);
 
   factory ResultTest.fromJson(Map<String, dynamic> json) {
     String dataTime = json['passed_at']+"Z";
     return new ResultTest(
       json['id'],
+      User.fromJson(json['user']),
       QuestionWithAnswers.listFromJson(json['question_results']),
       DateTime.parse(dataTime),
       Result.fromJson(json['result_can']),
