@@ -155,7 +155,7 @@ class _ResultPage extends State<ResultPage> with SingleTickerProviderStateMixin 
                     ),
                     Divider(),
                     Text(
-                      'Вы можите: ',
+                      'Вы можете: ',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18.0
@@ -163,8 +163,8 @@ class _ResultPage extends State<ResultPage> with SingleTickerProviderStateMixin 
                       textAlign: TextAlign.left,
                     ),
                     Text(
-                      'Предмет труда: ' + _result.resultWant.character.value + '\n'
-                          'Характер труда: ' + _result.resultWant.subject.value,
+                      'Предмет труда: ' + _result.resultWant.character.title + '\n'
+                          'Характер труда: ' + _result.resultWant.subject.title,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18.0
@@ -181,7 +181,7 @@ class _ResultPage extends State<ResultPage> with SingleTickerProviderStateMixin 
                     ),
                     Divider(),
                     Text(
-                      '\nСписок профессий подходящих вам:\n',
+                      '\nСписок профессий, подходящих вам:\n',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18.0
@@ -198,8 +198,8 @@ class _ResultPage extends State<ResultPage> with SingleTickerProviderStateMixin 
                       textAlign: TextAlign.left,
                     ),
                     Text(
-                      'Предмет труда: ' + _result.resultCan.character.value + '\n'
-                          'Характер труда: ' + _result.resultCan.subject.value,
+                      'Предмет труда: ' + _result.resultCan.character.title + '\n'
+                          'Характер труда: ' + _result.resultCan.subject.title,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18.0
@@ -216,7 +216,7 @@ class _ResultPage extends State<ResultPage> with SingleTickerProviderStateMixin 
                     ),
                     Divider(),
                     Text(
-                      '\nСписок профессий подходящих вам:\n',
+                      '\nСписок профессий, подходящих вам:\n',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18.0
