@@ -61,7 +61,7 @@ class ProfilePageState extends State<ProfilePage> {
                   _getResultString(_results[index])
               ),
               onTap: () =>
-                  moveWithHistory(context, new ResultPage(_results[index])),
+                  moveWithHistory(context, new ResultPage(_results[index], false)),
               trailing: Icon(Icons.keyboard_arrow_right),
             );
           },

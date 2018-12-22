@@ -66,65 +66,69 @@ class _StatisticsPageState extends State<StatisticsPage> with SingleTickerProvid
     var chartWant = _getBarChart(seriesWant);
 
     return Scaffold(
-        appBar: AppBar(
-          bottom: TabBar(
-            tabs: [
-              Tab(icon: Icon(Icons.youtube_searched_for),text: "Результаты поиска"),
-              Tab(icon: Icon(Icons.equalizer),text: "Графики")
-            ],
-            controller: _tabController,
-          ),
-          title: Text('Статистика'),
+      appBar: AppBar(
+        bottom: TabBar(
+          tabs: [
+            Tab(icon: Icon(Icons.youtube_searched_for),text: "Результаты поиска"),
+            Tab(icon: Icon(Icons.equalizer),text: "Графики")
+          ],
+          controller: _tabController,
         ),
-        body: TabBarView(
-            controller: _tabController,
-            children: [
-              ListView.builder(
-                scrollDirection: Axis.vertical,
-                padding: EdgeInsets.all(16.0),
-                itemBuilder: (context, index) {
-                  if (index.isOdd) return Divider(height: 12.0);
-                  final i = index ~/ 2;
-                  return ListTile(
-                    title: Text(
-                        DateFormat('yyyy-MM-dd  kk:mm').format(_results[i].date) + ', ' + _results[i].user.gender.title + ', ' +
-                            _results[i].user.age.toString() + ', ' + _results[i].user.city + '\n'
-                            'Хочу: ' + '"' + _results[i].resultWant.character.title + '-' + _results[i].resultWant.subject.title + '"\n'
-                            'Могу: ' + '"' + _results[i].resultCan.character.title + '-' + _results[i].resultCan.subject.title + '"\n'
-                    ),
-                    onTap: () => moveWithHistory(context, new ResultPage(_results[i])),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                  );
-                },
-                itemCount: _results.length * 2,
-
-              ),
-              SingleChildScrollView(
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text('Люди могут:'),
-                        Padding(
-                            padding: new EdgeInsets.all(32.0),
-                            child: new SizedBox(
-                                height: 300.0,
-                                child: chartCan,
-                            )
-                        ),
-                        Text('Люди хотят:'),
-                        Padding(
-                            padding: new EdgeInsets.all(32.0),
-                            child: new SizedBox(
-                                height: 300.0,
-                                child: chartWant
-                            )
-                        ),
-                      ]
+        title: Text('Статистика'),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          ListView.separated(
+            padding: EdgeInsets.all(16.0),
+            scrollDirection: Axis.vertical,
+            separatorBuilder: (context, index) => Divider(height: 12.0),
+            itemBuilder: (context, index) {
+              if(index == 0) return Text(
+                "Всего результатов: " + _results.length.toString(),
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.grey, fontSize: 16.0)
+              );
+              int i = index - 1;
+              return ListTile(
+                title: Text(
+                    DateFormat('yyyy-MM-dd  kk:mm').format(_results[i].date) + ', ' + _results[i].user.gender.title + ', ' +
+                        _results[i].user.age.toString() + ', ' + _results[i].user.city + '\n'
+                        'Хочу: ' + '"' + _results[i].resultWant.character.title + '-' + _results[i].resultWant.subject.title + '"\n'
+                        'Могу: ' + '"' + _results[i].resultCan.character.title + '-' + _results[i].resultCan.subject.title + '"\n'
+                ),
+                onTap: () => moveWithHistory(context, new ResultPage(_results[i], false)),
+                trailing: Icon(Icons.keyboard_arrow_right),
+              );
+            },
+            itemCount: _results.length,
+          ),
+          SingleChildScrollView(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('Люди могут:'),
+                Padding(
+                  padding: new EdgeInsets.all(32.0),
+                  child: new SizedBox(
+                    height: 300.0,
+                    child: chartCan,
                   )
-              )
-            ]
-        )
+                ),
+                Text('Люди хотят:'),
+                Padding(
+                  padding: new EdgeInsets.all(32.0),
+                  child: new SizedBox(
+                    height: 300.0,
+                    child: chartWant
+                  )
+                ),
+              ]
+            )
+          )
+        ]
+      )
     );
   }
   

@@ -7,20 +7,22 @@ import 'package:questionnaire_fe/pages/navigation.dart';
 class ResultPage extends StatefulWidget {
 
   final ResultTest _result;
+  final bool _hasCheck;
 
-  ResultPage(this._result);
+  ResultPage(this._result, this._hasCheck);
 
   @override
-  State<StatefulWidget> createState() => new _ResultPage(_result);
+  State<StatefulWidget> createState() => new _ResultPage(_result, _hasCheck);
 
 }
 
 class _ResultPage extends State<ResultPage> with SingleTickerProviderStateMixin {
 
   final ResultTest _result;
+  final bool _hasCheck;
   TabController _tabController;
 
-  _ResultPage(this._result);
+  _ResultPage(this._result, this._hasCheck);
 
 
   @override
@@ -94,14 +96,12 @@ class _ResultPage extends State<ResultPage> with SingleTickerProviderStateMixin 
       listResultQuestions.add (
         ListTile(
           leading: Icon(Icons.check_box),
-
           title:
           Text(answer,
               style: TextStyle(
                 fontSize: 18.0,
               )
           ),
-
         ),
       );
     }
@@ -110,13 +110,6 @@ class _ResultPage extends State<ResultPage> with SingleTickerProviderStateMixin 
     widgetProfessionsWant = new Column(children: listProfessionsWant);
     widgetResultQuestions = new Column(children: listResultQuestions);
 
-    var profileIcon;
-    profileIcon = <Widget>[
-      IconButton(
-          icon: Icon(Icons.check),
-          onPressed: () => moveWithHistory(context, new HomePage())
-      )
-    ];
     //not authenticate
     return Scaffold(
         appBar: AppBar(
@@ -128,7 +121,12 @@ class _ResultPage extends State<ResultPage> with SingleTickerProviderStateMixin 
             controller: _tabController,
           ),
           title: Text('Страница результата'),
-          actions: profileIcon,
+          actions: _hasCheck ? [
+            IconButton(
+              icon: Icon(Icons.check),
+              onPressed: () => moveWithHistory(context, new HomePage())
+            )
+          ] : []
         ),
         body: TabBarView(
             controller: _tabController,
@@ -155,7 +153,7 @@ class _ResultPage extends State<ResultPage> with SingleTickerProviderStateMixin 
                     ),
                     Divider(),
                     Text(
-                      'Вы можете: ',
+                      'Умение: ',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18.0
@@ -190,7 +188,7 @@ class _ResultPage extends State<ResultPage> with SingleTickerProviderStateMixin 
                     ),
                     widgetProfessionsWant,
                     Text(
-                      'Вы хотите: ',
+                      'Желание: ',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18.0
@@ -233,7 +231,7 @@ class _ResultPage extends State<ResultPage> with SingleTickerProviderStateMixin 
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      "\nВаш тест пройден: " + DateFormat('yyyy-MM-dd   kk:mm').format(_result.date) + "\n",
+                      "\nТест пройден: " + DateFormat('yyyy-MM-dd   kk:mm').format(_result.date) + "\n",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18.0

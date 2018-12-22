@@ -123,9 +123,9 @@ class _QuestionPageState extends State<QuestionPage> {
         });
         DataProvider.getResult(_questionsWithAnswers,_test.id).then((res) {
           if (res != null) {
-            moveWithHistoryClean(context, new ResultPage(res));
+            moveWithHistoryClean(context, new ResultPage(res, true));
           } else {
-            _showError("Ошибка. Обратитесь в служду подержки!");
+            _showError("Ошибка. Обратитесь в службу поддержки!");
           }
         });
       }
