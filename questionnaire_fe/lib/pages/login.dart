@@ -19,37 +19,38 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Вход'),
-      ),
-      body: _loadingInProgress ? _getSpinner() : Container(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              TextFormField(
-                decoration: InputDecoration(labelText: "Адрес электронной почты"),
-                keyboardType: TextInputType.emailAddress,
-                validator: _emailValidator,
-                onSaved: (val) { _login = val; },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "Пароль"),
-                keyboardType: TextInputType.text,
-                obscureText: true,
-                validator: _emptyFieldValidator,
-                onSaved: (val) { _password = val; },
-              ),
-              WideRaisedButton(
-                onPressed: _submit,
-                text: "Войти",
-              ),
-            ],
-          ),
+        appBar: AppBar(
+          title: Text('Вход'),
         ),
-      ),
+        body: _loadingInProgress ? _getSpinner() : SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          padding: EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TextFormField(
+                  decoration: InputDecoration(labelText: "Адрес электронной почты"),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: _emailValidator,
+                  onSaved: (val) { _login = val; },
+                ),
+                TextFormField(
+                  decoration: InputDecoration(labelText: "Пароль"),
+                  keyboardType: TextInputType.text,
+                  obscureText: true,
+                  validator: _emptyFieldValidator,
+                  onSaved: (val) { _password = val; },
+                ),
+                WideRaisedButton(
+                  onPressed: _submit,
+                  text: "Войти",
+                ),
+              ],
+            ),
+          ),
+        )
     );
   }
 

@@ -49,9 +49,39 @@ class _HomePageState extends State<HomePage> {
       exitButton = IconButton(
           icon: Icon(Icons.exit_to_app),
           onPressed: () {
-            setState(() {
-              AuthService.logout();
-            });
+            showDialog<void>(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Выход'),
+                  content: Text('Вы точно хотите выйти?'),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text(
+                        'Да',
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          AuthService.logout();
+                          Navigator.of(context).pop();
+                        });
+                      },
+                    ),
+                    FlatButton(
+                      child: Text(
+                        'Нет',
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
           }
       );
     }
