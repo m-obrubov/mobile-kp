@@ -44,7 +44,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Опросник Соломина',
+      title: 'Определи свой путь',
       home: new HomePage(),
     );
   }

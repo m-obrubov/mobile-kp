@@ -145,7 +145,7 @@ class _ResultPage extends State<ResultPage> with SingleTickerProviderStateMixin 
                       height: 100.0,
                     ),
                     Text(
-                      '\nПоздравлю вы завершили тестирование!\n',
+                      '\nРезультат тестирования\n',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 21.0
