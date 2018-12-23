@@ -28,7 +28,7 @@ public class Result {
 
     @JsonProperty("description")
     @Basic
-    @Column(name = "description")
+    @Column(name = "description", length = 1024)
     public String getDescription() {
         return description;
     }

@@ -46,36 +46,30 @@ class _ResultPage extends State<ResultPage> with SingleTickerProviderStateMixin 
       String _professionsDescription = _result.resultWant.professions[i].description;
       String _professionsName = _result.resultWant.professions[i].value;
       listProfessionsWant.add (
-          DropdownButton<String>(
-            items: <String>[_professionsName,_professionsDescription].map((String value) {
-              return new DropdownMenuItem<String>(
-                value: value,
-                child: new Text(value),
-              );
-            }).toList(),
-            value: _professionsName,
-            isExpanded: true,
-            onChanged: (_) {},
+          ListTile(
+            title: Text(_professionsName),
+            trailing: IconButton(
+                icon: Icon(Icons.info_outline),
+                onPressed: () => _professionInfo(context, _professionsName, _professionsDescription)
+            ),
           )
       );
+      listProfessionsWant.add(Divider());
     }
 
     for (int i = 0; i < _result.resultCan.professions.length; i++) {
       String _professionsDescription = _result.resultCan.professions[i].description;
       String _professionsName = _result.resultCan.professions[i].value;
       listProfessionsCan.add (
-          DropdownButton<String>(
-            items: <String>[_professionsName,_professionsDescription].map((String value) {
-              return new DropdownMenuItem<String>(
-                value: value,
-                child: new Text(value),
-              );
-            }).toList(),
-            value: _professionsName,
-            isExpanded: true,
-            onChanged: (_) {},
+          ListTile(
+            title: Text(_professionsName),
+            trailing: IconButton(
+                icon: Icon(Icons.info_outline),
+                onPressed: () => _professionInfo(context, _professionsName, _professionsDescription)
+            ),
           )
       );
+      listProfessionsCan.add(Divider());
     }
 
     for (int i = 0; i < _result.questionWithAnswersUser.length; i++) {
@@ -244,6 +238,27 @@ class _ResultPage extends State<ResultPage> with SingleTickerProviderStateMixin 
               )
             ]
         )
+    );
+  }
+
+  Future<void> _professionInfo(BuildContext context, String name, String description) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(name),
+          content: SingleChildScrollView(child: Text(description), scrollDirection: Axis.vertical),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('ОК'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 

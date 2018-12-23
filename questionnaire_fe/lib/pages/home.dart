@@ -151,6 +151,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(
                       fontSize: 18.0
                   ),
+                  textAlign: TextAlign.justify,
                 ),
                 Divider(),
                 Text(
@@ -165,6 +166,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(
                       fontSize: 18.0
                   ),
+                  textAlign: TextAlign.justify,
                 ),
                 Divider(),
               ],

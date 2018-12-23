@@ -38,10 +38,7 @@ public class InitService {
             return;
         }
         if(!savedTest.equals(jsonTest)) {
-            Test updatedTest = testService.update(jsonTest);
-            if(updatedTest == null) {
-                throw new InitializationException("Тест не был обновлен");
-            }
+            throw new InitializationException("Тест был обновлен. Пересоздайте схему базы данных!");
         }
     }
 }

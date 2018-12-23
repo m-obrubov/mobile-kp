@@ -44,7 +44,7 @@ public class Test {
 
     @JsonProperty("about")
     @Basic
-    @Column(name = "about")
+    @Column(name = "about", length = 1024)
     public String getAbout() {
         return about;
     }
@@ -55,7 +55,7 @@ public class Test {
 
     @JsonProperty("rules")
     @Basic
-    @Column(name = "rules")
+    @Column(name = "rules", length = 1024)
     public String getRules() {
         return rules;
     }

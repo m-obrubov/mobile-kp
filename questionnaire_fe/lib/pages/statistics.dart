@@ -35,13 +35,13 @@ class _StatisticsPageState extends State<StatisticsPage> with SingleTickerProvid
     var seriesCan = [
       new charts.Series(
         id: 'Исполнитель',
-        domainFn: (_TestPerType testData, _) => testData.type.title,
+        domainFn: (_TestPerType testData, _) => testData.type.title.substring(0, 2),
         measureFn: (_TestPerType testData, _) => testData.count,
         data: _prepareChartData(Work.EXECUTOR, true),
       ),
       new charts.Series(
         id: 'Создатель',
-        domainFn: (_TestPerType testData, _) => testData.type.title,
+        domainFn: (_TestPerType testData, _) => testData.type.title.substring(0, 2),
         measureFn: (_TestPerType testData, _) => testData.count,
         data: _prepareChartData(Work.CREATOR, true),
       ),
@@ -50,13 +50,13 @@ class _StatisticsPageState extends State<StatisticsPage> with SingleTickerProvid
     var seriesWant = [
       new charts.Series(
         id: 'Исполнитель',
-        domainFn: (_TestPerType testData, _) => testData.type.title,
+        domainFn: (_TestPerType testData, _) => testData.type.title.substring(0, 2),
         measureFn: (_TestPerType testData, _) => testData.count,
         data: _prepareChartData(Work.EXECUTOR, false),
       ),
       new charts.Series(
         id: 'Создатель',
-        domainFn: (_TestPerType testData, _) => testData.type.title,
+        domainFn: (_TestPerType testData, _) => testData.type.title.substring(0, 2),
         measureFn: (_TestPerType testData, _) => testData.count,
         data: _prepareChartData(Work.CREATOR, false),
       ),
@@ -124,6 +124,11 @@ class _StatisticsPageState extends State<StatisticsPage> with SingleTickerProvid
                     child: chartWant
                   )
                 ),
+                Text(Work.ART.title.substring(0, 2) + ' - ' + Work.ART.title),
+                Text(Work.TECHNICS.title.substring(0, 2) + ' - ' + Work.TECHNICS.title),
+                Text(Work.HUMAN.title.substring(0, 2) + ' - ' + Work.HUMAN.title),
+                Text(Work.NATURE.title.substring(0, 2) + ' - ' + Work.NATURE.title),
+                Text(Work.ZNAK.title.substring(0, 2) + ' - ' + Work.ZNAK.title),
               ]
             )
           )
