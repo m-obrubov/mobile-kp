@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:questionnaire_fe/pages/button.dart';
-import 'package:questionnaire_fe/pages/home.dart';
-import 'package:questionnaire_fe/pages/navigation.dart';
+import 'package:questionnaire_fe/services/requester.dart';
+import 'exception_handler.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -11,53 +11,65 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
-
   String _login;
   String _password;
+
+  bool _loadingInProgress = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Вход'),
-      ),
-      body: Container(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              TextFormField(
-                decoration: InputDecoration(labelText: "Адрес электронной почты"),
-                keyboardType: TextInputType.emailAddress,
-                validator: _emailValidator,
-                onSaved: (val) { _login = val; },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "Пароль"),
-                keyboardType: TextInputType.text,
-                obscureText: true,
-                validator: _emptyFieldValidator,
-                onSaved: (val) { _password = val; },
-              ),
-              WideRaisedButton(
-                onPressed: _submit,
-                text: "Войти",
-              ),
-            ],
-          ),
+        appBar: AppBar(
+          title: Text('Вход'),
         ),
-      ),
+        body: _loadingInProgress ? _getSpinner() : SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          padding: EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TextFormField(
+                  decoration: InputDecoration(labelText: "Адрес электронной почты"),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: _emailValidator,
+                  onSaved: (val) { _login = val; },
+                ),
+                TextFormField(
+                  decoration: InputDecoration(labelText: "Пароль"),
+                  keyboardType: TextInputType.text,
+                  obscureText: true,
+                  validator: _emptyFieldValidator,
+                  onSaved: (val) { _password = val; },
+                ),
+                WideRaisedButton(
+                  onPressed: _submit,
+                  text: "Войти",
+                ),
+              ],
+            ),
+          ),
+        )
     );
   }
+
+  Widget _getSpinner() => new Center(child: CircularProgressIndicator());
 
   void _submit() {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
-      //TODO вызвать API получения токена
-      moveWithHistoryClean(context, new Home());
+      setState(() {
+        _loadingInProgress = true;
+      });
+      AuthService.auth(_login, _password).then((res) {
+        if (res) {
+          Navigator.of(context).pop();
+        } else {
+          _showError("Неправильный логин или пароль");
+        }
+      }).catchError((e) => _showError("Ошибка"));
     }
   }
 
@@ -88,5 +100,12 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     return null;
+  }
+
+  void _showError(String text) {
+    setState(() {
+      _loadingInProgress = false;
+    });
+    errorDialog(context, text);
   }
 }

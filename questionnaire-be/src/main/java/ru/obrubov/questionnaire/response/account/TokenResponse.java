@@ -4,18 +4,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.obrubov.questionnaire.response.Response;
 
 public class TokenResponse implements Response {
-    private String token;
+    private Token token;
 
-    private TokenResponse(String token) {
+
+    private TokenResponse(Token token) {
         this.token = token;
     }
 
-    @JsonProperty("token")
-    public String getToken() {
-        return token;
+    public static TokenResponse create(Token token) {
+        return new TokenResponse(token);
     }
 
-    public static TokenResponse create(String token) {
-        return new TokenResponse(token);
+    @JsonProperty("token")
+    public Token getToken() {
+        return token;
     }
 }

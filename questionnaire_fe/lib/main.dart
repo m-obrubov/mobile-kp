@@ -2,8 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:questionnaire_fe/pages/home.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:questionnaire_fe/services/requester.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:questionnaire_fe/services/requester.dart' as requester;
 
-void main() => runApp(new MyApp());
+void main() {
+  SharedPreferences.getInstance().then((prefs) {
+    requester.prefs = prefs;
+    DataProvider.loadTest().then((_) {
+      runApp(new MyApp());
+    });
+  });
+}
 
 class MyApp extends StatefulWidget {
   @override
@@ -34,8 +44,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Опросник Соломина',
-      home: new Home(),
+      title: 'Определи свой путь',
+      home: new HomePage(),
     );
   }
 }

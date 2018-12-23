@@ -1,5 +1,6 @@
 package ru.obrubov.questionnaire.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -34,13 +35,15 @@ public class Answer {
         this.value = value;
     }
 
-    @JsonProperty("weight")
+    //@JsonProperty("weight")
+    @JsonIgnore
     @Basic
     @Column(name = "weight")
     public int getWeight() {
         return weight;
     }
 
+    @JsonProperty("weight")
     public void setWeight(int weight) {
         this.weight = weight;
     }

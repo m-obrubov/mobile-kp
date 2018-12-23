@@ -1,19 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:questionnaire_fe/domain/constants.dart';
+import 'package:questionnaire_fe/domain/user.dart';
+import 'package:questionnaire_fe/exception/exceptions.dart';
 import 'package:questionnaire_fe/pages/button.dart';
+import 'package:questionnaire_fe/pages/exception_handler.dart';
+import 'package:questionnaire_fe/services/requester.dart';
 
 class EditProfilePage extends StatefulWidget {
+  final User user;
+
+  const EditProfilePage({Key key, this.user}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => new EditProfilePageState();
+  State<StatefulWidget> createState() => new EditProfilePageState(user);
 }
 
 class EditProfilePageState extends State<EditProfilePage> {
   final _formKey = GlobalKey<FormState>();
 
+  User _user;
   String _name;
   String _surname;
   int _age;
   String _city;
-  String _gender = 'MALE';
+  Gender _gender;
+
+  EditProfilePageState(this._user) {
+    _gender = _user.gender;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,28 +45,28 @@ class EditProfilePageState extends State<EditProfilePage> {
               children: <Widget>[
                 TextFormField(
                   decoration: InputDecoration(labelText: "Имя"),
-                  initialValue: 'Иван',
+                  initialValue: _user.firstName,
                   keyboardType: TextInputType.text,
                   validator: _emptyFieldValidator,
                   onSaved: (String val) { _name = val; },
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: "Фамилия"),
-                  initialValue: 'Иванов',
+                  initialValue: _user.lastName,
                   keyboardType: TextInputType.text,
                   validator: _emptyFieldValidator,
                   onSaved: (String val) { _surname = val; },
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: "Возраст"),
-                  initialValue: '21',
+                  initialValue: _user.age.toString(),
                   keyboardType: TextInputType.number,
                   validator: _ageValidator,
                   onSaved: (String val) { _age = int.parse(val); },
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: "Город"),
-                  initialValue: 'Москва',
+                  initialValue: _user.city,
                   keyboardType: TextInputType.text,
                   validator: _emptyFieldValidator,
                   onSaved: (String val) { _city = val; },
@@ -68,15 +82,15 @@ class EditProfilePageState extends State<EditProfilePage> {
                   padding: EdgeInsets.only(left: 2.0),
                   child: Column(
                     children: <Widget>[
-                      RadioListTile<String>(
-                        title: Text("Мужской"),
-                        value: 'MALE',
+                      RadioListTile<Gender>(
+                        title: Text(Gender.MALE.title),
+                        value: Gender.MALE,
                         groupValue: _gender,
                         onChanged: (value) { setState(() { _gender = value; }); },
                       ),
-                      RadioListTile<String>(
-                        title: Text("Женский"),
-                        value: 'FEMALE',
+                      RadioListTile<Gender>(
+                        title: Text(Gender.FEMALE.title),
+                        value: Gender.FEMALE,
                         groupValue: _gender,
                         onChanged: (value) { setState(() { _gender = value; }); },
                       ),
@@ -99,10 +113,18 @@ class EditProfilePageState extends State<EditProfilePage> {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
-      //TODO вызвать API изменения данных
-      Navigator
-        .of(context)
-        .pop();
+      User user = new User(
+        firstName: _name,
+        lastName: _surname,
+        age: _age,
+        city: _city,
+        gender: _gender
+      );
+      DataProvider.updateUserData(user).then((res) {
+        if(res) {
+          Navigator.of(context).pop();
+        }
+      }).catchError((RestCallException e) => _showError(e.getMessage()));
     }
   }
 
@@ -121,10 +143,14 @@ class EditProfilePageState extends State<EditProfilePage> {
     }
 
     int age = double.parse(val).round();
-    if(age <= 0 && age > 100) {
+    if(age <= 0 || age > 100) {
       return 'Введите корректный возраст';
     }
 
     return null;
+  }
+
+  void _showError(String text) {
+    errorDialog(context, text);
   }
 }

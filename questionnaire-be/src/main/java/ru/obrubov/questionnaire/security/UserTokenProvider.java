@@ -1,27 +1,31 @@
 package ru.obrubov.questionnaire.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.obrubov.questionnaire.config.QuestionnaireConfig;
+import ru.obrubov.questionnaire.data.access.UserDataAccess;
+import ru.obrubov.questionnaire.domain.User;
+import ru.obrubov.questionnaire.response.account.Token;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
-import java.util.Date;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
 public class UserTokenProvider {
 
-    private final UserDetailsServiceImpl userDetailsService;
     private final QuestionnaireConfig questionnaireConfig;
+    private final UserDataAccess userDataAccess;
+    private JwtParser jwtParser;
 
     @PostConstruct
     protected void init() {
@@ -29,43 +33,54 @@ public class UserTokenProvider {
     }
 
     @Autowired
-    public UserTokenProvider(UserDetailsServiceImpl userDetailsService,
-                             QuestionnaireConfig questionnaireConfig) {
-        this.userDetailsService = userDetailsService;
+    public UserTokenProvider(QuestionnaireConfig questionnaireConfig,
+                             UserDataAccess userDataAccess) {
         this.questionnaireConfig = questionnaireConfig;
+        this.userDataAccess = userDataAccess;
+        this.jwtParser = Jwts.parser().setSigningKey(questionnaireConfig.getTokenSecretKey().getBytes());
     }
 
-    Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(getUserName(token));
+    private UserDetails getUserDetails(Jws<Claims> token) {
+        Claims claims = token.getBody();
+        String username = claims.getIssuer();
+        List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(claims.getSubject()));
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(username)
+                .password("")
+                .authorities(authorities)
+                .build();
+    }
+
+    Authentication getAuthentication(Jws<Claims> token) {
+        UserDetails userDetails = getUserDetails(token);
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    private String getUserName(String token) {
-        return Jwts.parser().setSigningKey(questionnaireConfig.getTokenSecretKey()).parseClaimsJws(token).getBody().getSubject();
+    Jws<Claims> resolveToken(HttpServletRequest req) {
+        String header = req.getHeader(HttpHeaders.AUTHORIZATION);
+        if(header != null) {
+            return parseToken(header);
+        }
+        return null;
     }
 
-    String resolveToken(HttpServletRequest req) {
-        return req.getHeader("Authorization");
-    }
-
-    public boolean validateToken(String token) {
+    Jws<Claims> parseToken(String token) {
         try {
-            Jwts.parser().setSigningKey(questionnaireConfig.getTokenSecretKey()).parseClaimsJws(token);
-            return true;
+            return jwtParser.parseClaimsJws(token);
         } catch (JwtException | IllegalArgumentException e) {
-            return false;
+            return null;
         }
     }
 
-    public String generate(String login) {
-        Claims claims = Jwts.claims().setSubject(login);
-        Date now = new Date();
-        Date validity = new Date(now.getTime()+ questionnaireConfig.getTokenExpireMinutes()*60000);// действительность в милисикундах
-        return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(now)
-                .setExpiration(validity)
+    public Token generate(String login) {
+        User user = userDataAccess.getByEmail(login);
+        String token = Jwts.builder()
+                .setSubject(user.getEmail())
+                .setIssuedAt(new Date())
+                .setIssuer(user.getEmail())
+                .setSubject(user.getRole().toString())
                 .signWith(SignatureAlgorithm.HS256, questionnaireConfig.getTokenSecretKey()) //в кодировочке
                 .compact();
+        return new Token(token, user.getRole());
     }
 }

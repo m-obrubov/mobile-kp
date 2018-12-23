@@ -1,20 +1,20 @@
 package ru.obrubov.questionnaire.security;
-
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class UserSecurityFilter extends GenericFilterBean {
+public class UserSecurityFilter extends OncePerRequestFilter {
 
     private final UserTokenProvider tokenProvider;
 
@@ -24,12 +24,14 @@ public class UserSecurityFilter extends GenericFilterBean {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        String token = tokenProvider.resolveToken((HttpServletRequest) servletRequest);
-        if(token != null && tokenProvider.validateToken(token)) {
+    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+        Jws<Claims> token = tokenProvider.resolveToken(httpServletRequest);
+        if(token != null) {
             Authentication authentication = tokenProvider.getAuthentication(token);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            if(authentication != null) {
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
-        filterChain.doFilter(servletRequest, servletResponse);
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }
